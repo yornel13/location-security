@@ -5,9 +5,12 @@
 * todas las respuesta son en formato JSON
 * todas las consulta son POST el body va con formato JSON
 * Los get si son a lista responde
-* En las url, lo que este entre {} es por lo que debe remplazar. Ejemplo 
+* En las url, lo que este entre {} es por lo que debe remplazar. Ejemplo:
+
 "http://icsseseguridad.com/location-security/public/vehicle/get/{imei}"
- se rempleaza por 
+
+se rempleaza por 
+
 "http://icsseseguridad.com/location-security/public/vehicle/get/867162025555236"
 
 

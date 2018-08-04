@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eaa892b9-4744-4ead-bd06-8997b50f9dad" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/model/visit_model.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/model/visit_model.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/route/visit_route.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/route/visit_route.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -46,14 +43,14 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="22" />
-          <entry key="md" value="4781" />
+          <entry key="md" value="4782" />
           <entry key="php" value="3941" />
           <entry key="txt" value="62" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Markdown" value="4781" />
+          <entry key="Markdown" value="4782" />
           <entry key="PHP" value="3941" />
           <entry key="PLAIN_TEXT" value="84" />
         </counts>
@@ -72,8 +69,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="331">
-                <caret line="499" column="31" selection-start-line="499" selection-start-column="31" selection-end-line="499" selection-end-column="31" />
+              <first_editor relative-caret-position="756">
+                <caret line="524" column="22" selection-start-line="524" selection-start-column="22" selection-end-line="524" selection-end-column="22" />
               </first_editor>
               <second_editor />
             </state>
@@ -292,7 +289,7 @@
       <workItem from="1533235503260" duration="18828000" />
       <workItem from="1533295882375" duration="36863000" />
       <workItem from="1533393683590" duration="189000" />
-      <workItem from="1533393894661" duration="3770000" />
+      <workItem from="1533393894661" duration="4020000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <created>1533236198500</created>
@@ -340,7 +337,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="59650000" />
+    <option name="totallyTimeSpent" value="59900000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -748,8 +745,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="331">
-            <caret line="499" column="31" selection-start-line="499" selection-start-column="31" selection-end-line="499" selection-end-column="31" />
+          <first_editor relative-caret-position="756">
+            <caret line="524" column="22" selection-start-line="524" selection-start-column="22" selection-end-line="524" selection-end-column="22" />
           </first_editor>
           <second_editor />
         </state>

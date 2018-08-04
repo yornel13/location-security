@@ -518,8 +518,8 @@ POST http://icsseseguridad.com/location-security/public/alert/register
     
 POST http://icsseseguridad.com/location-security/public/alert/update/{id} 
 
-    Pone la alarta como solventada
+    Pone la alerta como solventada
 
 DELETE http://icsseseguridad.com/location-security/public/alert/delete/{id}
 
-    Elimina una visita por el id
+    Elimina una alerta por el id

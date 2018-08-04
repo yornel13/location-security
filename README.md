@@ -89,6 +89,37 @@ y habra un mensaje en 'message' y en 'errors' una lista de lo errores.
     
 
 # Las URL existentes
+
+
+Recomendacion: Se deberia agregar una variable estatica de sistema con el siguiente valor = http://icsseseguridad.com/location-security/public/ y agregarle el path
+asi en caso de cambiar la url del servidor solo de modificara la variable estatica.
+
+# Logeo (auth)
+POST http://icsseseguridad.com/location-security/public/auth/admin
+
+    logeo de administradores, recibe por body
+    * email
+    * password
+    
+    
+POST http://icsseseguridad.com/location-security/public/auth/guard
+
+    logeo de guardias, recibe por body
+    * dni
+    * password
+    
+tanto en logeo de admin como de guardia la respuesta de ser exitosa sera: 
+
+    {
+        "result": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MzMzMjE2MzQsImF1ZCI6IjBkN2NiNjBiYmY1ZTQxYmYxMGFjM2FjMzZjOWM4NzAwZDQ2MjlhYmYiLCJkYXRhIjp7ImlkIjoiMSIsIk5vbWJyZSI6Illvcm5lbCIsIk5vbWJyZUNvbXBsZXRvIjoiWW9ybmVsIE1hcnZhbCIsIkVzQWRtaW4iOnRydWV9fQ.nTIUDX_7ZmvWiRHFZ7sWVCLlfvkh6dzqHluwrdqd394",
+        "response": true,
+        "message": "",
+        "errors": []
+    }
+
+y el 'result' sera en token de session
+
+
 # * Vehiculos (Vehicles)
 (Vehiculos proporcianados por claro-flatas)
 
@@ -293,5 +324,29 @@ POST http://icsseseguridad.com/location-security/public/special/report/update/{i
 DELETE http://icsseseguridad.com/location-security/public/special/report/delete/{id}
 
     Elimina el reporte por el id
+    
+# * Comentarios al reporte especial (replies)
+
+GET http://icsseseguridad.com/location-security/public/special/report/reply/get
+
+    obtiene la lista de comentarios
+
+GET http://icsseseguridad.com/location-security/public/special/report/reply/get/{id}
+
+    obtiene un comentario por su id
+    
+POST http://icsseseguridad.com/location-security/public/special/report/reply/register 
+
+    Registrar un comentario, recibe parametros en el body:
+    enviar admin_id si comenta un administrador, enviar guard_id si comenta un empleado
+    * report_id
+    * text
+    * admin_id (obligatorio si no tiene guard_id) 
+    * guard_id (obligatorio si no tiene admin_id) 
+    
+
+DELETE http://icsseseguridad.com/location-security/public/special/report/reply/delete/{id}
+
+    Elimina un comentario por el id
     
     

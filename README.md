@@ -349,4 +349,177 @@ DELETE http://icsseseguridad.com/location-security/public/special/report/reply/d
 
     Elimina un comentario por el id
     
+# * Visitantes (Visitors)
+
+GET http://icsseseguridad.com/location-security/public/visitor/get
+
+    obtiene la lista de visitante
+
+GET http://icsseseguridad.com/location-security/public/visitor/get/{id}
+
+    obtiene un visitante por su id
     
+GET http://icsseseguridad.com/location-security/public/visitor/get/dni/{dni}
+
+    obtiene un visitante por la cedula
+    
+POST http://icsseseguridad.com/location-security/public/visitor/register 
+
+    Registrar un visitante, recibe parametros en el body:
+    * dni
+    * name
+    * lastname
+    * company (opcional)
+    * photo (opcional)(url)
+   
+    
+POST http://icsseseguridad.com/location-security/public/visitor/update/{id} 
+
+    Actualiza un visitante, recibe parametros en el body:
+    * dni
+    * name
+    * lastname
+    * company (opcional)
+    * photo (opcional)(url)
+
+DELETE http://icsseseguridad.com/location-security/public/visitor/delete/{id}
+
+    Elimina un visitante por el id
+    
+# * Funcionario (Clerks)
+
+GET http://icsseseguridad.com/location-security/public/clerk/get
+
+    obtiene la lista de funcionarios
+
+GET http://icsseseguridad.com/location-security/public/clerk/get/{id}
+
+    obtiene un funcionario por su id
+    
+GET http://icsseseguridad.com/location-security/public/clerk/get/dni/{dni}
+
+    obtiene un funcionario por la cedula
+    
+POST http://icsseseguridad.com/location-security/public/clerk/register 
+
+    Registrar un funcionario, recibe parametros en el body:
+    * dni
+    * name
+    * lastname
+    * address (opcional)
+   
+    
+POST http://icsseseguridad.com/location-security/public/clerk/update/{id} 
+
+    Actualiza un funcionario, recibe parametros en el body:
+    * dni
+    * name
+    * lastname
+    * address (opcional)
+
+DELETE http://icsseseguridad.com/location-security/public/clerk/delete/{id}
+
+    Elimina un funcionario por el id
+    
+# * Vehiculo Visitante (Visitor vehicle)
+
+GET http://icsseseguridad.com/location-security/public/visitor/vehicle/get
+
+    obtiene la lista de vehiculos visitantes
+
+GET http://icsseseguridad.com/location-security/public/visitor/vehicle/get/{id}
+
+    obtiene un vehiculo vitante por su id
+    
+GET http://icsseseguridad.com/location-security/public/visitor/vehicle/get/plate/{plate}
+
+    obtiene un vehiculo vitante por la placa
+    
+POST http://icsseseguridad.com/location-security/public/visitor/vehicle/register 
+
+    Registrar un vehiculo vitante, recibe parametros en el body:
+    * plate
+    * model
+    * type
+    * vehicle (opcional)
+    * photo (opcional)
+   
+    
+POST http://icsseseguridad.com/location-security/public/visitor/vehicle/update/{id} 
+
+    Actualiza un vehiculo vitante, recibe parametros en el body:
+    * plate
+    * model
+    * type
+    * vehicle (opcional)
+    * photo (opcional)
+
+DELETE http://icsseseguridad.com/location-security/public/visitor/vehicle/delete/{id}
+
+    Elimina un vehiculo vitante por el id
+    
+# * Visita (visit)
+
+GET http://icsseseguridad.com/location-security/public/visit/get
+
+    obtiene la lista de visitas
+    
+GET http://icsseseguridad.com/location-security/public/visit/get_active
+
+    obtiene la lista de visitas activas
+
+GET http://icsseseguridad.com/location-security/public/visit/get/{id}
+
+    obtiene una visita por su id
+    
+POST http://icsseseguridad.com/location-security/public/visit/register 
+
+    Registrar una visita, recibe parametros en el body:
+    * visitor_id
+    * guard_id
+    * vehicle_id (opcional)
+    * visited_id (opcional)
+    * persons
+    * latitude
+    * longitude
+    * observation (opcional)
+   
+    
+POST http://icsseseguridad.com/location-security/public/visit/finish/{id} 
+
+    Finaliza la visita por el id
+
+DELETE http://icsseseguridad.com/location-security/public/visit/delete/{id}
+
+    Elimina una visita por el id
+    
+# * Alerta (alert)
+
+GET http://icsseseguridad.com/location-security/public/alert/get
+
+    obtiene la lista de alertas
+    
+GET http://icsseseguridad.com/location-security/public/alert/get_active
+
+    obtiene la lista de alertas activas
+
+GET http://icsseseguridad.com/location-security/public/alert/get/{id}
+
+    obtiene una alerta por su id
+    
+POST http://icsseseguridad.com/location-security/public/alert/register 
+
+    Registrar una visita, recibe parametros en el body:
+    * guard_id
+    * cause
+    * extra (opcional)
+    * latitude
+    * longitude
+    
+POST http://icsseseguridad.com/location-security/public/alert/update/{id} 
+
+    Pone la alarta como solventada
+
+DELETE http://icsseseguridad.com/location-security/public/alert/delete/{id}
+
+    Elimina una visita por el id

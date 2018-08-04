@@ -16,6 +16,12 @@ $app->group('/visit/', function () {
                 json_encode($this->model->visit->getAll())
             );
     });
+    $this->get('get_active', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->visit->getAllActive())
+            );
+    });
     $this->post('register', function ($req, $res, $args) {
         $r = VisitValidation::validate($req->getParsedBody());
 
@@ -33,7 +39,7 @@ $app->group('/visit/', function () {
     $this->post('finish/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
-                json_encode($this->model->visit->finish($req->getParsedBody(), $args['id']))
+                json_encode($this->model->visit->finish($args['id']))
             );
     });
     $this->delete('delete/{id}', function ($req, $res, $args) {

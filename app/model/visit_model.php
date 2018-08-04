@@ -38,7 +38,7 @@ class VisitModel
         return $this->response->SetResponse(true);
     }
 
-    public function finish($data, $id)
+    public function finish($id)
     {
         $timestamp = time()-(5*60*60);
         $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
@@ -66,15 +66,23 @@ class VisitModel
             ->orderBy('id DESC')
             ->fetchAll();
 
-        $total = $this->db
+        return [
+            'data' => $data,
+            'total' => count($data)
+        ];
+    }
+
+    public function getAllActive()
+    {
+        $data = $this->db
             ->from($this->table)
-            ->select('COUNT(*) Total')
-            ->fetch()
-            ->Total;
+            ->where('status', 1)
+            ->orderBy('id DESC')
+            ->fetchAll();
 
         return [
             'data' => $data,
-            'total' => $total
+            'total' => count($data)
         ];
     }
 

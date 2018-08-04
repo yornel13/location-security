@@ -33,6 +33,18 @@ $container['db'] = function ($c) {
 // Models
 $container['model'] = function ($c) {
     return (object) [
-        'auth' => new App\Model\AuthModel($c->db)
+        'auth' => new App\Model\AuthModel($c->db),
+        'vehicle' => new App\Model\VehicleModel($c->db),
+        'guard' => new App\Model\GuardModel($c->db),
+        'admin' => new App\Model\AdminModel($c->db),
+        'visitor' => new App\Model\VisitorModel($c->db),
+        'clerk' => new App\Model\ClerkModel($c->db),
+        'visitorVehicle' => new App\Model\VisitorVehicleModel($c->db),
+        'visit' => new App\Model\VisitModel($c->db),
+        'incidence' => new App\Model\IncidenceModel($c->db),
+        'specialReport' => new App\Model\SpecialReportModel($c->db),
+        'watch' => new App\Model\WatchModel($c->db),
+        'reply' => new App\Model\SpecialReportReplyModel($c->db),
+        'alert' => new App\Model\AlertModel($c->db)
     ];
 };

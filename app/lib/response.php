@@ -15,7 +15,7 @@ class Response
         $this->response = $response;
         $this->message = $m;
 
-        if (!$response && $m == '') $this->response = 'Ocurrio un error inesperado.';
+        if (!$response && $m == '') $this->message = 'Ocurrio un error inesperado.';
 
         return $this;
     }

@@ -8,7 +8,8 @@ use App\Lib\Response;
 class AuthModel
 {
     private $db;
-    private $table = 'empleado';
+    private $tableG = 'guard';
+    private $tableA = 'admin';
     private $response;
 
     public function __CONSTRUCT($db)
@@ -17,22 +18,43 @@ class AuthModel
         $this->response = new Response();
     }
 
-    public function autenticar($correo, $password)
+    public function guard($dni, $password)
     {
-        $empleado = $this->db->from($this->table)
-            ->where('Correo', $correo)
-            ->where('Password', md5($password))
+        $guard = $this->db->from($this->tableG)
+            ->where('dni', $dni)
+            ->where('password', md5($password))
             ->fetch();
 
-        if (is_object($empleado)) {
-            $nombre = explode(' ', $empleado->Nombre)[0];
-
+        if (is_object($guard)) {
             $token = Auth::SignIn([
-                'id' => $empleado->id,
-                'Nombre' => $nombre,
-                'NombreCompleto' => $empleado->Nombre,
-                //'Imagen' => $empleado->Imagen,
-                'EsAdmin' => (bool) $empleado->EsAdmin
+                'id' => $guard->id,
+                'dni' => $guard->dni,
+                'name' => $guard->name,
+                'lastname' => $guard->lastname,
+                'isAdmin' => false
+            ]);
+            $this->response->result = $token;
+            return $this->response->SetResponse(true);
+
+        } else {
+            return $this->response->SetResponse(false, 'Credenciales no validas');
+        }
+    }
+
+    public function admin($email, $password)
+    {
+        $admin = $this->db->from($this->tableA)
+            ->where('email', $email)
+            ->where('password', md5($password))
+            ->fetch();
+
+        if (is_object($admin)) {
+            $token = Auth::SignIn([
+                'id' => $admin->id,
+                'dni' => $admin->dni,
+                'name' => $admin->name,
+                'lastname' => $admin->lastname,
+                'isAdmin' => true
             ]);
             $this->response->result = $token;
             return $this->response->SetResponse(true);

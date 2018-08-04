@@ -111,6 +111,22 @@ GET http://icsseseguridad.com/location-security/public/vehicle/history/{imei}/{y
 
 # * Guardias (Watches)
 
+* El estatus 1 significa guardia activa
+* El estatus 0 significa guardia finalizada
+
+
+    {
+        "id": "10",
+        "guard_id": "5",
+        "guard_out_id": null,
+        "create_date": "2018-08-03 16:23:43",
+        "update_date": "2018-08-03 16:23:43",
+        "latitude": "10.1176433",
+        "longitude": "-68.0477509",
+        "observation": "Extravio de clave",
+        "status": "1"  <------ Estatus
+    }
+
 GET http://icsseseguridad.com/location-security/public/watch/get_active
 
     Obtiene todas las watches activas
@@ -237,5 +253,45 @@ POST http://icsseseguridad.com/location-security/public/incidence/update/{id}
 DELETE http://icsseseguridad.com/location-security/public/incidence/delete/{id}
 
     Elimina una incidencia por el id
+    
+# * Reporte Especial (special_report)
+
+* El estatus 1 significa que aun no se ha aceptado la notificacion 
+* El estatus 2 significa que ya se ha aceptado la notificacion
+
+GET http://icsseseguridad.com/location-security/public/special/report/get
+
+    obtiene la lista de reportes
+    
+GET http://icsseseguridad.com/location-security/public/special/report/get_active
+
+    obtiene la lista de reportes a los cuales no se le ha aceptado la notificacion
+
+GET http://icsseseguridad.com/location-security/public/special/report/get/{id}
+
+    obtiene un reporte por su id
+    
+GET http://icsseseguridad.com/location-security/public/special/report/get/{id}/replies
+
+    obtiene la lista de comentarios hechos a dicho reporte
+    
+POST http://icsseseguridad.com/location-security/public/special/report/register 
+
+    Registrar un reporte, recibe parametros en el body:
+    * incidence_id
+    * watch_id
+    * title
+    * observation
+    * latitude
+    * longitude
+    
+POST http://icsseseguridad.com/location-security/public/special/report/update/{id} 
+
+    Pasa el reporte al estado 2, que quiere decir que ya se acepto la notificacion, 
+    no recibe parametros.
+  
+DELETE http://icsseseguridad.com/location-security/public/special/report/delete/{id}
+
+    Elimina el reporte por el id
     
     

@@ -3,26 +3,8 @@
 use App\Middleware\AuthMiddleware;
 use App\Validation\WatchValidation;
 
-$app->group('/watch/', function () {
-    $this->get('get/{id}', function ($req, $res, $args) {
-        return $res->withHeader('Content-type', 'application/json')
-            ->write(
-                json_encode($this->model->watch->get($args['id']))
-            );
-    });
-    $this->get('get', function ($req, $res, $args) {
-        return $res->withHeader('Content-type', 'application/json')
-            ->write(
-                json_encode($this->model->watch->getAll())
-            );
-    });
-    $this->get('get_active', function ($req, $res, $args) {
-        return $res->withHeader('Content-type', 'application/json')
-            ->write(
-                json_encode($this->model->watch->getAllActive())
-            );
-    });
-    $this->post('register', function ($req, $res, $args) {
+$app->group('/watch', function () {
+    $this->post('', function ($req, $res, $args) {
         $r = WatchValidation::validate($req->getParsedBody());
 
         if (!$r->response) {
@@ -36,7 +18,7 @@ $app->group('/watch/', function () {
                 json_encode($this->model->watch->register($req->getParsedBody()))
             );
     });
-    $this->post('finish/{id}', function ($req, $res, $args) {
+    $this->put('/{id}', function ($req, $res, $args) {
         $r = WatchValidation::validate($req->getParsedBody(), true);
 
         if (!$r->response) {
@@ -50,10 +32,28 @@ $app->group('/watch/', function () {
                 json_encode($this->model->watch->finish($req->getParsedBody(), $args['id']))
             );
     });
-    $this->delete('delete/{id}', function ($req, $res, $args) {
+    $this->delete('/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
                 json_encode($this->model->watch->delete($args['id']))
+            );
+    });
+    $this->get('', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->watch->getAll())
+            );
+    });
+    $this->get('/{id}', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->watch->get($args['id']))
+            );
+    });
+    $this->get('/active/1', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->watch->getAllActive())
             );
     });
 })/*->add(new AuthMiddleware($app))*/;

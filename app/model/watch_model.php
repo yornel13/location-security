@@ -52,10 +52,15 @@ class WatchModel
         $watch['update_date'] = $timestamp;
         $watch['status'] = 0;
 
-        $this->db
+        $query = $this->db
             ->update($this->table, $watch, $id)
             ->execute();
 
+        if ($query === 0) {
+            return $this->response->SetResponse(false, 'La guardia no exite');
+        } else {
+            $this->response->result = $this->get($id);
+        }
         return $this->response->SetResponse(true);
     }
 
@@ -135,10 +140,20 @@ class WatchModel
 
     public function delete($id)
     {
-        $this->db
-            ->deleteFrom($this->table, $id)
-            ->execute();
-
-        return $this->response->SetResponse(true);
+        try {
+            $query = $this->db
+                ->deleteFrom($this->table, $id)
+                ->execute();
+            if ($query === 0) {
+                return $this->response
+                    ->SetResponse(false, 'La guardia no exite');
+            }
+            return $this->response->SetResponse(true);
+        } catch (Exception $e) {
+            if (strpos($e->getMessage(), "special_report_fk1")) {
+                return $this->response
+                    ->SetResponse(false, 'No se puede borrar esta guardia');
+            }
+        }
     }
 }

@@ -33,7 +33,8 @@ class AuthModel
                 'lastname' => $guard->lastname,
                 'isAdmin' => false
             ]);
-            $this->response->result = $token;
+            $guard->token = $token;
+            $this->response->result = $guard;
             return $this->response->SetResponse(true);
 
         } else {
@@ -56,9 +57,9 @@ class AuthModel
                 'lastname' => $admin->lastname,
                 'isAdmin' => true
             ]);
-            $this->response->result = $token;
+            $admin->token = $token;
+            $this->response->result = $admin;
             return $this->response->SetResponse(true);
-
         } else {
             return $this->response->SetResponse(false, 'Credenciales no validas');
         }

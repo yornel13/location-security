@@ -41,9 +41,15 @@ class AlertModel
         $data['update_date'] = $timestamp;
         $data['status'] = 0;
 
-        $this->db
+        $query = $this->db
             ->update($this->table, $data, $id)
             ->execute();
+
+        if ($query === 0) {
+            return $this->response->SetResponse(false, 'La alerta no exite');
+        } else {
+            $this->response->result = $this->get($id);
+        }
 
         return $this->response->SetResponse(true);
     }
@@ -84,10 +90,14 @@ class AlertModel
 
     public function delete($id)
     {
-        $this->db
+        $query = $this->db
             ->deleteFrom($this->table, $id)
             ->execute();
 
+        if ($query === 0) {
+            return $this->response
+                ->SetResponse(false, 'La alerta no exite');
+        }
         return $this->response->SetResponse(true);
     }
 }

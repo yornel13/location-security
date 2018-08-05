@@ -18,8 +18,6 @@ class IncidenceModel
 
     public function register($data)
     {
-
-
         $object = $this->db
             ->from($this->table)
             ->where('name', $data['name'])
@@ -31,10 +29,12 @@ class IncidenceModel
             return $this->response->SetResponse(false);
         }
 
-        $this->db
+        $query = $this->db
             ->insertInto($this->table, $data)
             ->execute();
 
+        $data['id'] = $query;
+        $this->response->result = $data;
         return $this->response->SetResponse(true);
     }
 
@@ -51,10 +51,15 @@ class IncidenceModel
             return $this->response->SetResponse(false);
         }
 
-        $this->db
+        $query = $this->db
             ->update($this->table, $data, $id)
             ->execute();
 
+        if ($query === 0) {
+            return $this->response->SetResponse(false, 'La incidencia no exite');
+        } else {
+            $this->response->result = $this->get($id);
+        }
         return $this->response->SetResponse(true);
     }
 
@@ -80,24 +85,21 @@ class IncidenceModel
             ->orderBy('id DESC')
             ->fetchAll();
 
-        $total = $this->db
-            ->from($this->table)
-            ->select('COUNT(*) Total')
-            ->fetch()
-            ->Total;
-
         return [
             'data' => $data,
-            'total' => $total
+            'total' => count($data)
         ];
     }
 
     public function delete($id)
     {
-        $this->db
+        $query = $this->db
             ->deleteFrom($this->table, $id)
             ->execute();
-
+        if ($query === 0) {
+            return $this->response
+                ->SetResponse(false, 'La incidencia no existe no exite');
+        }
         return $this->response->SetResponse(true);
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
-$app->group('/auth/', function () {
-    $this->post('guard', function ($req, $res, $args) {
+$app->group('/auth', function () {
+    $this->post('/guard', function ($req, $res, $args) {
 
         $parameters= $req->getParsedBody();
 
@@ -10,7 +10,7 @@ $app->group('/auth/', function () {
                 json_encode($this->model->auth->guard($parameters['dni'], $parameters['password']))
             );
     });
-    $this->post('admin', function ($req, $res, $args) {
+    $this->post('/admin', function ($req, $res, $args) {
 
         $parameters = $req->getParsedBody();
 

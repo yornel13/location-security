@@ -25,17 +25,18 @@ class VisitModel
         $data['status'] = 1;
 
         try {
-            $this->db
+            $query = $this->db
                 ->insertInto($this->table, $data)
                 ->execute();
+            $data['id'] = $query;
+            $this->response->result = $data;
+            return $this->response->SetResponse(true);
         } catch (Exception $e) {
             if (strpos($e->getMessage(), "foreign key")) {
                 return $this->response->SetResponse(false, 'Uno o mas de los id no existe');
             }
             return $this->response->SetResponse(false);
         }
-
-        return $this->response->SetResponse(true);
     }
 
     public function finish($id)
@@ -45,10 +46,15 @@ class VisitModel
         $dataF['finish_date'] = $timestamp;
         $dataF['status'] = 0;
 
-        $this->db
+        $query = $this->db
             ->update($this->table, $dataF, $id)
             ->execute();
 
+        if ($query === 0) {
+            return $this->response->SetResponse(false, 'La visita no exite');
+        } else {
+            $this->response->result = $this->get($id);
+        }
         return $this->response->SetResponse(true);
     }
 
@@ -88,10 +94,13 @@ class VisitModel
 
     public function delete($id)
     {
-        $this->db
+        $query = $this->db
             ->deleteFrom($this->table, $id)
             ->execute();
-
+        if ($query === 0) {
+            return $this->response
+                ->SetResponse(false, 'La visita no exite');
+        }
         return $this->response->SetResponse(true);
     }
 }

@@ -38,10 +38,15 @@ class SpecialReportReplyModel
         $data['update_date'] = $timestamp;
         $data['active'] = 1;
 
-        $this->db
+        $query = $this->db
             ->update($this->table, $data, $id)
             ->execute();
 
+        if ($query === 0) {
+            return $this->response->SetResponse(false, 'El reporte especial no exite');
+        } else {
+            $this->response->result = $this->get($id);
+        }
         return $this->response->SetResponse(true);
     }
 
@@ -59,15 +64,9 @@ class SpecialReportReplyModel
             ->orderBy('id DESC')
             ->fetchAll();
 
-        $total = $this->db
-            ->from($this->table)
-            ->select('COUNT(*) Total')
-            ->fetch()
-            ->Total;
-
         return [
             'data' => $data,
-            'total' => $total
+            'total' => count($data)
         ];
     }
 
@@ -87,10 +86,13 @@ class SpecialReportReplyModel
 
     public function delete($id)
     {
-        $this->db
+        $query = $this->db
             ->deleteFrom($this->table, $id)
             ->execute();
-
+        if ($query === 0) {
+            return $this->response
+                ->SetResponse(false, 'El comentario no exite');
+        }
         return $this->response->SetResponse(true);
     }
 }

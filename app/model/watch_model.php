@@ -26,11 +26,19 @@ class WatchModel
         $data['update_date'] = $timestamp;
         $data['status'] = 1;
 
+        $watch = $this->getWatchActiveByGuard($data['guard_id']);
+        if ($watch != null) {
+            $watch->resumed = true;
+            $this->response->result = $watch;
+            return $this->response->SetResponse(true);
+        }
+
         try {
             $query = $this->db
                 ->insertInto($this->table, $data)
                 ->execute();
             $data['id'] = $query;
+            $data['resumed'] = false;
         } catch (Exception $e) {
             if (strpos($e->getMessage(), "foreign key")) {
                 return $this->response->SetResponse(false, 'El guardia no existe');
@@ -96,6 +104,15 @@ class WatchModel
             return $watch;
         }
         return false;
+    }
+
+    public function getWatchActiveByGuard($id)
+    {
+        return $this->db
+            ->from($this->table)
+            ->where('status', 1)
+            ->where('guard_id', $id)
+            ->fetch();
     }
 
     public function getAll()

@@ -42,10 +42,10 @@ class AuthModel
         }
     }
 
-    public function admin($email, $password)
+    public function admin($dni, $password)
     {
         $admin = $this->db->from($this->tableA)
-            ->where('email', $email)
+            ->where('dni', $dni)
             ->where('password', md5($password))
             ->fetch();
 
@@ -57,11 +57,15 @@ class AuthModel
                 'lastname' => $admin->lastname,
                 'isAdmin' => true
             ]);
-            $admin->token = $token;
-            $this->response->result = $admin;
+            $this->response->result = $token;
             return $this->response->SetResponse(true);
         } else {
             return $this->response->SetResponse(false, 'Credenciales no validas');
         }
+    }
+
+    public function verify($token)
+    {
+        return Auth::GetData($token);
     }
 }

@@ -2,7 +2,8 @@
 
 $app->group('/vehicle', function () {
     $this->get('', function ($req, $res, $args) {
-        return $res->withHeader('Content-type', 'application/json')
+        return $res
+            ->withHeader('Content-type', 'application/json')
             ->write(
                 json_encode($this->model->vehicle->getAll())
             );

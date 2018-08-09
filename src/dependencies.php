@@ -45,6 +45,7 @@ $container['model'] = function ($c) {
         'specialReport' => new App\Model\SpecialReportModel($c->db),
         'watch' => new App\Model\WatchModel($c->db),
         'reply' => new App\Model\SpecialReportReplyModel($c->db),
-        'alert' => new App\Model\AlertModel($c->db)
+        'alert' => new App\Model\AlertModel($c->db),
+        'company' => new App\Model\CompanyModel($c->db)
     ];
 };

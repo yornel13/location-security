@@ -1,11 +1,11 @@
 <?php
 
 use App\Middleware\AuthMiddleware;
-use App\Validation\GuardValidation;
+use App\Validation\IncidenceValidation;
 
-$app->group('/admin', function () {
+$app->group('/company', function () {
     $this->post('', function ($req, $res, $args) {
-        $r = GuardValidation::validate($req->getParsedBody());
+        $r = IncidenceValidation::validate($req->getParsedBody());
 
         if (!$r->response) {
             return $res->withHeader('Content-type', 'application/json')
@@ -15,11 +15,11 @@ $app->group('/admin', function () {
 
         return $res->withHeader('Content-type', 'application/json')
             ->write(
-                json_encode($this->model->admin->register($req->getParsedBody()))
+                json_encode($this->model->company->register($req->getParsedBody()))
             );
     });
     $this->put('/{id}', function ($req, $res, $args) {
-        $r = GuardValidation::validate($req->getParsedBody(), true);
+        $r = IncidenceValidation::validate($req->getParsedBody());
 
         if (!$r->response) {
             return $res->withHeader('Content-type', 'application/json')
@@ -29,34 +29,34 @@ $app->group('/admin', function () {
 
         return $res->withHeader('Content-type', 'application/json')
             ->write(
-                json_encode($this->model->admin->update($req->getParsedBody(), $args['id']))
+                json_encode($this->model->company->update($req->getParsedBody(), $args['id']))
             );
     });
     $this->delete('/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
-                json_encode($this->model->admin->delete($args['id']))
+                json_encode($this->model->company->delete($args['id']))
             );
     });
     $this->get('', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
-                json_encode($this->model->admin->getAll())
+                json_encode($this->model->company->getAll())
             );
     });
     $this->get('/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
-                json_encode($this->model->admin->get($args['id']))
+                json_encode($this->model->company->get($args['id']))
             );
     });
-    $this->get('/dni/{dni}', function ($req, $res, $args) {
+    $this->get('/name/{name}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
-                json_encode($this->model->admin->getByDni($args['dni']))
+                json_encode($this->model->company->getByName($args['name']))
             );
     });
-});
+})/*->add(new AuthMiddleware($app))*/;
 
 
 

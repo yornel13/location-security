@@ -11,7 +11,7 @@ class AlertValidation
 
         $key = 'guard_id';
         if (!isset($data[$key])) {
-            $response->errors[$key][] = 'Este campo es obligatorio';
+            $response->errors[][$key] = 'Este campo es obligatorio';
         }
 
         $key = 'cause';

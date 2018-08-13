@@ -28,14 +28,25 @@ class VisitModel
             $query = $this->db
                 ->insertInto($this->table, $data)
                 ->execute();
-            $data['id'] = $query;
-            $this->response->result = $data;
+            $this->response->result = $this->get($query);
             return $this->response->SetResponse(true);
         } catch (Exception $e) {
             if (strpos($e->getMessage(), "foreign key")) {
+                if (strpos($e->getMessage(), "guard_id")) {
+                    $this->response->errors['guard_id'][] = 'ID no encontrado';
+                }
+                if (strpos($e->getMessage(), "visitor_id")) {
+                    $this->response->errors['visitor_id'][] = 'ID no encontrado';
+                }
+                if (strpos($e->getMessage(), "vehicle_id")) {
+                    $this->response->errors['vehicle_id'][] = 'ID no encontrado';
+                }
+                if (strpos($e->getMessage(), "visited_id")) {
+                    $this->response->errors['visited_id'][] = 'ID no encontrado';
+                }
                 return $this->response->SetResponse(false, 'Uno o mas de los id no existe');
             }
-            return $this->response->SetResponse(false);
+            return $this->response->SetResponse(false, $e->getMessage());
         }
     }
 
@@ -60,35 +71,82 @@ class VisitModel
 
     public function get($id)
     {
-        return $this->db
+        $data = $this->db
             ->from($this->table, $id)
             ->fetch();
+        if (is_object($data)) {
+            if ($data->vehicle_id != null) {
+                $data->vehicle = $this->db
+                    ->from('visitor_vehicle', $data->vehicle_id)
+                    ->fetch();
+            }
+            if ($data->visited_id != null) {
+                $data->visited = $this->db
+                    ->from('clerk_visited', $data->visited_id)
+                    ->fetch();
+            }
+            if ($data->visitor_id != null) {
+                $data->visitor = $this->db
+                    ->from('visitor', $data->visitor_id)
+                    ->fetch();
+            }
+            if ($data->guard_id != null) {
+                $data->guard = $this->db
+                    ->from('guard', $data->guard_id)
+                    ->fetch();
+                $data->guard->password = null;
+            }
+        }
+        return $data;
     }
 
     public function getAll()
     {
-        $data = $this->db
+        $list = $this->db
             ->from($this->table)
             ->orderBy('id DESC')
             ->fetchAll();
 
         return [
-            'data' => $data,
-            'total' => count($data)
+            'data' => $list,
+            'total' => count($list)
         ];
     }
 
     public function getAllActive()
     {
-        $data = $this->db
+        $list = $this->db
             ->from($this->table)
             ->where('status', 1)
             ->orderBy('id DESC')
             ->fetchAll();
-
+        foreach ($list as $data)
+        {
+            if ($data->vehicle_id != null) {
+                $data->vehicle = $this->db
+                    ->from('visitor_vehicle', $data->vehicle_id)
+                    ->fetch();
+            }
+            if ($data->visited_id != null) {
+                $data->visited = $this->db
+                    ->from('clerk_visited', $data->visited_id)
+                    ->fetch();
+            }
+            if ($data->visitor_id != null) {
+                $data->visitor = $this->db
+                    ->from('visitor', $data->visitor_id)
+                    ->fetch();
+            }
+            if ($data->guard_id != null) {
+                $data->guard = $this->db
+                    ->from('guard', $data->guard_id)
+                    ->fetch();
+                $data->guard->password = null;
+            }
+        }
         return [
-            'data' => $data,
-            'total' => count($data)
+            'data' => $list,
+            'total' => count($list)
         ];
     }
 

@@ -1,9 +1,18 @@
 <?php
 
 use App\Middleware\AuthMiddleware;
+use App\Validation\AuthValidation;
 
 $app->group('/auth', function () {
     $this->post('/guard', function ($req, $res, $args) {
+
+        $r = AuthValidation::validate($req->getParsedBody());
+
+        if (!$r->response) {
+            return $res->withHeader('Content-type', 'application/json')
+                ->withStatus(422)
+                ->write(json_encode($r));
+        }
 
         $parameters= $req->getParsedBody();
 
@@ -13,6 +22,21 @@ $app->group('/auth', function () {
             );
     });
     $this->post('/admin', function ($req, $res, $args) {
+
+        $r = AuthValidation::validate($req->getParsedBody());
+
+        if (!$r->response) {
+            return $res->withHeader('Content-type', 'application/json')
+                ->withStatus(422)
+                ->write(json_encode($r));
+        }
+
+        if (!$r->response) {
+            return $res->withHeader('Content-type', 'application/json')
+                ->withStatus(422)
+                ->write(json_encode($r));
+        }
+
 
         $parameters = $req->getParsedBody();
 
@@ -27,7 +51,7 @@ $app->group('/auth', function () {
             ->write(
                 json_encode($this->model->auth->verify($token))
             );
-    })/*->add(new AuthMiddleware($this))*/;
+    })->add(new AuthMiddleware($this));
 });
 
 

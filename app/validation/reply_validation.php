@@ -32,6 +32,17 @@ class ReplyValidation
             $response->errors[$keyG][] = 'La respuesta debe estar asociada a un guardia o administrador';
         }
 
+        $key = 'user_name';
+        if (empty($data[$key])) {
+            $response->errors[$key][] = 'Este campo es obligatorio';
+        } else {
+            $value = $data[$key];
+
+            if (strlen($value) < 1) {
+                $response->errors[$key][] = 'debe contener como minimo 1 caracter';
+            }
+        }
+
         $response->SetResponse(count($response->errors) === 0);
 
         return $response;

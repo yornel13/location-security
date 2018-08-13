@@ -41,6 +41,7 @@ class VisitorModel
 
         $data['id'] = $query;
         $this->response->result = $data;
+        $this->checkCompany($data['company']);
         return $this->response->SetResponse(true);
     }
 
@@ -72,6 +73,23 @@ class VisitorModel
             $this->response->result = $this->get($id);
         }
         return $this->response->SetResponse(true);
+    }
+
+    public function checkCompany($name)
+    {
+        if ($name !== null) {
+            $data = $this->db
+                ->from('company')
+                ->where('name', $name)
+                ->fetch();
+            if (!is_object($data)) {
+                $values = array('name' => $name);
+                $this->db
+                    ->insertInto('company')
+                    ->values($values)
+                    ->execute();
+            }
+        }
     }
 
     public function get($id)

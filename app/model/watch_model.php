@@ -101,9 +101,10 @@ class WatchModel
             if ($finishWatch != null) {
                 $watch->finish = $finishWatch;
             }
-            return $watch;
+            $guardModel = new GuardModel($this->db);
+            $watch->guard = $guardModel->get($watch->guard_id);
         }
-        return false;
+        return $watch;
     }
 
     public function getWatchActiveByGuard($id)

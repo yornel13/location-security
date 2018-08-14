@@ -123,23 +123,20 @@ tanto en logeo de admin como de guardia la respuesta de ser exitosa sera como la
 
     {
         "result": {
-            "id": "2",
-            "dni": "123456",
-            "name": "Rocky",
-            "lastname": "Balboa",
-            "email": "rockybalboa@gmail.com",
-            "password": "81dc9bdb52d04dc20036dbd8313ed055",
-            "create_date": "2018-08-03 07:18:28",
-            "update_date": "2018-08-03 07:18:28",
-            "active": "1",
-            "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MzM1MTE4MzEsImF1ZCI6IjBkN2NiNjBiYmY1ZTQxYmYxMGFjM2FjMzZjOWM4NzAwZDQ2MjlhYmYiLCJkYXRhIjp7ImlkIjoiMiIsImRuaSI6IjEyMzQ1NiIsIm5hbWUiOiJSb2NreSIsImxhc3RuYW1lIjoiQmFsYm9hIiwiaXNBZG1pbiI6ZmFsc2V9fQ.CPpbzX6wDVWt0J4Q_l4dqSPt2aSC8mVL7H474Bw-YPw"
+            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MzM1MTE4MzEsImF1ZCI6IjBkN2NiNjBiYmY1ZTQxYmYxMGFjM2FjMzZjOWM4NzAwZDQ2MjlhYmYiLCJkYXRhIjp7ImlkIjoiMiIsImRuaSI6IjEyMzQ1NiIsIm5hbWUiOiJSb2NreSIsImxhc3RuYW1lIjoiQmFsYm9hIiwiaXNBZG1pbiI6ZmFsc2V9fQ.CPpbzX6wDVWt0J4Q_l4dqSPt2aSC8mVL7H474Bw-YPw"
         },
         "response": true,
         "message": "",
         "errors": []
     }
 
-y el 'result' sera el usuario y uno de sus atributos el token de session
+y el 'result' sera  el token de session
+
+GET http://icsseseguridad.com/location-security/public/auth/verify
+
+    recibe por la cabezera (header) el token como:
+    * APP-TOKEN
+    y reporte con el usuario
 
 
 # * Vehiculos (Vehicles)
@@ -297,11 +294,13 @@ POST http://icsseseguridad.com/location-security/public/incidence
 
     Registrar una incidencia, recibe parametros en el body:
     * name
+    * level
     
 PUT http://icsseseguridad.com/location-security/public/incidence/{id} 
 
     Edita una incidencia, recibe parametros en el body:
     * name
+    * level
 
 DELETE http://icsseseguridad.com/location-security/public/incidence/{id}
 
@@ -316,13 +315,41 @@ GET http://icsseseguridad.com/location-security/public/binnacle
 
     obtiene la lista de reportes
     
-GET http://icsseseguridad.com/location-security/public/binnacle/active/1
-
-    obtiene la lista de reportes a los cuales no se le ha aceptado la notificacion
-
 GET http://icsseseguridad.com/location-security/public/binnacle/{id}
 
     obtiene un reporte por su id
+    
+GET http://icsseseguridad.com/location-security/public/binnacle/active/1
+
+    obtiene la lista de reportes a los cuales no se le ha aceptado la notificacion
+    
+GET http://icsseseguridad.com/location-security/public/binnacle/incidence/{id}
+
+    obtiene la lista de reportes por la incidencia
+    
+GET http://icsseseguridad.com/location-security/public/binnacle/watch/{id}
+
+    obtiene la lista de reportes por la guardia (watch)
+    
+GET http://icsseseguridad.com/location-security/public/binnacle/guard/{id}
+
+    obtiene la lista de reportes por el guardia (empleado)
+
+GET http://icsseseguridad.com/location-security/public/binnacle/date/today
+
+    obtiene la lista de reportes del dia actual
+    
+GET http://icsseseguridad.com/location-security/public/binnacle/date/{year}/{month}/{day}
+
+    obtiene la lista de reportes del dia seleccionado
+    
+GET http://icsseseguridad.com/location-security/public/binnacle/guard/{id}/date/today
+
+    obtiene la lista de reportes por el guardia del dia actual
+    
+GET http://icsseseguridad.com/location-security/public/binnacle/guard/{id}/date/{year}/{month}/{day}
+
+    obtiene la lista de reportes por el guardia del dia seleccionado
     
 GET http://icsseseguridad.com/location-security/public/binnacle/{id}/replies
 

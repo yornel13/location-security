@@ -31,13 +31,6 @@ $app->group('/auth', function () {
                 ->write(json_encode($r));
         }
 
-        if (!$r->response) {
-            return $res->withHeader('Content-type', 'application/json')
-                ->withStatus(422)
-                ->write(json_encode($r));
-        }
-
-
         $parameters = $req->getParsedBody();
 
         return $res->withHeader('Content-type', 'application/json')

@@ -64,18 +64,7 @@ los POST, PUT y DELETE tienen la respuesta con el siguiente formato
 Algunos POST y PUT devolveran datos en el 'result' segun sea necesario, por ejemplo el LOGIN que devuelve el usuario con el token de session
 
     {
-        "result": {
-            "id": "2",
-            "dni": "123456",
-            "name": "Rocky",
-            "lastname": "Balboa",
-            "email": "rockybalboa@gmail.com",
-            "password": "81dc9bdb52d04dc20036dbd8313ed055",
-            "create_date": "2018-08-03 07:18:28",
-            "update_date": "2018-08-03 07:18:28",
-            "active": "1",
-            "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MzM1MTE4MzEsImF1ZCI6IjBkN2NiNjBiYmY1ZTQxYmYxMGFjM2FjMzZjOWM4NzAwZDQ2MjlhYmYiLCJkYXRhIjp7ImlkIjoiMiIsImRuaSI6IjEyMzQ1NiIsIm5hbWUiOiJSb2NreSIsImxhc3RuYW1lIjoiQmFsYm9hIiwiaXNBZG1pbiI6ZmFsc2V9fQ.CPpbzX6wDVWt0J4Q_l4dqSPt2aSC8mVL7H474Bw-YPw"
-        },
+        "result": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MzQyODcwMDcsImF1ZCI6IjBkN2NiNjBiYmY1ZTQxYmYxMGFjM2FjMzZjOWM4NzAwZDQ2MjlhYmYiLCJkYXRhIjp7ImlkIjoiMSIsImRuaSI6IjIwMzU2ODQxIiwibmFtZSI6Illvcm5lbCIsImxhc3RuYW1lIjoiTWFydmFsIiwiaXNBZG1pbiI6dHJ1ZX19.t5jZREVK7-v_SSYm23cN_e7Y4ylcK3KHybPFJLfD0ZA",
         "response": true,
         "message": "",
         "errors": []
@@ -109,7 +98,7 @@ asi en caso de cambiar la url del servidor solo de modificara la variable estati
 POST http://icsseseguridad.com/location-security/public/auth/admin
 
     logeo de administradores, recibe por body
-    * email
+    * dni
     * password
     
     
@@ -122,9 +111,7 @@ POST http://icsseseguridad.com/location-security/public/auth/guard
 tanto en logeo de admin como de guardia la respuesta de ser exitosa sera como la siguiente: 
 
     {
-        "result": {
-            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MzM1MTE4MzEsImF1ZCI6IjBkN2NiNjBiYmY1ZTQxYmYxMGFjM2FjMzZjOWM4NzAwZDQ2MjlhYmYiLCJkYXRhIjp7ImlkIjoiMiIsImRuaSI6IjEyMzQ1NiIsIm5hbWUiOiJSb2NreSIsImxhc3RuYW1lIjoiQmFsYm9hIiwiaXNBZG1pbiI6ZmFsc2V9fQ.CPpbzX6wDVWt0J4Q_l4dqSPt2aSC8mVL7H474Bw-YPw"
-        },
+        "result": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MzQyODcwMDcsImF1ZCI6IjBkN2NiNjBiYmY1ZTQxYmYxMGFjM2FjMzZjOWM4NzAwZDQ2MjlhYmYiLCJkYXRhIjp7ImlkIjoiMSIsImRuaSI6IjIwMzU2ODQxIiwibmFtZSI6Illvcm5lbCIsImxhc3RuYW1lIjoiTWFydmFsIiwiaXNBZG1pbiI6dHJ1ZX19.t5jZREVK7-v_SSYm23cN_e7Y4ylcK3KHybPFJLfD0ZA",
         "response": true,
         "message": "",
         "errors": []

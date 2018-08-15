@@ -113,6 +113,20 @@ class VisitModel
         ];
     }
 
+    public function getAllGroup()
+    {
+        $list = $this->db
+            ->from($this->table)
+            ->groupBy('vehicle_id DESC')
+            ->orderBy('id DESC')
+            ->fetchAll();
+
+        return [
+            'data' => $list,
+            'total' => count($list)
+        ];
+    }
+
     public function getAllActive()
     {
         $list = $this->db

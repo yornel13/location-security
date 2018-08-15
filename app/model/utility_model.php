@@ -4,10 +4,10 @@ namespace App\Model;
 
 use App\Lib\Response;
 
-class VisitorVehicleModel
+class UtilityModel
 {
     private $db;
-    private $table = 'visitor_vehicle';
+    private $table = 'utility';
     private $response;
 
     public function __CONSTRUCT($db)
@@ -24,14 +24,11 @@ class VisitorVehicleModel
         $data['update_date'] = $timestamp;
         $data['active'] = 1;
 
-        $guard = $this->db
-            ->from($this->table)
-            ->where('plate', $data['plate'])
-            ->fetch();
+        $utility = $this->getByName($data['name']);
 
-        if (!empty($guard)) {
-            $key = 'plate';
-            $this->response->errors[$key][] = 'La placa se encuentra asociada a otro vehiculo';
+        if (!empty($utility)) {
+            $key = 'name';
+            $this->response->errors[$key][] = 'Ya se encuentra una configuracion con este nombre';
             return $this->response->SetResponse(false);
         }
 
@@ -51,14 +48,11 @@ class VisitorVehicleModel
         $data['update_date'] = $timestamp;
         $data['active'] = 1;
 
-        $guard = $this->db
-            ->from($this->table)
-            ->where('plate', $data['plate'])
-            ->fetch();
+        $utility = $this->getByName($data['name']);
 
-        if (!empty($guard) && $guard->id !== $id) {
-            $key = 'plate';
-            $this->response->errors[$key][] = 'La placa se encuentra asociada a otro vehiculo';
+        if (!empty($utility) && $utility->id !== $id) {
+            $key = 'name';
+            $this->response->errors[$key][] = 'Ya se encuentra una configuracion con este nombre';
             return $this->response->SetResponse(false);
         }
 
@@ -67,10 +61,11 @@ class VisitorVehicleModel
             ->execute();
 
         if ($query === 0) {
-            return $this->response->SetResponse(false, 'El vehiculo no exite');
+            return $this->response->SetResponse(false, 'La configuracion no existe');
         } else {
             $this->response->result = $this->get($id);
         }
+
         return $this->response->SetResponse(true);
     }
 
@@ -81,11 +76,11 @@ class VisitorVehicleModel
             ->fetch();
     }
 
-    public function getByPlate($plate)
+    public function getByName($name)
     {
         return $this->db
             ->from($this->table)
-            ->where('plate', $plate)
+            ->where('name', $name)
             ->fetch();
     }
 
@@ -95,22 +90,6 @@ class VisitorVehicleModel
             ->from($this->table)
             ->orderBy('id DESC')
             ->fetchAll();
-
-        $visits = (new VisitModel($this->db))->getAllGroup()['data'];
-        foreach ($visits as $visit) {
-            foreach ($data as $vehicle) {
-                if ($visit->vehicle_id == $vehicle->id) {
-                    $lastVisit = [
-                        'vehicle_id' => $visit->vehicle_id,
-                        'visitor_id' => $visit->visitor_id,
-                        'visited_id' => $visit->visited_id,
-                        'guard_id' => $visit->guard_id,
-                        'visit_id' => $visit->id
-                    ];
-                    $vehicle->last_visit = $lastVisit;
-                }
-            }
-        }
 
         return [
             'data' => $data,
@@ -123,10 +102,12 @@ class VisitorVehicleModel
         $query = $this->db
             ->deleteFrom($this->table, $id)
             ->execute();
+
         if ($query === 0) {
             return $this->response
-                ->SetResponse(false, 'El vehiculo no exite');
+                ->SetResponse(false, 'La configuracion no exite');
         }
+
         return $this->response->SetResponse(true);
     }
 }

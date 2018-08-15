@@ -32,13 +32,33 @@ class SpecialReportModel
         return $this->response->SetResponse(true);
     }
 
-    public function update($id)
+    public function accept($id)
     {
         $data = null;
         $timestamp = time()-(5*60*60);
         $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
         $data['update_date'] = $timestamp;
         $data['status'] = 2;
+
+        $query = $this->db
+            ->update($this->table, $data, $id)
+            ->execute();
+
+        if ($query === 0) {
+            return $this->response->SetResponse(false, 'El reporte especial no exite');
+        } else {
+            $this->response->result = $this->get($id);
+        }
+        return $this->response->SetResponse(true);
+    }
+
+    public function resolved($id)
+    {
+        $data = null;
+        $timestamp = time()-(5*60*60);
+        $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
+        $data['update_date'] = $timestamp;
+        $data['resolved'] = 1;
 
         $query = $this->db
             ->update($this->table, $data, $id)

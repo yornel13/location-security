@@ -352,10 +352,20 @@ POST http://icsseseguridad.com/location-security/public/binnacle/binnacle
     * latitude
     * longitude
     
-PUT http://icsseseguridad.com/location-security/public/binnacle/{id} 
+PUT http://icsseseguridad.com/location-security/public/binnacle/accept/{id} 
 
     Pasa el reporte al estado 2, que quiere decir que ya se acepto la notificacion, 
     no recibe parametros.
+    0 -> Eliminado
+    1 -> Creado
+    2 -> Aceptado
+    
+PUT http://icsseseguridad.com/location-security/public/binnacle/resolved/{id} 
+
+    Pasa el estado resuelto a 0, 
+    0 -> resuelto.
+    1 -> Caso Abierto
+    2 -> Caso Reabierto
   
 DELETE http://icsseseguridad.com/location-security/public/binnacle/{id}
 
@@ -520,7 +530,6 @@ POST http://icsseseguridad.com/location-security/public/visit
     * longitude
     * observation (opcional)
    
-    
 PUT http://icsseseguridad.com/location-security/public/visit/{id} 
 
     Finaliza la visita por el id
@@ -559,3 +568,116 @@ PUT http://icsseseguridad.com/location-security/public/alert/{id}
 DELETE http://icsseseguridad.com/location-security/public/alert/{id}
 
     Elimina una alerta por el id
+    
+# * Configuracion (utility)
+
+GET http://icsseseguridad.com/location-security/public/utility
+
+    obtiene la lista de configuraciones
+    
+
+GET http://icsseseguridad.com/location-security/public/utility/{id}
+
+    obtiene una configuracion por su id
+    
+GET http://icsseseguridad.com/location-security/public/utility/name/{name}
+
+    obtiene una configuracion por su nombre
+    
+POST http://icsseseguridad.com/location-security/public/alert 
+
+    Registrar una configuracion, recibe parametros en el body:
+    * name
+    * value
+    
+PUT http://icsseseguridad.com/location-security/public/utility/{id} 
+
+    Edita el valor de una configuracion, recibe parametros en el body:
+    * value 
+
+DELETE http://icsseseguridad.com/location-security/public/utility/{id}
+
+    Borra una configuracion
+    
+# * Position de las Tablets (tablet-position)
+
+GET http://icsseseguridad.com/location-security/public/tablet
+
+    Obtiene el ultimo registro de cada tablet
+
+POST http://icsseseguridad.com/location-security/public/tablet
+
+    Registrar la posicion, recibe parametros en el body:
+    * latitude
+    * longitude
+    * watch_id
+    * imei
+    * message
+    
+GET http://icsseseguridad.com/location-security/public/tablet/all
+
+    obtiene todas las posiciones registrar (usar solo para pruebas, no poner en produccion)
+    
+GET http://icsseseguridad.com/location-security/public/tablet/id/{id}
+ 
+     obtiene una posicion por su id
+    
+GET http://icsseseguridad.com/location-security/public/tablet/date/today
+ 
+     obtiene todas las posiciones registradas del dia actual
+    
+GET http://icsseseguridad.com/location-security/public/tablet/date/{year}/{month}/{day}
+ 
+     obtiene todas las posiciones registradas del dia seleccionado
+     
+GET http://icsseseguridad.com/location-security/public/tablet/watch/{id}
+ 
+     obtiene todas las posiciones registradas de una guardia por el id
+     
+GET http://icsseseguridad.com/location-security/public/tablet/watch/{id}/date
+ 
+     obtiene todas las posiciones registradas de una guardia por el id del dia actual
+     
+GET http://icsseseguridad.com/location-security/public/tablet/watch/{id}/date/{year}/{month}/{day}
+ 
+     obtiene todas las posiciones registradas de una guardia por el id del dia seleccionado
+     
+GET http://icsseseguridad.com/location-security/public/tablet/guard/{id}
+ 
+     obtiene todas las posiciones registradas de un empleado por el id
+     
+GET http://icsseseguridad.com/location-security/public/tablet/guard/{id}/date
+ 
+     obtiene todas las posiciones registradas de un empleado por el id del dia actual
+     
+GET http://icsseseguridad.com/location-security/public/tablet/guard/{id}/date/{year}/{month}/{day}
+ 
+     obtiene todas las posiciones registradas de un empleado por el id del dia seleccionado
+     
+GET http://icsseseguridad.com/location-security/public/tablet/imei/{imei}
+ 
+     obtiene todas las posiciones registradas de una tablet por su imei
+     
+GET http://icsseseguridad.com/location-security/public/tablet/imei/{imei}/date
+ 
+     obtiene todas las posiciones registradas de una tablet por su imei del dia actual
+     
+GET http://icsseseguridad.com/location-security/public/tablet/imei/{imei}/date/{year}/{month}/{day}
+ 
+     obtiene todas las posiciones registradas de una tablet por su imei del dia seleccionado
+     
+GET http://icsseseguridad.com/location-security/public/tablet/message/{message}
+ 
+     obtiene todas las posiciones registradas con ese message
+     
+GET http://icsseseguridad.com/location-security/public/tablet/message/{message}/date
+ 
+     obtiene todas las posiciones registradas con ese message del dia actual
+     
+GET http://icsseseguridad.com/location-security/public/tablet/message/{message}/date/{year}/{month}/{day}
+ 
+     obtiene todas las posiciones registradas con ese message del dia seleccionado
+     
+  
+     
+        

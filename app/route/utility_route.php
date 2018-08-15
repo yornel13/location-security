@@ -1,11 +1,12 @@
 <?php
 
 use App\Middleware\AuthMiddleware;
-use App\Validation\VisitValidation;
+use App\Validation\UtilityValidation;
+use App\Validation\VisitorValidation;
 
-$app->group('/visit', function () {
+$app->group('/utility', function () {
     $this->post('', function ($req, $res, $args) {
-        $r = VisitValidation::validate($req->getParsedBody());
+        $r = UtilityValidation::validate($req->getParsedBody());
 
         if (!$r->response) {
             return $res->withHeader('Content-type', 'application/json')
@@ -15,43 +16,45 @@ $app->group('/visit', function () {
 
         return $res->withHeader('Content-type', 'application/json')
             ->write(
-                json_encode($this->model->visit->register($req->getParsedBody()))
+                json_encode($this->model->utility->register($req->getParsedBody()))
             );
     });
     $this->put('/{id}', function ($req, $res, $args) {
+        $r = UtilityValidation::validate($req->getParsedBody(), true);
+
+        if (!$r->response) {
+            return $res->withHeader('Content-type', 'application/json')
+                ->withStatus(422)
+                ->write(json_encode($r));
+        }
+
         return $res->withHeader('Content-type', 'application/json')
             ->write(
-                json_encode($this->model->visit->finish($args['id']))
+                json_encode($this->model->utility->update($req->getParsedBody(), $args['id']))
             );
     });
     $this->delete('/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
-                json_encode($this->model->visit->delete($args['id']))
+                json_encode($this->model->utility->delete($args['id']))
             );
     });
     $this->get('', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
-                json_encode($this->model->visit->getAll())
-            );
-    });
-    $this->get('/last/group', function ($req, $res, $args) {
-        return $res->withHeader('Content-type', 'application/json')
-            ->write(
-                json_encode($this->model->visit->getAllGroup())
+                json_encode($this->model->utility->getAll())
             );
     });
     $this->get('/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
-                json_encode($this->model->visit->get($args['id']))
+                json_encode($this->model->utility->get($args['id']))
             );
     });
-    $this->get('/active/1', function ($req, $res, $args) {
+    $this->get('/name/{name}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
-                json_encode($this->model->visit->getAllActive())
+                json_encode($this->model->utility->getByName($args['name']))
             );
     });
 })/*->add(new AuthMiddleware($app))*/;

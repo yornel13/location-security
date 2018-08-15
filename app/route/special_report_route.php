@@ -17,10 +17,16 @@ $app->group('/binnacle', function () {
                 json_encode($this->model->specialReport->register($req->getParsedBody()))
             );
     });
-    $this->put('/{id}', function ($req, $res, $args) {
+    $this->put('/accept/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
-                json_encode($this->model->specialReport->update($args['id']))
+                json_encode($this->model->specialReport->accept($args['id']))
+            );
+    });
+    $this->put('/resolved/{id}', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->specialReport->resolved($args['id']))
             );
     });
     $this->delete('/{id}', function ($req, $res, $args) {

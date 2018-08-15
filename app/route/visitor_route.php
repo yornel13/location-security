@@ -44,6 +44,12 @@ $app->group('/visitor', function () {
                 json_encode($this->model->visitor->getAll())
             );
     });
+    $this->get('/active/1', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->visitor->getAllActive())
+            );
+    });
     $this->get('/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(

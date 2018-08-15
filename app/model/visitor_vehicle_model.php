@@ -3,6 +3,7 @@ namespace App\Model;
 
 
 use App\Lib\Response;
+use Exception;
 
 class VisitorVehicleModel
 {
@@ -27,6 +28,7 @@ class VisitorVehicleModel
         $guard = $this->db
             ->from($this->table)
             ->where('plate', $data['plate'])
+            ->where('active', 1)
             ->fetch();
 
         if (!empty($guard)) {
@@ -118,14 +120,60 @@ class VisitorVehicleModel
         ];
     }
 
+    public function getAllActive()
+    {
+        $data = $this->db
+            ->from($this->table)
+            ->where('active', 1)
+            ->orderBy('id DESC')
+            ->fetchAll();
+
+        $visits = (new VisitModel($this->db))->getAllGroup()['data'];
+        foreach ($visits as $visit) {
+            foreach ($data as $vehicle) {
+                if ($visit->vehicle_id == $vehicle->id) {
+                    $lastVisit = [
+                        'vehicle_id' => $visit->vehicle_id,
+                        'visitor_id' => $visit->visitor_id,
+                        'visited_id' => $visit->visited_id,
+                        'guard_id' => $visit->guard_id,
+                        'visit_id' => $visit->id
+                    ];
+                    $vehicle->last_visit = $lastVisit;
+                }
+            }
+        }
+
+        return [
+            'data' => $data,
+            'total' => count($data)
+        ];
+    }
+
     public function delete($id)
     {
-        $query = $this->db
-            ->deleteFrom($this->table, $id)
-            ->execute();
-        if ($query === 0) {
-            return $this->response
-                ->SetResponse(false, 'El vehiculo no exite');
+        try {
+            $query = $this->db
+                ->deleteFrom($this->table, $id)
+                ->execute();
+
+            if ($query === 0) {
+                return $this->response
+                    ->SetResponse(false, 'El vehiculo no exite');
+            }
+        } catch (Exception $e) {
+            if (strpos($e->getMessage(), "FOREIGN KEY")) {
+                $timestamp = time() - (5 * 60 * 60);
+                $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
+                $set = null;
+                $set['update_date'] = $timestamp;
+                $set['active'] = 0;
+                $this->db
+                    ->update($this->table, $set, $id)
+                    ->execute();
+            } else {
+                return $this->response->SetResponse(false);
+            }
         }
         return $this->response->SetResponse(true);
     }

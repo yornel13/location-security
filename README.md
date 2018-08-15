@@ -196,6 +196,10 @@ PUT http://icsseseguridad.com/location-security/public/watch/{watch_id}
 GET http://icsseseguridad.com/location-security/public/guard
 
     obtiene la lista de empleados
+    
+GET http://icsseseguridad.com/location-security/public/guard/active/1
+
+    obtiene la lista de empleados activos
 
 GET http://icsseseguridad.com/location-security/public/guard/{id}
 
@@ -232,6 +236,10 @@ DELETE http://icsseseguridad.com/location-security/public/guard/{id}
 GET http://icsseseguridad.com/location-security/public/admin
 
     obtiene la lista de administradores
+    
+GET http://icsseseguridad.com/location-security/public/admin/active/1
+
+    obtiene la lista de administradores activos
 
 GET http://icsseseguridad.com/location-security/public/admin/{id}
 
@@ -399,7 +407,11 @@ DELETE http://icsseseguridad.com/location-security/public/binnacle-reply/{id}
 
 GET http://icsseseguridad.com/location-security/public/visitor
 
-    obtiene la lista de visitante
+    obtiene la lista de visitantes
+    
+GET http://icsseseguridad.com/location-security/public/visitor/active/1
+
+    obtiene la lista de visitantes activos
 
 GET http://icsseseguridad.com/location-security/public/visitor/{id}
 
@@ -437,6 +449,10 @@ DELETE http://icsseseguridad.com/location-security/public/visitor/{id}
 GET http://icsseseguridad.com/location-security/public/clerk
 
     obtiene la lista de funcionarios
+    
+GET http://icsseseguridad.com/location-security/public/clerk/active/1
+
+    obtiene la lista de funcionarios activos
 
 GET http://icsseseguridad.com/location-security/public/clerk/{id}
 
@@ -472,6 +488,10 @@ DELETE http://icsseseguridad.com/location-security/public/clerk/{id}
 GET http://icsseseguridad.com/location-security/public/visitor-vehicle
 
     obtiene la lista de vehiculos visitantes
+    
+GET http://icsseseguridad.com/location-security/public/visitor-vehicle/active/1
+
+    obtiene la lista de vehiculos visitantes activos
 
 GET http://icsseseguridad.com/location-security/public/visitor-vehicle/{id}
 

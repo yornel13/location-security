@@ -44,6 +44,12 @@ $app->group('/clerk', function () {
                 json_encode($this->model->clerk->getAll())
             );
     });
+    $this->get('/active/1', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->clerk->getAllActive())
+            );
+    });
     $this->get('/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(

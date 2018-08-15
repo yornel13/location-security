@@ -30,6 +30,7 @@ class AdminModel
             $guard = $this->db
                 ->from($this->table)
                 ->where('dni', $data['dni'])
+                ->where('active', 1)
                 ->fetch();
 
             if (!empty($guard)) {
@@ -133,6 +134,24 @@ class AdminModel
         }
     }
 
+    public function getAllActive()
+    {
+        try {
+            $data = $this->db
+                ->from($this->table)
+                ->where('active', 1)
+                ->orderBy('id DESC')
+                ->fetchAll();
+
+            return [
+                'data' => $data,
+                'total' => count($data)
+            ];
+        } catch (Exception $e) {
+            return $this->response->SetResponse(false, $e->getMessage());
+        }
+    }
+
     public function delete($id)
     {
         try {
@@ -143,11 +162,20 @@ class AdminModel
                 return $this->response
                     ->SetResponse(false, 'El administrador no exite');
             }
-            return $this->response->SetResponse(true);
-
         } catch (Exception $e) {
-            return $this->response->SetResponse(false, $e->getMessage());
+            if (strpos($e->getMessage(), "FOREIGN KEY")) {
+                $timestamp = time() - (5 * 60 * 60);
+                $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
+                $set = null;
+                $set['update_date'] = $timestamp;
+                $set['active'] = 0;
+                $this->db
+                    ->update($this->table, $set, $id)
+                    ->execute();
+            } else {
+                return $this->response->SetResponse(false);
+            }
         }
-
+        return $this->response->SetResponse(true);
     }
 }

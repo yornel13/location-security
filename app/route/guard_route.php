@@ -44,6 +44,12 @@ $app->group('/guard', function () {
                 json_encode($this->model->guard->getAll())
             );
     });
+    $this->get('/active/1', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->guard->getAllActive())
+            );
+    });
     $this->get('/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(

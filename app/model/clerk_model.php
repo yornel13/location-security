@@ -3,6 +3,7 @@ namespace App\Model;
 
 
 use App\Lib\Response;
+use Exception;
 
 class ClerkModel
 {
@@ -27,6 +28,7 @@ class ClerkModel
         $guard = $this->db
             ->from($this->table)
             ->where('dni', $data['dni'])
+            ->where('active', 1)
             ->fetch();
 
         if (!empty($guard)) {
@@ -103,17 +105,48 @@ class ClerkModel
         ];
     }
 
+    public function getAllActive()
+    {
+        try {
+            $data = $this->db
+                ->from($this->table)
+                ->where('active', 1)
+                ->orderBy('id DESC')
+                ->fetchAll();
+
+            return [
+                'data' => $data,
+                'total' => count($data)
+            ];
+        } catch (Exception $e) {
+            return $this->response->SetResponse(false, $e->getMessage());
+        }
+    }
+
     public function delete($id)
     {
-        $query = $this->db
-            ->deleteFrom($this->table, $id)
-            ->execute();
-
-        if ($query === 0) {
-            return $this->response
-                ->SetResponse(false, 'El funcionario no exite');
+        try {
+            $query = $this->db
+                ->deleteFrom($this->table, $id)
+                ->execute();
+            if ($query === 0) {
+                return $this->response
+                    ->SetResponse(false, 'El funcionario no exite');
+            }
+        } catch (Exception $e) {
+            if (strpos($e->getMessage(), "FOREIGN KEY")) {
+                $timestamp = time() - (5 * 60 * 60);
+                $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
+                $set = null;
+                $set['update_date'] = $timestamp;
+                $set['active'] = 0;
+                $this->db
+                    ->update($this->table, $set, $id)
+                    ->execute();
+            } else {
+                return $this->response->SetResponse(false);
+            }
         }
-
         return $this->response->SetResponse(true);
     }
 }

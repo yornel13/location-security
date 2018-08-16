@@ -104,6 +104,11 @@ class VisitModel
     {
         $list = $this->db
             ->from($this->table)
+            ->select('visitor.dni AS visitor_dni')
+            ->select('visitor.name AS visitor_name')
+            ->select('visitor.lastname AS visitor_lastname')
+            ->leftJoin('visitor_vehicle ON visitor_vehicle.id = vehicle_id')
+            ->select('visitor_vehicle.plate')
             ->orderBy('id DESC')
             ->fetchAll();
 
@@ -178,8 +183,13 @@ class VisitModel
         }
         $data = $this->db
             ->from($this->table)
-            ->where('create_date >= ?', $year."-".$month."-".$day." 00:00:00")
-            ->where('create_date <= ?', $year."-".$month."-".$day." 23:59:59")
+            ->where('control_visit.create_date >= ?', $year."-".$month."-".$day." 00:00:00")
+            ->where('control_visit.create_date <= ?', $year."-".$month."-".$day." 23:59:59")
+            ->select('visitor.dni AS visitor_dni')
+            ->select('visitor.name AS visitor_name')
+            ->select('visitor.lastname AS visitor_lastname')
+            ->leftJoin('visitor_vehicle ON visitor_vehicle.id = vehicle_id')
+            ->select('visitor_vehicle.plate')
             ->orderBy('id DESC')
             ->fetchAll();
 
@@ -203,9 +213,14 @@ class VisitModel
         }
         $data = $this->db
             ->from($this->table)
-            ->where('create_date >= ?', $year."-".$month."-".$day." 00:00:00")
-            ->where('create_date <= ?', $year."-".$month."-".$day." 23:59:59")
+            ->where('control_visit.create_date >= ?', $year."-".$month."-".$day." 00:00:00")
+            ->where('control_visit.create_date <= ?', $year."-".$month."-".$day." 23:59:59")
             ->where($propertyName, $propertyValue)
+            ->select('visitor.dni AS visitor_dni')
+            ->select('visitor.name AS visitor_name')
+            ->select('visitor.lastname AS visitor_lastname')
+            ->leftJoin('visitor_vehicle ON visitor_vehicle.id = vehicle_id')
+            ->select('visitor_vehicle.plate')
             ->orderBy('id DESC')
             ->fetchAll();
 
@@ -236,6 +251,11 @@ class VisitModel
         $data = $this->db
             ->from($this->table)
             ->where('guard_id', $id)
+            ->select('visitor.dni AS visitor_dni')
+            ->select('visitor.name AS visitor_name')
+            ->select('visitor.lastname AS visitor_lastname')
+            ->leftJoin('visitor_vehicle ON visitor_vehicle.id = vehicle_id')
+            ->select('visitor_vehicle.plate')
             ->orderBy('id DESC')
             ->fetchAll();
 
@@ -250,6 +270,11 @@ class VisitModel
         $data = $this->db
             ->from($this->table)
             ->where('vehicle_id', $id)
+            ->select('visitor.dni AS visitor_dni')
+            ->select('visitor.name AS visitor_name')
+            ->select('visitor.lastname AS visitor_lastname')
+            ->leftJoin('visitor_vehicle ON visitor_vehicle.id = vehicle_id')
+            ->select('visitor_vehicle.plate')
             ->orderBy('id DESC')
             ->fetchAll();
 
@@ -264,6 +289,11 @@ class VisitModel
         $data = $this->db
             ->from($this->table)
             ->where('visitor_id', $id)
+            ->select('visitor.dni AS visitor_dni')
+            ->select('visitor.name AS visitor_name')
+            ->select('visitor.lastname AS visitor_lastname')
+            ->leftJoin('visitor_vehicle ON visitor_vehicle.id = vehicle_id')
+            ->select('visitor_vehicle.plate')
             ->orderBy('id DESC')
             ->fetchAll();
 
@@ -278,6 +308,11 @@ class VisitModel
         $data = $this->db
             ->from($this->table)
             ->where('visited_id', $id)
+            ->select('visitor.dni AS visitor_dni')
+            ->select('visitor.name AS visitor_name')
+            ->select('visitor.lastname AS visitor_lastname')
+            ->leftJoin('visitor_vehicle ON visitor_vehicle.id = vehicle_id')
+            ->select('visitor_vehicle.plate')
             ->orderBy('id DESC')
             ->fetchAll();
 

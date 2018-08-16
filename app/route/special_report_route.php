@@ -59,6 +59,26 @@ $app->group('/binnacle', function () {
                 json_encode($this->model->specialReport->getAllActive())
             );
     });
+    $this->group('/open/all', function () {
+        $this->get('', function ($req, $res, $args) {
+            return $res->withHeader('Content-type', 'application/json')
+                ->write(
+                    json_encode($this->model->specialReport->getAllOpen($args['id']))
+                );
+        });
+        $this->get('/date', function ($req, $res, $args) {
+            return $res->withHeader('Content-type', 'application/json')
+                ->write(
+                    json_encode($this->model->specialReport->getAllOpenInDate())
+                );
+        });
+        $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
+            return $res->withHeader('Content-type', 'application/json')
+                ->write(
+                    json_encode($this->model->specialReport->getAllOpenInDate($args['year'],$args['month'],$args['day']))
+                );
+        });
+    });
     $this->group('/guard/{id}', function () {
         $this->get('', function ($req, $res, $args) {
             return $res->withHeader('Content-type', 'application/json')

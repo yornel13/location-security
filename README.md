@@ -326,6 +326,18 @@ GET http://icsseseguridad.com/location-security/public/binnacle/date/{year}/{mon
 
     obtiene la lista de reportes del dia seleccionado
     
+GET http://icsseseguridad.com/location-security/public/binnacle/open/all    <- All open or reopen
+
+    obtiene la lista de reportes abiertos y reabiertos
+    
+GET http://icsseseguridad.com/location-security/public/binnacle/open/all/date
+
+    obtiene la lista de reportes abiertos y reabiertos del dia
+    
+GET http://icsseseguridad.com/location-security/public/binnacle/open/all/date/{year}/{month}/{day}
+
+    obtiene la lista de reportes abiertos y reabiertos de la fecha seleccionada
+    
 GET http://icsseseguridad.com/location-security/public/binnacle/incidence/{id}     <- by Incidence
  
      obtiene todas los reportes registrados de un tipo incidence por el id

@@ -2,6 +2,7 @@
   <dictionary name="Yornel">
     <words>
       <w>imei</w>
+      <w>lastname</w>
     </words>
   </dictionary>
 </component>

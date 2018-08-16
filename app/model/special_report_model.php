@@ -174,6 +174,10 @@ class SpecialReportModel
         return $this->getByDateAndProperty('resolved', $resolved, $year, $month, $day);
     }
 
+    public function getAllOpenInDate($year = false, $month = false, $day = false) {
+        return $this->getByDateAndProperty('resolved > ?', 0, $year, $month, $day);
+    }
+
     public function getByIncidence($id)
     {
         $data = $this->db
@@ -234,6 +238,20 @@ class SpecialReportModel
     {
         $data = $this->db
             ->from($this->table)
+            ->orderBy('id DESC')
+            ->fetchAll();
+
+        return [
+            'data' => $data,
+            'total' => count($data)
+        ];
+    }
+
+    public function getAllOpen()
+    {
+        $data = $this->db
+            ->from($this->table)
+            ->where('resolved > ?', 0)
             ->orderBy('id DESC')
             ->fetchAll();
 

@@ -318,18 +318,6 @@ GET http://icsseseguridad.com/location-security/public/binnacle/active/1
 
     obtiene la lista de reportes a los cuales no se le ha aceptado la notificacion
     
-GET http://icsseseguridad.com/location-security/public/binnacle/incidence/{id}
-
-    obtiene la lista de reportes por la incidencia
-    
-GET http://icsseseguridad.com/location-security/public/binnacle/watch/{id}
-
-    obtiene la lista de reportes por la guardia (watch)
-    
-GET http://icsseseguridad.com/location-security/public/binnacle/guard/{id}
-
-    obtiene la lista de reportes por el guardia (empleado)
-
 GET http://icsseseguridad.com/location-security/public/binnacle/date/today
 
     obtiene la lista de reportes del dia actual
@@ -338,17 +326,57 @@ GET http://icsseseguridad.com/location-security/public/binnacle/date/{year}/{mon
 
     obtiene la lista de reportes del dia seleccionado
     
-GET http://icsseseguridad.com/location-security/public/binnacle/guard/{id}/date/today
-
-    obtiene la lista de reportes por el guardia del dia actual
-    
+GET http://icsseseguridad.com/location-security/public/binnacle/incidence/{id}     <- by Incidence
+ 
+     obtiene todas los reportes registrados de un tipo incidence por el id
+     
+GET http://icsseseguridad.com/location-security/public/binnacle/incidence/{id}/date
+ 
+     obtiene todas los reportes registrados de un tipo incidence por el id del dia actual
+     
+GET http://icsseseguridad.com/location-security/public/binnacle/incidence/{id}/date/{year}/{month}/{day}
+ 
+     obtiene todas los reportes registrados de un tipo incidence por el id del dia seleccionado
+         
+GET http://icsseseguridad.com/location-security/public/binnacle/guard/{id}     <- by Guard
+ 
+     obtiene todas los reportes registrados de un empleado por el id
+     
+GET http://icsseseguridad.com/location-security/public/binnacle/guard/{id}/date
+ 
+     obtiene todas las visitas registrados de un empleado por el id del dia actual
+     
 GET http://icsseseguridad.com/location-security/public/binnacle/guard/{id}/date/{year}/{month}/{day}
-
-    obtiene la lista de reportes por el guardia del dia seleccionado
+ 
+     obtiene todas las visitas registrados de un empleado por el id del dia seleccionado
+    
+GET http://icsseseguridad.com/location-security/public/binnacle/watch/{id}     <- by Watch
+ 
+     obtiene todas los reportes registrados en una guardia por el id
+     
+GET http://icsseseguridad.com/location-security/public/binnacle/watch/{id}/date
+ 
+     obtiene todas las visitas registrados en una guardia por el id del dia actual
+     
+GET http://icsseseguridad.com/location-security/public/binnacle/watch/{id}/date/{year}/{month}/{day}
+ 
+     obtiene todas las visitas registrados en una guardia por el id del dia seleccionado
+     
+GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{id}     <- by resolved
+ 
+     obtiene todas los reportes registrados en estado de su resolucion
+     
+GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{id}/date
+ 
+     obtiene todas los reportes registrados en estado de su resolucion del dia actual
+     
+GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{id}/date/{year}/{month}/{day}
+ 
+     obtiene todas los reportes registrados en estado de su resolucion del dia seleccionado
     
 GET http://icsseseguridad.com/location-security/public/binnacle/{id}/replies
 
-    obtiene la lista de comentarios hechos a dicho reporte
+    obtiene la lista de comentarios hechos a un reporte
     
 POST http://icsseseguridad.com/location-security/public/binnacle/binnacle 
 
@@ -362,7 +390,7 @@ POST http://icsseseguridad.com/location-security/public/binnacle/binnacle
     
 PUT http://icsseseguridad.com/location-security/public/binnacle/accept/{id} 
 
-    Pasa el reporte al estado 2, que quiere decir que ya se acepto la notificacion, 
+    Pasa el status del reporte a 2, que quiere decir que ya se acepto la notificacion, 
     no recibe parametros.
     0 -> Eliminado
     1 -> Creado
@@ -374,8 +402,13 @@ PUT http://icsseseguridad.com/location-security/public/binnacle/resolved/{id}
     0 -> resuelto.
     1 -> Caso Abierto
     2 -> Caso Reabierto
+    
+PUT http://icsseseguridad.com/location-security/public/binnacle/open/{id} 
+
+    Pasa el estado resuelto a 2, (reabierto) 
   
 DELETE http://icsseseguridad.com/location-security/public/binnacle/{id}
+(no se usara el delete, los reportes creados no se pueden eliminar)
 
     Elimina el reporte por el id
     
@@ -399,7 +432,7 @@ POST http://icsseseguridad.com/location-security/public//binnacle-reply/register
     * guard_id (obligatorio si no tiene admin_id) 
     
 
-DELETE http://icsseseguridad.com/location-security/public/binnacle-reply/{id}
+DELETE http://icsseseguridad.com/location-security/public/binnacle-reply/{id} 
 
     Elimina un comentario por el id
     
@@ -537,6 +570,62 @@ GET http://icsseseguridad.com/location-security/public/visit/active/1
 GET http://icsseseguridad.com/location-security/public/visit/{id}
 
     obtiene una visita por su id
+    
+GET http://icsseseguridad.com/location-security/public/visit/date/today
+ 
+     obtiene todas las visitas registradas del dia actual
+    
+GET http://icsseseguridad.com/location-security/public/visit/date/{year}/{month}/{day}
+
+    obtiene todas las visitas registradas del dia seleccionado
+    
+GET http://icsseseguridad.com/location-security/public/visit/guard/{id}     <- by Guard
+ 
+     obtiene todas las visitas registradas de un empleado por el id
+     
+GET http://icsseseguridad.com/location-security/public/visit/guard/{id}/date
+ 
+     obtiene todas las visitas registradas de un empleado por el id del dia actual
+     
+GET http://icsseseguridad.com/location-security/public/visit/guard/{id}/date/{year}/{month}/{day}
+ 
+     obtiene todas las visitas registradas de un empleado por el id del dia seleccionado
+     
+GET http://icsseseguridad.com/location-security/public/visit/vehicle/{id}       <- by Vehicle    
+ 
+     obtiene todas las visitas registradas por el id del vehiculo
+     
+GET http://icsseseguridad.com/location-security/public/visit/vehicle/{id}/date
+ 
+     obtiene todas las visitas registradas por el id del vehiculo del dia actual
+     
+GET http://icsseseguridad.com/location-security/public/visit/vehicle/{id}/date/{year}/{month}/{day}
+ 
+     obtiene todas las visitas registradas por el id del vehiculo del dia seleccionado
+     
+GET http://icsseseguridad.com/location-security/public/visit/visitor/{id}       <- by Visitor
+ 
+     obtiene todas las visitas registradas por el id del visitante
+     
+GET http://icsseseguridad.com/location-security/public/visit/visitor/{id}/date
+ 
+     obtiene todas las visitas registradas por el id del visitante del dia actual
+     
+GET http://icsseseguridad.com/location-security/public/visit/visitor/{id}/date/{year}/{month}/{day}
+ 
+     obtiene todas las visitas registradas por el id del visitante del dia seleccionado
+     
+GET http://icsseseguridad.com/location-security/public/visit/clerk/{id}     <- by Clerk
+ 
+     obtiene todas las visitas registradas por el id del funcionario visitado
+     
+GET http://icsseseguridad.com/location-security/public/visit/clerk/{id}/date
+ 
+     obtiene todas las visitas registradas por el id del funcionario visitado del dia actual
+     
+GET http://icsseseguridad.com/location-security/public/visit/clerk/{id}/date/{year}/{month}/{day}
+ 
+     obtiene todas las visitas registradas por el id del funcionario visitado del dia seleccionado
     
 POST http://icsseseguridad.com/location-security/public/visit 
 

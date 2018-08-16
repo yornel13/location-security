@@ -58,7 +58,27 @@ class SpecialReportModel
         $timestamp = time()-(5*60*60);
         $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
         $data['update_date'] = $timestamp;
-        $data['resolved'] = 1;
+        $data['resolved'] = 0;
+
+        $query = $this->db
+            ->update($this->table, $data, $id)
+            ->execute();
+
+        if ($query === 0) {
+            return $this->response->SetResponse(false, 'El reporte especial no exite');
+        } else {
+            $this->response->result = $this->get($id);
+        }
+        return $this->response->SetResponse(true);
+    }
+
+    public function reOpen($id)
+    {
+        $data = null;
+        $timestamp = time()-(5*60*60);
+        $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
+        $data['update_date'] = $timestamp;
+        $data['resolved'] = 2;
 
         $query = $this->db
             ->update($this->table, $data, $id)
@@ -112,49 +132,7 @@ class SpecialReportModel
         ];
     }
 
-    public function getByIncidenceId($id)
-    {
-        $data = $this->db
-            ->from($this->table)
-            ->where('incidence_id', $id)
-            ->orderBy('id DESC')
-            ->fetchAll();
-
-        return [
-            'data' => $data,
-            'total' => count($data)
-        ];
-    }
-
-    public function getByWatchId($id)
-    {
-        $data = $this->db
-            ->from($this->table)
-            ->where('watch_id', $id)
-            ->orderBy('id DESC')
-            ->fetchAll();
-
-        return [
-            'data' => $data,
-            'total' => count($data)
-        ];
-    }
-
-    public function getByGuardId($id)
-    {
-        $data = $this->db
-            ->from($this->table)
-            ->where('watch.guard_id', $id)
-            ->orderBy('id DESC')
-            ->fetchAll();
-
-        return [
-            'data' => $data,
-            'total' => count($data)
-        ];
-    }
-
-    public function getByDateAndGuard($id, $year = false, $month = false, $day = false)
+    public function getByDateAndProperty($propertyName, $propertyValue, $year = false, $month = false, $day = false)
     {
         $timestamp = time()-(5*60*60);
         if (is_bool($year) && !$year) {
@@ -170,7 +148,79 @@ class SpecialReportModel
             ->from($this->table)
             ->where('special_report.create_date >= ?', $year."-".$month."-".$day." 00:00:00")
             ->where('special_report.create_date <= ?', $year."-".$month."-".$day." 23:59:59")
+            ->where($propertyName, $propertyValue)
+            ->orderBy('id DESC')
+            ->fetchAll();
+
+        return [
+            'data' => $data,
+            'total' => count($data)
+        ];
+    }
+
+    public function getByGuardInDate($id, $year = false, $month = false, $day = false) {
+        return $this->getByDateAndProperty('watch.guard_id', $id, $year, $month, $day);
+    }
+
+    public function getByWatchInDate($id, $year = false, $month = false, $day = false) {
+        return $this->getByDateAndProperty('watch_id', $id, $year, $month, $day);
+    }
+
+    public function getByIncidenceInDate($id, $year = false, $month = false, $day = false) {
+        return $this->getByDateAndProperty('incidence_id', $id, $year, $month, $day);
+    }
+
+    public function getByResolvedInDate($resolved, $year = false, $month = false, $day = false) {
+        return $this->getByDateAndProperty('resolved', $resolved, $year, $month, $day);
+    }
+
+    public function getByIncidence($id)
+    {
+        $data = $this->db
+            ->from($this->table)
+            ->where('incidence_id', $id)
+            ->orderBy('id DESC')
+            ->fetchAll();
+
+        return [
+            'data' => $data,
+            'total' => count($data)
+        ];
+    }
+
+    public function getByWatch($id)
+    {
+        $data = $this->db
+            ->from($this->table)
+            ->where('watch_id', $id)
+            ->orderBy('id DESC')
+            ->fetchAll();
+
+        return [
+            'data' => $data,
+            'total' => count($data)
+        ];
+    }
+
+    public function getByGuard($id)
+    {
+        $data = $this->db
+            ->from($this->table)
             ->where('watch.guard_id', $id)
+            ->orderBy('id DESC')
+            ->fetchAll();
+
+        return [
+            'data' => $data,
+            'total' => count($data)
+        ];
+    }
+
+    public function getByResolved($resolved)
+    {
+        $data = $this->db
+            ->from($this->table)
+            ->where('resolved', $resolved)
             ->orderBy('id DESC')
             ->fetchAll();
 

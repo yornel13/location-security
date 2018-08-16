@@ -164,6 +164,129 @@ class VisitModel
         ];
     }
 
+    public function getByDate($year = false, $month = false, $day = false)
+    {
+        $timestamp = time()-(5*60*60);
+        if (is_bool($year) && !$year) {
+            $year = gmdate("Y", $timestamp);
+        }
+        if (is_bool($month) && !$month) {
+            $month = gmdate("m", $timestamp);
+        }
+        if (is_bool($day) && !$day) {
+            $day = gmdate("d", $timestamp);
+        }
+        $data = $this->db
+            ->from($this->table)
+            ->where('create_date >= ?', $year."-".$month."-".$day." 00:00:00")
+            ->where('create_date <= ?', $year."-".$month."-".$day." 23:59:59")
+            ->orderBy('id DESC')
+            ->fetchAll();
+
+        return [
+            'data' => $data,
+            'total' => count($data)
+        ];
+    }
+
+    public function getByDateAndProperty($propertyName, $propertyValue, $year = false, $month = false, $day = false)
+    {
+        $timestamp = time()-(5*60*60);
+        if (is_bool($year) && !$year) {
+            $year = gmdate("Y", $timestamp);
+        }
+        if (is_bool($month) && !$month) {
+            $month = gmdate("m", $timestamp);
+        }
+        if (is_bool($day) && !$day) {
+            $day = gmdate("d", $timestamp);
+        }
+        $data = $this->db
+            ->from($this->table)
+            ->where('create_date >= ?', $year."-".$month."-".$day." 00:00:00")
+            ->where('create_date <= ?', $year."-".$month."-".$day." 23:59:59")
+            ->where($propertyName, $propertyValue)
+            ->orderBy('id DESC')
+            ->fetchAll();
+
+        return [
+            'data' => $data,
+            'total' => count($data)
+        ];
+    }
+
+    public function getByGuardInDate($id, $year = false, $month = false, $day = false) {
+        return $this->getByDateAndProperty('guard_id', $id, $year, $month, $day);
+    }
+
+    public function getByVehicleInDate($id, $year = false, $month = false, $day = false) {
+        return $this->getByDateAndProperty('vehicle_id', $id, $year, $month, $day);
+    }
+
+    public function getByVisitorInDate($id, $year = false, $month = false, $day = false) {
+        return $this->getByDateAndProperty('visitor_id', $id, $year, $month, $day);
+    }
+
+    public function getByClerkInDate($id, $year = false, $month = false, $day = false) {
+        return $this->getByDateAndProperty('visited_id', $id, $year, $month, $day);
+    }
+
+    public function getByGuard($id)
+    {
+        $data = $this->db
+            ->from($this->table)
+            ->where('guard_id', $id)
+            ->orderBy('id DESC')
+            ->fetchAll();
+
+        return [
+            'data' => $data,
+            'total' => count($data)
+        ];
+    }
+
+    public function getByVehicle($id)
+    {
+        $data = $this->db
+            ->from($this->table)
+            ->where('vehicle_id', $id)
+            ->orderBy('id DESC')
+            ->fetchAll();
+
+        return [
+            'data' => $data,
+            'total' => count($data)
+        ];
+    }
+
+    public function getByVisitor($id)
+    {
+        $data = $this->db
+            ->from($this->table)
+            ->where('visitor_id', $id)
+            ->orderBy('id DESC')
+            ->fetchAll();
+
+        return [
+            'data' => $data,
+            'total' => count($data)
+        ];
+    }
+
+    public function getByClerk($id)
+    {
+        $data = $this->db
+            ->from($this->table)
+            ->where('visited_id', $id)
+            ->orderBy('id DESC')
+            ->fetchAll();
+
+        return [
+            'data' => $data,
+            'total' => count($data)
+        ];
+    }
+
     public function delete($id)
     {
         $query = $this->db

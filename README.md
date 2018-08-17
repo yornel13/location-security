@@ -318,71 +318,75 @@ GET http://icsseseguridad.com/location-security/public/binnacle/active/1
 
     obtiene la lista de reportes a los cuales no se le ha aceptado la notificacion
     
-GET http://icsseseguridad.com/location-security/public/binnacle/date/today
+Sobre el estado de resuelto (resolved)
+    
+    Ahora todas las consultas requieren especificar el resolved
+    
+    Hay 5 especificaciones posibles para el resolved:
+    
+        resolved = all  -> todos 
+        resolved = open -> abierto y reabiertos (1,2)
+        resolved = 0    -> cerrados 
+        resolved = 1    -> abiertos 
+        resolved = 2    -> reabiertos 
+    
+GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}
 
     obtiene la lista de reportes del dia actual
     
-GET http://icsseseguridad.com/location-security/public/binnacle/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}/date
+
+    obtiene la lista de reportes del dia actual
+    
+GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}/date/{year}/{month}/{day}
 
     obtiene la lista de reportes del dia seleccionado
     
-GET http://icsseseguridad.com/location-security/public/binnacle/open/all    <- All open or reopen
-
-    obtiene la lista de reportes abiertos y reabiertos
-    
-GET http://icsseseguridad.com/location-security/public/binnacle/open/all/date
-
-    obtiene la lista de reportes abiertos y reabiertos del dia
-    
-GET http://icsseseguridad.com/location-security/public/binnacle/open/all/date/{year}/{month}/{day}
-
-    obtiene la lista de reportes abiertos y reabiertos de la fecha seleccionada
-    
-GET http://icsseseguridad.com/location-security/public/binnacle/incidence/{id}     <- by Incidence
+GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}/incidence/{id}     <- by Incidence
  
      obtiene todas los reportes registrados de un tipo incidence por el id
      
-GET http://icsseseguridad.com/location-security/public/binnacle/incidence/{id}/date
+GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}/incidence/{id}/date
  
      obtiene todas los reportes registrados de un tipo incidence por el id del dia actual
      
-GET http://icsseseguridad.com/location-security/public/binnacle/incidence/{id}/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}/incidence/{id}/date/{year}/{month}/{day}
  
      obtiene todas los reportes registrados de un tipo incidence por el id del dia seleccionado
          
-GET http://icsseseguridad.com/location-security/public/binnacle/guard/{id}     <- by Guard
+GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}/guard/{id}     <- by Guard
  
      obtiene todas los reportes registrados de un empleado por el id
      
-GET http://icsseseguridad.com/location-security/public/binnacle/guard/{id}/date
+GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}/guard/{id}/date
  
      obtiene todas las visitas registrados de un empleado por el id del dia actual
      
-GET http://icsseseguridad.com/location-security/public/binnacle/guard/{id}/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}/guard/{id}/date/{year}/{month}/{day}
  
      obtiene todas las visitas registrados de un empleado por el id del dia seleccionado
     
-GET http://icsseseguridad.com/location-security/public/binnacle/watch/{id}     <- by Watch
+GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}/watch/{id}     <- by Watch
  
      obtiene todas los reportes registrados en una guardia por el id
      
-GET http://icsseseguridad.com/location-security/public/binnacle/watch/{id}/date
+GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}/watch/{id}/date
  
      obtiene todas las visitas registrados en una guardia por el id del dia actual
      
-GET http://icsseseguridad.com/location-security/public/binnacle/watch/{id}/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}/watch/{id}/date/{year}/{month}/{day}
  
      obtiene todas las visitas registrados en una guardia por el id del dia seleccionado
      
-GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{id}     <- by resolved
+GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}     <- by resolved
  
      obtiene todas los reportes registrados en estado de su resolucion
      
-GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{id}/date
+GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}/date
  
      obtiene todas los reportes registrados en estado de su resolucion del dia actual
      
-GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{id}/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}/date/{year}/{month}/{day}
  
      obtiene todas los reportes registrados en estado de su resolucion del dia seleccionado
     

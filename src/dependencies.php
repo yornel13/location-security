@@ -48,6 +48,7 @@ $container['model'] = function ($c) {
         'alert' => new App\Model\AlertModel($c->db),
         'company' => new App\Model\CompanyModel($c->db),
         'utility' => new App\Model\UtilityModel($c->db),
-        'tablet' => new App\Model\TabletModel($c->db)
+        'tablet' => new App\Model\TabletModel($c->db),
+        'messenger' => new App\Model\MessengerModel($c->db)
     ];
 };

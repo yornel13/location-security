@@ -434,12 +434,13 @@ GET http://icsseseguridad.com/location-security/public//binnacle-reply/{id}
 
     obtiene un comentario por su id
     
-POST http://icsseseguridad.com/location-security/public//binnacle-reply/register 
+POST http://icsseseguridad.com/location-security/public//binnacle-reply
 
     Registrar un comentario, recibe parametros en el body:
     enviar admin_id si comenta un administrador, enviar guard_id si comenta un empleado
     * report_id
     * text
+    * user_name (nombre completo del que hace el comentario)
     * admin_id (obligatorio si no tiene guard_id) 
     * guard_id (obligatorio si no tiene admin_id) 
     

@@ -132,7 +132,7 @@ class SpecialReportModel
         ];
     }
 
-    public function getByDateAndProperty($propertyName, $propertyValue, $year = false, $month = false, $day = false)
+    public function getByDateAndProperty($propertyName, $propertyValue, $resolved, $year = false, $month = false, $day = false)
     {
         $timestamp = time()-(5*60*60);
         if (is_bool($year) && !$year) {
@@ -144,11 +144,18 @@ class SpecialReportModel
         if (is_bool($day) && !$day) {
             $day = gmdate("d", $timestamp);
         }
+        if ($resolved === 'all') {
+            $resolved = array(0,1,2);
+        }
+        if ($resolved === 'open') {
+            $resolved = array(1,2);
+        }
         $data = $this->db
             ->from($this->table)
             ->where('special_report.create_date >= ?', $year."-".$month."-".$day." 00:00:00")
             ->where('special_report.create_date <= ?', $year."-".$month."-".$day." 23:59:59")
             ->where($propertyName, $propertyValue)
+            ->where('resolved', $resolved)
             ->orderBy('id DESC')
             ->fetchAll();
 
@@ -158,31 +165,34 @@ class SpecialReportModel
         ];
     }
 
-    public function getByGuardInDate($id, $year = false, $month = false, $day = false) {
-        return $this->getByDateAndProperty('watch.guard_id', $id, $year, $month, $day);
+    public function getByGuardInDate($id, $resolved, $year = false, $month = false, $day = false) {
+        return $this->getByDateAndProperty('watch.guard_id', $id, $resolved, $year, $month, $day);
     }
 
-    public function getByWatchInDate($id, $year = false, $month = false, $day = false) {
-        return $this->getByDateAndProperty('watch_id', $id, $year, $month, $day);
+    public function getByWatchInDate($id, $resolved, $year = false, $month = false, $day = false) {
+        return $this->getByDateAndProperty('watch_id', $id, $resolved, $year, $month, $day);
     }
 
-    public function getByIncidenceInDate($id, $year = false, $month = false, $day = false) {
-        return $this->getByDateAndProperty('incidence_id', $id, $year, $month, $day);
+    public function getByIncidenceInDate($id, $resolved, $year = false, $month = false, $day = false) {
+        return $this->getByDateAndProperty('incidence_id', $id, $resolved, $year, $month, $day);
     }
 
     public function getByResolvedInDate($resolved, $year = false, $month = false, $day = false) {
-        return $this->getByDateAndProperty('resolved', $resolved, $year, $month, $day);
+        return $this->getByDateAndProperty('special_report.id > ?', 0, $resolved, $year, $month, $day);
     }
 
-    public function getAllOpenInDate($year = false, $month = false, $day = false) {
-        return $this->getByDateAndProperty('resolved > ?', 0, $year, $month, $day);
-    }
-
-    public function getByIncidence($id)
+    public function getByIncidence($id, $resolved)
     {
+        if ($resolved === 'all') {
+            $resolved = array(0,1,2);
+        }
+        if ($resolved === 'open') {
+            $resolved = array(1,2);
+        }
         $data = $this->db
             ->from($this->table)
             ->where('incidence_id', $id)
+            ->where('resolved', $resolved)
             ->orderBy('id DESC')
             ->fetchAll();
 
@@ -192,11 +202,18 @@ class SpecialReportModel
         ];
     }
 
-    public function getByWatch($id)
+    public function getByWatch($id, $resolved)
     {
+        if ($resolved === 'all') {
+            $resolved = array(0,1,2);
+        }
+        if ($resolved === 'open') {
+            $resolved = array(1,2);
+        }
         $data = $this->db
             ->from($this->table)
             ->where('watch_id', $id)
+            ->where('resolved', $resolved)
             ->orderBy('id DESC')
             ->fetchAll();
 
@@ -206,11 +223,18 @@ class SpecialReportModel
         ];
     }
 
-    public function getByGuard($id)
+    public function getByGuard($id, $resolved)
     {
+        if ($resolved === 'all') {
+            $resolved = array(0,1,2);
+        }
+        if ($resolved === 'open') {
+            $resolved = array(1,2);
+        }
         $data = $this->db
             ->from($this->table)
             ->where('watch.guard_id', $id)
+            ->where('resolved', $resolved)
             ->orderBy('id DESC')
             ->fetchAll();
 
@@ -222,36 +246,15 @@ class SpecialReportModel
 
     public function getByResolved($resolved)
     {
+        if ($resolved === 'all') {
+            $resolved = array(0,1,2);
+        }
+        if ($resolved === 'open') {
+            $resolved = array(1,2);
+        }
         $data = $this->db
             ->from($this->table)
             ->where('resolved', $resolved)
-            ->orderBy('id DESC')
-            ->fetchAll();
-
-        return [
-            'data' => $data,
-            'total' => count($data)
-        ];
-    }
-
-    public function getAll()
-    {
-        $data = $this->db
-            ->from($this->table)
-            ->orderBy('id DESC')
-            ->fetchAll();
-
-        return [
-            'data' => $data,
-            'total' => count($data)
-        ];
-    }
-
-    public function getAllOpen()
-    {
-        $data = $this->db
-            ->from($this->table)
-            ->where('resolved > ?', 0)
             ->orderBy('id DESC')
             ->fetchAll();
 

@@ -41,12 +41,6 @@ $app->group('/binnacle', function () {
                 json_encode($this->model->specialReport->delete($args['id']))
             );
     });
-    $this->get('', function ($req, $res, $args) {
-        return $res->withHeader('Content-type', 'application/json')
-            ->write(
-                json_encode($this->model->specialReport->getAll())
-            );
-    });
     $this->get('/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
@@ -58,46 +52,6 @@ $app->group('/binnacle', function () {
             ->write(
                 json_encode($this->model->specialReport->getAllActive())
             );
-    });
-    $this->group('/open/all', function () {
-        $this->get('', function ($req, $res, $args) {
-            return $res->withHeader('Content-type', 'application/json')
-                ->write(
-                    json_encode($this->model->specialReport->getAllOpen($args['id']))
-                );
-        });
-        $this->get('/date', function ($req, $res, $args) {
-            return $res->withHeader('Content-type', 'application/json')
-                ->write(
-                    json_encode($this->model->specialReport->getAllOpenInDate())
-                );
-        });
-        $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
-            return $res->withHeader('Content-type', 'application/json')
-                ->write(
-                    json_encode($this->model->specialReport->getAllOpenInDate($args['year'],$args['month'],$args['day']))
-                );
-        });
-    });
-    $this->group('/guard/{id}', function () {
-        $this->get('', function ($req, $res, $args) {
-            return $res->withHeader('Content-type', 'application/json')
-                ->write(
-                    json_encode($this->model->specialReport->getByGuard($args['id']))
-                );
-        });
-        $this->get('/date', function ($req, $res, $args) {
-            return $res->withHeader('Content-type', 'application/json')
-                ->write(
-                    json_encode($this->model->specialReport->getByGuardInDate($args['id']))
-                );
-        });
-        $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
-            return $res->withHeader('Content-type', 'application/json')
-                ->write(
-                    json_encode($this->model->specialReport->getByGuardInDate($args['id'], $args['year'],$args['month'],$args['day']))
-                );
-        });
     });
     $this->group('/resolved/{resolved}', function () {
         $this->get('', function ($req, $res, $args) {
@@ -118,58 +72,66 @@ $app->group('/binnacle', function () {
                     json_encode($this->model->specialReport->getByResolvedInDate($args['resolved'], $args['year'],$args['month'],$args['day']))
                 );
         });
-    });
-    $this->group('/watch/{id}', function () {
-        $this->get('', function ($req, $res, $args) {
-            return $res->withHeader('Content-type', 'application/json')
-                ->write(
-                    json_encode($this->model->specialReport->getByWatch($args['id']))
-                );
+        $this->group('/guard/{id}', function () {
+            $this->get('', function ($req, $res, $args) {
+                return $res->withHeader('Content-type', 'application/json')
+                    ->write(
+                        json_encode($this->model->specialReport->getByGuard($args['id'], $args['resolved']))
+                    );
+            });
+            $this->get('/date', function ($req, $res, $args) {
+                return $res->withHeader('Content-type', 'application/json')
+                    ->write(
+                        json_encode($this->model->specialReport->getByGuardInDate($args['id'], $args['resolved']))
+                    );
+            });
+            $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
+                return $res->withHeader('Content-type', 'application/json')
+                    ->write(
+                        json_encode($this->model->specialReport->getByGuardInDate($args['id'], $args['resolved'], $args['year'],$args['month'],$args['day']))
+                    );
+            });
         });
-        $this->get('/date', function ($req, $res, $args) {
-            return $res->withHeader('Content-type', 'application/json')
-                ->write(
-                    json_encode($this->model->specialReport->getByWatchInDate($args['id']))
-                );
+        $this->group('/watch/{id}', function () {
+            $this->get('', function ($req, $res, $args) {
+                return $res->withHeader('Content-type', 'application/json')
+                    ->write(
+                        json_encode($this->model->specialReport->getByWatch($args['id'], $args['resolved']))
+                    );
+            });
+            $this->get('/date', function ($req, $res, $args) {
+                return $res->withHeader('Content-type', 'application/json')
+                    ->write(
+                        json_encode($this->model->specialReport->getByWatchInDate($args['id'], $args['resolved']))
+                    );
+            });
+            $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
+                return $res->withHeader('Content-type', 'application/json')
+                    ->write(
+                        json_encode($this->model->specialReport->getByWatchInDate($args['id'], $args['resolved'], $args['year'],$args['month'],$args['day']))
+                    );
+            });
         });
-        $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
-            return $res->withHeader('Content-type', 'application/json')
-                ->write(
-                    json_encode($this->model->specialReport->getByWatchInDate($args['id'], $args['year'],$args['month'],$args['day']))
-                );
+        $this->group('/incidence/{id}', function () {
+            $this->get('', function ($req, $res, $args) {
+                return $res->withHeader('Content-type', 'application/json')
+                    ->write(
+                        json_encode($this->model->specialReport->getByIncidence($args['id'], $args['resolved']))
+                    );
+            });
+            $this->get('/date', function ($req, $res, $args) {
+                return $res->withHeader('Content-type', 'application/json')
+                    ->write(
+                        json_encode($this->model->specialReport->getByIncidenceInDate($args['id'], $args['resolved']))
+                    );
+            });
+            $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
+                return $res->withHeader('Content-type', 'application/json')
+                    ->write(
+                        json_encode($this->model->specialReport->getByIncidenceInDate($args['id'], $args['resolved'], $args['year'],$args['month'],$args['day']))
+                    );
+            });
         });
-    });
-    $this->group('/incidence/{id}', function () {
-        $this->get('', function ($req, $res, $args) {
-            return $res->withHeader('Content-type', 'application/json')
-                ->write(
-                    json_encode($this->model->specialReport->getByIncidence($args['id']))
-                );
-        });
-        $this->get('/date', function ($req, $res, $args) {
-            return $res->withHeader('Content-type', 'application/json')
-                ->write(
-                    json_encode($this->model->specialReport->getByIncidenceInDate($args['id']))
-                );
-        });
-        $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
-            return $res->withHeader('Content-type', 'application/json')
-                ->write(
-                    json_encode($this->model->specialReport->getByIncidenceInDate($args['id'], $args['year'],$args['month'],$args['day']))
-                );
-        });
-    });
-    $this->get('/date/today', function ($req, $res, $args) {
-        return $res->withHeader('Content-type', 'application/json')
-            ->write(
-                json_encode($this->model->specialReport->getByDate())
-            );
-    });
-    $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
-        return $res->withHeader('Content-type', 'application/json')
-            ->write(
-                json_encode($this->model->specialReport->getByDate($args['year'],$args['month'],$args['day']))
-            );
     });
     $this->get('/{id}/replies', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')

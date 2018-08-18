@@ -59,6 +59,7 @@ class SpecialReportModel
         $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
         $data['update_date'] = $timestamp;
         $data['resolved'] = 0;
+        $data['status'] = 2;
 
         $query = $this->db
             ->update($this->table, $data, $id)

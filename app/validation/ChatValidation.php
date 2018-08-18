@@ -3,37 +3,40 @@ namespace App\Validation;
 
 use App\Lib\Response;
 
-class MessengerValidation
+class ChatValidation
 {
     public static function validate($data)
     {
         $response = new Response();
 
-        $key = 'text';
+        $key = 'user_1_id';
         if (empty($data[$key])) {
             $response->errors[$key][] = 'Este campo es obligatorio';
         }
 
-        $key = 'sender_id';
+        $key = 'user_1_type';
         if (empty($data[$key])) {
             $response->errors[$key][] = 'Este campo es obligatorio';
         }
 
-        $key = 'sender_type';
+        $key = 'user_1_name';
         if (empty($data[$key])) {
             $response->errors[$key][] = 'Este campo es obligatorio';
         }
 
-        $key = 'sender_name';
+        $key = 'user_2_id';
         if (empty($data[$key])) {
             $response->errors[$key][] = 'Este campo es obligatorio';
         }
 
-        $keyA = 'chat_id';
-        $keyG = 'channel_id';
-        if (empty($data[$keyA]) && empty($data[$keyG])) {
-            $response->errors[$keyA][] = 'El mensaje debe estar asociado a un chat o canal';
-            $response->errors[$keyG][] = 'El mensaje debe estar asociado a un chat o canal';
+        $key = 'user_2_type';
+        if (empty($data[$key])) {
+            $response->errors[$key][] = 'Este campo es obligatorio';
+        }
+
+        $key = 'user_2_name';
+        if (empty($data[$key])) {
+            $response->errors[$key][] = 'Este campo es obligatorio';
         }
 
         $response->SetResponse(count($response->errors) === 0);

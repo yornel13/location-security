@@ -804,6 +804,51 @@ GET http://icsseseguridad.com/location-security/public/tablet/message/{message}/
  
      obtiene todas las posiciones registradas con ese message del dia seleccionado
      
+# * Messenger (CHAT)
+
+POST http://icsseseguridad.com/location-security/public/messenger/register/web
+
+    Registrar el token de la pagina web, recibe parametros en el body:
+    * registration_id   (token firebase)
+    * admin_id
+    * session  (identificador de session o ip, esta en veremos el uso) 
+    
+POST http://icsseseguridad.com/location-security/public/messenger/register/tablet
+
+    Registrar el token de la los dispositivos, recibe parametros en el body:
+    * registration_id   (token firebase)
+    * guard_id
+    * imei   
   
+POST http://icsseseguridad.com/location-security/public/messenger/chat
+
+    Creacion de chat con otro individuo, recibe parametros en el body:
+    * user_1_id         (id del usuario)
+    * user_1_type       (tipo de usuario/ ADMIN o GUARD)
+    * user_1_name       (nombre completo del usuario)  
+    * user_2_id         (id del usuario)
+    * user_2_type       (tipo de usuario/ ADMIN o GUARD)
+    * user_2_name       (nombre completo del usuario) 
+ 
+POST http://icsseseguridad.com/location-security/public/messenger/send
+
+    Envio de mensaje al otro usuario, recibe parametros en el body: 
+    * text              (mensaje que se envia)
+    * chat_id       
+    * sender_id         (id del usuario que envia)
+    * sender_type       (tipo de usuario que envia. ADMIN o GUARD)
+    * sender_name       (nombre completo del que envia)
+    
+GET http://icsseseguridad.com/location-security/public/messenger/conversations/admin/{id}
+ 
+     obtiene todas los chat abiertos de un administrador por su id
+     
+GET http://icsseseguridad.com/location-security/public/messenger/conversations/guard/{id}
+ 
+     obtiene todas los chat abiertos de un guardia por su id
+     
+GET http://icsseseguridad.com/location-security/public/messenger/conversations/chat/{id}
+ 
+     obtiene todos los mensajes de una conversacion atravez del id dle chat
      
         

@@ -180,6 +180,9 @@ class WatchModel
     {
         $data = $this->db
             ->from($this->table)
+            ->select('guard.dni as guard_dni')
+            ->select('guard.name as guard_name')
+            ->select('guard.lastname as guard_lastname')
             ->orderBy('id DESC')
             ->fetchAll();
 

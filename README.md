@@ -170,11 +170,35 @@ GET http://icsseseguridad.com/location-security/public/watch/active/1
 
 GET http://icsseseguridad.com/location-security/public/watch
 
-    Obtiene todas las guardias hechas (deberia tener un filtro por dia que aun no se ha hecho)
+    Obtiene todas las guardias hechas
 
 GET http://icsseseguridad.com/location-security/public/watch/{id}
 
     Obtiene una guardia por su id
+    
+GET http://icsseseguridad.com/location-security/public/watch/date/today
+
+    Obtiene todas las guardias del dia actual
+
+GET http://icsseseguridad.com/location-security/public/watch/date/{imei}/{year}/{month}/{day}
+
+    Obtiene todas las guardias del dia seleccionado
+    
+GET http://icsseseguridad.com/location-security/public/watch/guard/{id}
+
+    Obtiene todas las guardias por el id del guardia
+
+GET http://icsseseguridad.com/location-security/public/watch/guard/{id}/date
+
+    Obtiene todas las guardias por el id del guardia del dia actual
+
+GET http://icsseseguridad.com/location-security/public/watch/guard/{id}/date/{imei}/{year}/{month}/{day}
+
+    Obtiene todas las guardias por el id del guardia del dia seleccionado
+    
+GET http://icsseseguridad.com/location-security/public/watch/{id}/history
+
+    Obtiene todas los registro de una guardia
 
 POST http://icsseseguridad.com/location-security/public/watch
 

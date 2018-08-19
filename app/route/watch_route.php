@@ -50,11 +50,49 @@ $app->group('/watch', function () {
                 json_encode($this->model->watch->get($args['id']))
             );
     });
+    $this->get('/{id}/history', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->tablet->getByWatch($args['id']))
+            );
+    });
     $this->get('/active/1', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
                 json_encode($this->model->watch->getAllActive())
             );
+    });
+    $this->get('/date/today', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->watch->getByDate())
+            );
+    });
+    $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->watch->getByDate($args['year'],$args['month'],$args['day']))
+            );
+    });
+    $this->group('/guard/{id}', function () {
+        $this->get('', function ($req, $res, $args) {
+            return $res->withHeader('Content-type', 'application/json')
+                ->write(
+                    json_encode($this->model->watch->getByGuard($args['id']))
+                );
+        });
+        $this->get('/date', function ($req, $res, $args) {
+            return $res->withHeader('Content-type', 'application/json')
+                ->write(
+                    json_encode($this->model->watch->getByGuardInDate($args['id']))
+                );
+        });
+        $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
+            return $res->withHeader('Content-type', 'application/json')
+                ->write(
+                    json_encode($this->model->watch->getByGuardInDate($args['id'], $args['year'],$args['month'],$args['day']))
+                );
+        });
     });
 })/*->add(new AuthMiddleware($app))*/;
 

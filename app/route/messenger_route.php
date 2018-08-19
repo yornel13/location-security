@@ -1,6 +1,6 @@
 <?php
 
-use App\Validation\ChatValidation;
+use App\Validation\chatvalidation;
 use App\Validation\MessengerValidation;
 
 $app->group('/messenger', function () {

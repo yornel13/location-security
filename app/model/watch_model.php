@@ -107,6 +107,66 @@ class WatchModel
         return $watch;
     }
 
+    public function getByDate($year = false, $month = false, $day = false)
+    {
+        $timestamp = time()-(5*60*60);
+        if (is_bool($year) && !$year) {
+            $year = gmdate("Y", $timestamp);
+        }
+        if (is_bool($month) && !$month) {
+            $month = gmdate("m", $timestamp);
+        }
+        if (is_bool($day) && !$day) {
+            $day = gmdate("d", $timestamp);
+        }
+        $data = $this->db
+            ->from($this->table)
+            ->where('watch.create_date >= ?', $year."-".$month."-".$day." 00:00:00")
+            ->where('watch.create_date <= ?', $year."-".$month."-".$day." 23:59:59")
+            ->select('guard.dni as guard_dni')
+            ->select('guard.name as guard_name')
+            ->select('guard.lastname as guard_lastname')
+            ->fetchAll();
+
+        return [
+            'data' => $data,
+            'total' => count($data)
+        ];
+    }
+
+    public function getByDateAndProperty($propertyName, $propertyValue, $year = false, $month = false, $day = false)
+    {
+        $timestamp = time()-(5*60*60);
+        if (is_bool($year) && !$year) {
+            $year = gmdate("Y", $timestamp);
+        }
+        if (is_bool($month) && !$month) {
+            $month = gmdate("m", $timestamp);
+        }
+        if (is_bool($day) && !$day) {
+            $day = gmdate("d", $timestamp);
+        }
+        $data = $this->db
+            ->from($this->table)
+            ->where('watch.create_date >= ?', $year."-".$month."-".$day." 00:00:00")
+            ->where('watch.create_date <= ?', $year."-".$month."-".$day." 23:59:59")
+            ->where($propertyName, $propertyValue)
+            ->select('guard.dni as guard_dni')
+            ->select('guard.name as guard_name')
+            ->select('guard.lastname as guard_lastname')
+            ->orderBy('id DESC')
+            ->fetchAll();
+
+        return [
+            'data' => $data,
+            'total' => count($data)
+        ];
+    }
+
+    public function getByGuardInDate($id, $year = false, $month = false, $day = false) {
+        return $this->getByDateAndProperty('guard_id', $id, $year, $month, $day);
+    }
+
     public function getWatchActiveByGuard($id)
     {
         return $this->db
@@ -120,6 +180,23 @@ class WatchModel
     {
         $data = $this->db
             ->from($this->table)
+            ->orderBy('id DESC')
+            ->fetchAll();
+
+        return [
+            'data' => $data,
+            'total' => count($data)
+        ];
+    }
+
+    public function getByGuard($guard_id)
+    {
+        $data = $this->db
+            ->from($this->table)
+            ->where('guard_id', $guard_id)
+            ->select('guard.dni as guard_dni')
+            ->select('guard.name as guard_name')
+            ->select('guard.lastname as guard_lastname')
             ->orderBy('id DESC')
             ->fetchAll();
 

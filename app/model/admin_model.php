@@ -91,6 +91,51 @@ class AdminModel
         }
     }
 
+    public function savePhoto($data, $id)
+    {
+        $timestamp = time()-(5*60*60);
+        $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
+        $data = [
+            'photo'         => $data['photo'],
+            'update_date'   => $timestamp
+        ];
+        $query = $this->db
+            ->update($this->table, $data, $id)
+            ->execute();
+
+        if ($query === 0) {
+            return $this->response->SetResponse(false, 'El administrador no exite');
+        } else {
+            $this->response->result = $this->get($id);
+        }
+        return $this->response->SetResponse(true);
+    }
+
+    public function active($id, $active)
+    {
+        try {
+            $timestamp = time()-(5*60*60);
+            $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
+            $data = [
+                'update_date' => $timestamp,
+                'active'      => $active
+            ];
+            $query = $this->db
+                ->update($this->table, $data, $id)
+                ->execute();
+
+            if ($query === 0) {
+                return $this->response->SetResponse(false, 'El administrador no exite');
+            } else {
+                $this->response->result = $this->get($id);
+            }
+
+            return $this->response->SetResponse(true);
+        } catch (Exception $e) {
+            return $this->response->SetResponse(false, $e->getMessage());
+        }
+    }
+
     public function get($id)
     {
         try {
@@ -134,12 +179,12 @@ class AdminModel
         }
     }
 
-    public function getAllActive()
+    public function getByActive($active)
     {
         try {
             $data = $this->db
                 ->from($this->table)
-                ->where('active', 1)
+                ->where('active', $active)
                 ->orderBy('id DESC')
                 ->fetchAll();
 
@@ -172,6 +217,8 @@ class AdminModel
                 $this->db
                     ->update($this->table, $set, $id)
                     ->execute();
+                $this->response->result = $this->get($id);
+                return $this->response->SetResponse(true, 'DISABLED');
             } else {
                 return $this->response->SetResponse(false);
             }

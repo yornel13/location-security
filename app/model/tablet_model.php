@@ -107,10 +107,16 @@ class TabletModel
 
     public function getByWatch($watchId)
     {
-        return $this->db
+        $data = $this->db
             ->from($this->table)
             ->where('watch_id', $watchId)
+            ->orderBy('id DESC')
             ->fetchAll();
+
+        return [
+            'data' => $data,
+            'total' => count($data)
+        ];
     }
 
     public function getByGuard($id)

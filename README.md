@@ -200,6 +200,10 @@ GET http://icsseseguridad.com/location-security/public/guard
 GET http://icsseseguridad.com/location-security/public/guard/active/1
 
     obtiene la lista de empleados activos
+    
+GET http://icsseseguridad.com/location-security/public/guard/active/1
+
+    obtiene la lista de empleados desactivados
 
 GET http://icsseseguridad.com/location-security/public/guard/{id}
 
@@ -226,10 +230,25 @@ PUT http://icsseseguridad.com/location-security/public/guard/{id}
     * lastname
     * email
     * password (opcional)
+    
+PUT http://icsseseguridad.com/location-security/public/guard/{id}/photo
+
+    Edita un empleado, recibe en el body solo:
+    * photo (url)
+    
+PUT http://icsseseguridad.com/location-security/public/guard/{id}/active/0 
+
+    Desactiva un guardia
+    
+PUT http://icsseseguridad.com/location-security/public/guard/{id}/active/1
+
+    Activa un guardia
 
 DELETE http://icsseseguridad.com/location-security/public/guard/{id}
 
-    Elimina un empleado por el id
+    Elimina un empleado por el id, si el guardia tiene elementos asociados 
+    no se podra borrar y se desactivara, y la respuesta seguiria siendo OK
+    pero retornara en message la clave "DISABLED".
     
 # * Administradores (admins)
 
@@ -266,6 +285,11 @@ PUT http://icsseseguridad.com/location-security/public/admin/{id}
     * lastname
     * email
     * password (opcional)
+    
+PUT http://icsseseguridad.com/location-security/public/admin/{id}/photo
+
+    Edita un empleado, recibe en el body solo:
+    * photo (url)
 
 DELETE http://icsseseguridad.com/location-security/public/admin/{id}
 
@@ -850,5 +874,24 @@ GET http://icsseseguridad.com/location-security/public/messenger/conversations/g
 GET http://icsseseguridad.com/location-security/public/messenger/conversations/chat/{id}
  
      obtiene todos los mensajes de una conversacion atravez del id dle chat
+     
+# * Banner [imagenes para mostras en el home de las tablets]
+
+GET http://icsseseguridad.com/location-security/public/banner
+
+    obtiene la lista de banners
+
+GET http://icsseseguridad.com/location-security/public/banner/{id}
+
+    obtiene un banner por su id
+   
+POST http://icsseseguridad.com/location-security/public/banner 
+
+    Registrar una banner, recibe parametro en el body:
+    * photo (url)
+
+DELETE http://icsseseguridad.com/location-security/public/banner/{id}
+
+    Elimina una banner por el id
      
         

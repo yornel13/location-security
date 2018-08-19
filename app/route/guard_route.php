@@ -32,6 +32,18 @@ $app->group('/guard', function () {
                 json_encode($this->model->guard->update($req->getParsedBody(), $args['id']))
             );
     });
+    $this->put('/{id}/photo', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->guard->savePhoto($req->getParsedBody(), $args['id']))
+            );
+    });
+    $this->put('/{id}/active/{active}', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->guard->active($args['id'], $args['active']))
+            );
+    });
     $this->delete('/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
@@ -44,10 +56,10 @@ $app->group('/guard', function () {
                 json_encode($this->model->guard->getAll())
             );
     });
-    $this->get('/active/1', function ($req, $res, $args) {
+    $this->get('/active/{active}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
-                json_encode($this->model->guard->getAllActive())
+                json_encode($this->model->guard->getByActive($args['active']))
             );
     });
     $this->get('/{id}', function ($req, $res, $args) {

@@ -98,7 +98,7 @@ class IncidenceModel
             ->execute();
         if ($query === 0) {
             return $this->response
-                ->SetResponse(false, 'La incidencia no existe no exite');
+                ->SetResponse(false, 'La incidencia no exite');
         }
         return $this->response->SetResponse(true);
     }

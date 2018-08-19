@@ -2,13 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eaa892b9-4744-4ead-bd06-8997b50f9dad" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/validation/ChatValidation.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/model/banner_model.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/route/banner_route.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/model/messenger_model.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/model/messenger_model.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/model/admin_model.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/model/admin_model.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/model/guard_model.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/model/guard_model.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/model/incidence_model.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/model/incidence_model.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/model/special_report_model.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/model/special_report_model.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/model/tablet_model.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/model/tablet_model.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/model/watch_model.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/model/watch_model.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/route/admin_route.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/route/admin_route.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/route/guard_route.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/route/guard_route.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/route/messenger_route.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/route/messenger_route.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/validation/messenger_validation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/validation/messenger_validation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/route/watch_route.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/route/watch_route.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/validation/ChatValidation.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/validation/chat_validation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dependencies.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/dependencies.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/settings.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/settings.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -97,27 +106,29 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="json" value="1" />
-          <entry key="md" value="11" />
-          <entry key="php" value="163" />
+          <entry key="md" value="14" />
+          <entry key="php" value="190" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="JSON" value="1" />
-          <entry key="Markdown" value="11" />
-          <entry key="PHP" value="163" />
+          <entry key="Markdown" value="14" />
+          <entry key="PHP" value="190" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="md" value="2405" />
-          <entry key="php" value="5043" />
+          <entry key="dummy" value="6" />
+          <entry key="md" value="2869" />
+          <entry key="php" value="5566" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Markdown" value="2405" />
-          <entry key="PHP" value="5043" />
+          <entry key="Markdown" value="2869" />
+          <entry key="PHP" value="5566" />
+          <entry key="PLAIN_TEXT" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.php.new.class">
@@ -128,61 +139,61 @@
     </session>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/model/messenger_model.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="503">
-                  <caret line="222" column="40" selection-start-line="222" selection-start-column="40" selection-end-line="222" selection-end-column="40" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/app/route/messenger_route.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="534">
-                  <caret line="57" column="61" selection-start-line="57" selection-start-column="61" selection-end-line="57" selection-end-column="61" />
-                  <folding>
-                    <element signature="e#7#41#0#PHP" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/README.md">
-              <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-                <state split_layout="FIRST">
-                  <first_editor relative-caret-position="484">
-                    <caret line="826" column="41" selection-start-line="826" selection-start-column="41" selection-end-line="826" selection-end-column="41" />
-                  </first_editor>
-                  <second_editor />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/app/route/messenger_route.php">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="510">
-                  <caret line="35" column="21" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="21" />
-                  <folding>
-                    <element signature="e#7#41#0#PHP" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/model/banner_model.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="704">
+              <caret line="56" column="47" selection-start-line="56" selection-start-column="47" selection-end-line="56" selection-end-column="47" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/route/banner_route.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="476">
+              <caret line="29" column="7" selection-start-line="29" selection-start-column="7" selection-end-line="29" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/settings.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="391">
+              <caret line="23" column="23" lean-forward="true" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="31" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="FIRST">
+              <first_editor relative-caret-position="841">
+                <caret line="886" column="3" selection-start-line="886" selection-start-column="3" selection-end-line="886" selection-end-column="3" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/routes.php">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/dependencies.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="727">
+              <caret line="49" column="56" lean-forward="true" selection-start-line="49" selection-start-column="56" selection-end-line="49" selection-end-column="56" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -195,21 +206,15 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/validation/visit_validation.php" />
-        <option value="$PROJECT_DIR$/app/validation/incidence_validation.php" />
-        <option value="$PROJECT_DIR$/app/validation/report_validation.php" />
         <option value="$PROJECT_DIR$/app/validation/watch_validation.php" />
         <option value="$PROJECT_DIR$/app/model/vehicle_model.php" />
         <option value="$PROJECT_DIR$/app/model/alert_model.php" />
         <option value="$PROJECT_DIR$/app/route/alert_route.php" />
         <option value="$PROJECT_DIR$/app/route/incidence_route.php" />
-        <option value="$PROJECT_DIR$/app/route/watch_route.php" />
-        <option value="$PROJECT_DIR$/app/model/incidence_model.php" />
         <option value="$PROJECT_DIR$/app/route/vehicle_route.php" />
         <option value="$PROJECT_DIR$/app/model/company_model.php" />
         <option value="$PROJECT_DIR$/app/route/company_route.php" />
         <option value="$PROJECT_DIR$/src/routes.php" />
-        <option value="$PROJECT_DIR$/app/model/watch_model.php" />
         <option value="$PROJECT_DIR$/app/model/reply_model.php" />
         <option value="$PROJECT_DIR$/app/validation/reply_validation.php" />
         <option value="$PROJECT_DIR$/app/validation/auth_validation.php" />
@@ -220,32 +225,38 @@
         <option value="$PROJECT_DIR$/app/validation/alert_validation.php" />
         <option value="$PROJECT_DIR$/app/validation/utility_validation.php" />
         <option value="$PROJECT_DIR$/app/validation/tablet_validation.php" />
-        <option value="$PROJECT_DIR$/app/model/tablet_model.php" />
         <option value="$PROJECT_DIR$/app/route/tablet_route.php" />
         <option value="$PROJECT_DIR$/app/route/visitor_vehicle_route.php" />
-        <option value="$PROJECT_DIR$/app/model/admin_model.php" />
         <option value="$PROJECT_DIR$/app/model/visitor_vehicle_model.php" />
         <option value="$PROJECT_DIR$/app/route/visitor_route.php" />
-        <option value="$PROJECT_DIR$/app/route/guard_route.php" />
         <option value="$PROJECT_DIR$/app/route/clerk_route.php" />
-        <option value="$PROJECT_DIR$/app/route/admin_route.php" />
         <option value="$PROJECT_DIR$/app/model/clerk_model.php" />
-        <option value="$PROJECT_DIR$/app/model/guard_model.php" />
         <option value="$PROJECT_DIR$/app/model/visitor_model.php" />
         <option value="$PROJECT_DIR$/app/route/reply_route.php" />
         <option value="$PROJECT_DIR$/app/model/FireBaseNotification.php" />
-        <option value="$PROJECT_DIR$/src/dependencies.php" />
         <option value="$PROJECT_DIR$/app/model/FirebaseNotification.php" />
         <option value="$PROJECT_DIR$/app/route/visit_route.php" />
         <option value="$PROJECT_DIR$/app/model/visit_model.php" />
         <option value="$PROJECT_DIR$/app/route/special_report_route.php" />
-        <option value="$PROJECT_DIR$/app/model/special_report_model.php" />
-        <option value="$PROJECT_DIR$/src/settings.php" />
         <option value="$PROJECT_DIR$/app/validation/ChatValidation.php" />
         <option value="$PROJECT_DIR$/app/validation/messenger_validation.php" />
         <option value="$PROJECT_DIR$/app/model/messenger_model.php" />
+        <option value="$PROJECT_DIR$/app/validation/chat_validation.php" />
         <option value="$PROJECT_DIR$/app/route/messenger_route.php" />
+        <option value="$PROJECT_DIR$/app/model/guard_model.php" />
+        <option value="$PROJECT_DIR$/app/route/guard_route.php" />
+        <option value="$PROJECT_DIR$/app/route/admin_route.php" />
+        <option value="$PROJECT_DIR$/app/model/admin_model.php" />
+        <option value="$PROJECT_DIR$/app/model/special_report_model.php" />
+        <option value="$PROJECT_DIR$/app/model/watch_model.php" />
+        <option value="$PROJECT_DIR$/app/route/watch_route.php" />
+        <option value="$PROJECT_DIR$/app/model/tablet_model.php" />
+        <option value="$PROJECT_DIR$/app/model/banner_model.php" />
+        <option value="$PROJECT_DIR$/app/model/incidence_model.php" />
+        <option value="$PROJECT_DIR$/app/route/banner_route.php" />
+        <option value="$PROJECT_DIR$/src/dependencies.php" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/src/settings.php" />
       </list>
     </option>
   </component>
@@ -340,6 +351,11 @@
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="validation" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="location-security" type="b2602c69:ProjectViewProjectNode" />
+              <item name="location-security" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -355,9 +371,9 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\xampp\htdocs\location-security\app\validation" />
       <recent name="C:\xampp\htdocs\location-security\app\route" />
       <recent name="C:\xampp\htdocs\location-security\app\model" />
+      <recent name="C:\xampp\htdocs\location-security\app\validation" />
       <recent name="C:\xampp\htdocs\learning-php\location-security\app\validation" />
       <recent name="C:\xampp\htdocs\learning-php\location-security\app\route" />
     </key>
@@ -414,7 +430,7 @@
       <workItem from="1534426957487" duration="2002000" />
       <workItem from="1534448069036" duration="3469000" />
       <workItem from="1534462178773" duration="1203000" />
-      <workItem from="1534470695528" duration="30303000" />
+      <workItem from="1534470695528" duration="39914000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <created>1533236198500</created>
@@ -483,7 +499,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="190695000" />
+    <option name="totallyTimeSpent" value="200306000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -553,38 +569,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="agregando mas datos a la documentacion" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/middleware/auth_middleware.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="25" column="21" selection-start-line="25" selection-start-column="21" selection-end-line="25" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/route/auth_route.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="34" selection-start-line="5" selection-start-column="34" selection-end-line="5" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/model/auth_model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1122">
-          <caret line="67" column="5" selection-start-line="67" selection-start-column="5" selection-end-line="67" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/validation/alert_validation.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="13" column="37" selection-start-line="13" selection-start-column="37" selection-end-line="13" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/validation/auth_validation.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="41" selection-start-line="7" selection-start-column="41" selection-end-line="7" selection-end-column="41" />
         </state>
       </provider>
     </entry>
@@ -632,24 +620,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/validation/guard_validation.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-95">
-          <caret line="9" column="26" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/validation/utility_validation.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="13" column="37" selection-start-line="13" selection-start-column="37" selection-end-line="13" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/route/watch_route.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="43" column="55" selection-start-line="43" selection-start-column="49" selection-end-line="43" selection-end-column="55" />
         </state>
       </provider>
     </entry>
@@ -664,13 +638,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="432">
           <caret line="49" column="49" selection-start-line="49" selection-start-column="49" selection-end-line="49" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/route/guard_route.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="49" column="47" selection-start-line="49" selection-start-column="47" selection-end-line="49" selection-end-column="47" />
         </state>
       </provider>
     </entry>
@@ -695,13 +662,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/model/watch_model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="40" column="26" selection-start-line="40" selection-start-column="19" selection-end-line="40" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/route/tablet_route.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -713,13 +673,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" column="41" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/model/guard_model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="551">
-          <caret line="123" column="20" selection-start-line="123" selection-start-column="20" selection-end-line="123" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -751,24 +704,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/dependencies.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="761">
-          <caret line="51" column="52" selection-start-line="51" selection-start-column="52" selection-end-line="51" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/route/reply_route.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="612">
           <caret line="37" column="7" selection-start-line="37" selection-start-column="7" selection-end-line="37" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/model/incidence_model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="37" column="50" lean-forward="true" selection-start-line="20" selection-start-column="8" selection-end-line="37" selection-end-column="50" />
         </state>
       </provider>
     </entry>
@@ -786,44 +725,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/model/FirebaseNotification.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
-          <folding>
-            <element signature="e#6#87#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/model/visit_model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="215" column="92" lean-forward="true" selection-start-line="215" selection-start-column="92" selection-end-line="216" selection-end-column="92" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/route/visit_route.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
           <caret line="88" column="31" selection-start-line="88" selection-start-column="31" selection-end-line="88" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/route/special_report_route.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="714">
-          <caret line="42" column="7" selection-start-line="42" selection-start-column="7" selection-end-line="42" selection-end-column="7" />
-          <folding>
-            <element signature="e#7#41#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/settings.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="67" selection-start-line="21" selection-start-column="67" selection-end-line="21" selection-end-column="67" />
         </state>
       </provider>
     </entry>
@@ -844,65 +749,172 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/model/admin_model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="130" column="14" lean-forward="true" selection-start-line="122" selection-start-column="11" selection-end-line="130" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/route/admin_route.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="55" column="64" selection-start-line="55" selection-start-column="53" selection-end-line="55" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/model/special_report_model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-704">
-          <caret line="61" column="28" selection-start-line="61" selection-start-column="28" selection-end-line="61" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/model/tablet_model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="537">
-          <caret line="175" column="12" lean-forward="true" selection-start-line="175" selection-start-column="12" selection-end-line="175" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/model/messenger_model.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="503">
-          <caret line="222" column="40" selection-start-line="222" selection-start-column="40" selection-end-line="222" selection-end-column="40" />
+          <caret line="236" lean-forward="true" selection-start-line="236" selection-end-line="236" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/validation/ChatValidation.php">
+    <entry file="file://$PROJECT_DIR$/app/validation/auth_validation.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="6" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
+        <state relative-caret-position="119">
+          <caret line="7" column="41" selection-start-line="7" selection-start-column="41" selection-end-line="7" selection-end-column="41" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/route/messenger_route.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="534">
-          <caret line="57" column="61" selection-start-line="57" selection-start-column="61" selection-end-line="57" selection-end-column="61" />
+        <state relative-caret-position="585">
+          <caret line="35" column="19" selection-start-line="35" selection-start-column="19" selection-end-line="35" selection-end-column="19" />
           <folding>
             <element signature="e#7#41#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/validation/chat_validation.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="6" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/FirebaseNotification.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="206" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="206" />
+          <folding>
+            <element signature="e#6#87#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/validation/guard_validation.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="5" column="6" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/route/guard_route.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="34" column="4" lean-forward="true" selection-start-line="34" selection-start-column="4" selection-end-line="39" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/route/admin_route.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="43" column="47" selection-start-line="43" selection-start-column="47" selection-end-line="43" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/guard_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="636">
+          <caret line="100" column="5" lean-forward="true" selection-start-line="82" selection-start-column="4" selection-end-line="100" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/admin_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="364">
+          <caret line="106" column="72" selection-start-line="106" selection-start-column="72" selection-end-line="106" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/visit_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="254" column="12" lean-forward="true" selection-start-line="254" selection-start-column="12" selection-end-line="254" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/special_report_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="387">
+          <caret line="171" column="5" lean-forward="true" selection-start-line="169" selection-start-column="3" selection-end-line="171" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/watch_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1326">
+          <caret line="109" column="29" selection-start-line="109" selection-start-column="20" selection-end-line="109" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/route/watch_route.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="55" column="60" selection-start-line="55" selection-start-column="60" selection-end-line="55" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/route/special_report_route.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="731">
+          <caret line="73" column="11" lean-forward="true" selection-start-line="62" selection-start-column="7" selection-end-line="73" selection-end-column="11" />
+          <folding>
+            <element signature="e#7#41#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/tablet_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1751">
+          <caret line="108" column="5" selection-start-line="108" selection-start-column="5" selection-end-line="108" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/incidence_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1700">
+          <caret line="100" column="51" selection-start-line="100" selection-start-column="51" selection-end-line="100" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/banner_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="704">
+          <caret line="56" column="47" selection-start-line="56" selection-start-column="47" selection-end-line="56" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/route/banner_route.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="29" column="7" selection-start-line="29" selection-start-column="7" selection-end-line="29" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="484">
-            <caret line="826" column="41" selection-start-line="826" selection-start-column="41" selection-end-line="826" selection-end-column="41" />
+          <first_editor relative-caret-position="841">
+            <caret line="886" column="3" selection-start-line="886" selection-start-column="3" selection-end-line="886" selection-end-column="3" />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dependencies.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="727">
+          <caret line="49" column="56" lean-forward="true" selection-start-line="49" selection-start-column="56" selection-end-line="49" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/settings.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" column="23" lean-forward="true" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="31" />
         </state>
       </provider>
     </entry>

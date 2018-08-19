@@ -32,6 +32,18 @@ $app->group('/admin', function () {
                 json_encode($this->model->admin->update($req->getParsedBody(), $args['id']))
             );
     });
+    $this->put('/{id}/active/{active}', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->admin->active($args['id'], $args['active']))
+            );
+    });
+    $this->put('/{id}/photo', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->admin->savePhoto($req->getParsedBody(), $args['id']))
+            );
+    });
     $this->delete('/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
@@ -44,10 +56,10 @@ $app->group('/admin', function () {
                 json_encode($this->model->admin->getAll())
             );
     });
-    $this->get('/active/1', function ($req, $res, $args) {
+    $this->get('/active/{active}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
-                json_encode($this->model->admin->getAllActive())
+                json_encode($this->model->admin->getByActive($args['active']))
             );
     });
     $this->get('/{id}', function ($req, $res, $args) {

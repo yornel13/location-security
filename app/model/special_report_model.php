@@ -157,6 +157,7 @@ class SpecialReportModel
             ->where('special_report.create_date <= ?', $year."-".$month."-".$day." 23:59:59")
             ->where($propertyName, $propertyValue)
             ->where('resolved', $resolved)
+            ->select('watch.guard.dni AS guard_dni')
             ->orderBy('id DESC')
             ->fetchAll();
 
@@ -194,6 +195,7 @@ class SpecialReportModel
             ->from($this->table)
             ->where('incidence_id', $id)
             ->where('resolved', $resolved)
+            ->select('watch.guard.dni AS guard_dni')
             ->orderBy('id DESC')
             ->fetchAll();
 
@@ -215,6 +217,7 @@ class SpecialReportModel
             ->from($this->table)
             ->where('watch_id', $id)
             ->where('resolved', $resolved)
+            ->select('watch.guard.dni AS guard_dni')
             ->orderBy('id DESC')
             ->fetchAll();
 
@@ -236,6 +239,7 @@ class SpecialReportModel
             ->from($this->table)
             ->where('watch.guard_id', $id)
             ->where('resolved', $resolved)
+            ->select('watch.guard.dni AS guard_dni')
             ->orderBy('id DESC')
             ->fetchAll();
 
@@ -256,6 +260,7 @@ class SpecialReportModel
         $data = $this->db
             ->from($this->table)
             ->where('resolved', $resolved)
+            ->select('watch.guard.dni AS guard_dni')
             ->orderBy('id DESC')
             ->fetchAll();
 
@@ -270,6 +275,7 @@ class SpecialReportModel
         $data = $this->db
             ->from($this->table)
             ->where('status', 1)
+            ->select('watch.guard.dni AS guard_dni')
             ->orderBy('id DESC')
             ->fetchAll();
 

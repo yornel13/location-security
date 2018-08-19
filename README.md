@@ -290,10 +290,20 @@ PUT http://icsseseguridad.com/location-security/public/admin/{id}/photo
 
     Edita un empleado, recibe en el body solo:
     * photo (url)
+    
+PUT http://icsseseguridad.com/location-security/public/admin/{id}/active/0 
+
+    Desactiva un administrador
+    
+PUT http://icsseseguridad.com/location-security/public/admin/{id}/active/1
+
+    Activa un administrador
 
 DELETE http://icsseseguridad.com/location-security/public/admin/{id}
 
-    Elimina un administrador por el id
+    Elimina un administrador por el id, si el administrador tiene elementos asociados 
+    no se podra borrar y se desactivara, y la respuesta seguiria siendo OK
+    pero retornara en el message la clave "DISABLED".
     
 # * Incidencias (incidences) [son los tipos de indicencias]
 

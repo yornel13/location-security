@@ -29,7 +29,6 @@ class GuardModel
         $guard = $this->db
             ->from($this->table)
             ->where('dni', $data['dni'])
-            ->where('active', 1)
             ->fetch();
 
         if (!empty($guard)) {

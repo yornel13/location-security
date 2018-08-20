@@ -642,6 +642,11 @@ GET http://icsseseguridad.com/location-security/public/visit/{id}
 
     obtiene una visita por su id
     
+Ahora las visitas requieren el status en la url
+    status = 1     -> visitas activas
+    status = 0     -> visitas finalizadas
+    status = all   -> todos los status
+    
 GET http://icsseseguridad.com/location-security/public/visit/status/{status}
 
     obtiene la lista de visitas

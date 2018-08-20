@@ -180,7 +180,7 @@ GET http://icsseseguridad.com/location-security/public/watch/date/today
 
     Obtiene todas las guardias del dia actual
 
-GET http://icsseseguridad.com/location-security/public/watch/date/{imei}/{year}/{month}/{day}
+GET http://icsseseguridad.com/location-security/public/watch/date/{year}/{month}/{day}
 
     Obtiene todas las guardias del dia seleccionado
     
@@ -192,7 +192,7 @@ GET http://icsseseguridad.com/location-security/public/watch/guard/{id}/date
 
     Obtiene todas las guardias por el id del guardia del dia actual
 
-GET http://icsseseguridad.com/location-security/public/watch/guard/{id}/date/{imei}/{year}/{month}/{day}
+GET http://icsseseguridad.com/location-security/public/watch/guard/{id}/date/{year}/{month}/{day}
 
     Obtiene todas las guardias por el id del guardia del dia seleccionado
     

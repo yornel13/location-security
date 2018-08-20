@@ -88,7 +88,7 @@ class MessengerModel
             ->fetch();
 
         if (is_object($chat)) {
-            return $this->response->SetResponse(true, 'Ya existe una conversación entre ambos.');
+            return $this->response->SetResponse(false, 'Ya existe una conversación entre ambos.');
         }
 
         $chat = $this->db
@@ -100,7 +100,7 @@ class MessengerModel
             ->fetch();
 
         if (is_object($chat)) {
-            return $this->response->SetResponse(true, 'Ya existe una conversación entre ambos.');
+            return $this->response->SetResponse(false, 'Ya existe una conversación entre ambos.');
         }
 
         $timestamp = time()-(5*60*60);
@@ -113,6 +113,63 @@ class MessengerModel
             ->execute();
         $data['id'] = $query;
         $this->response->result = $data;
+        return $this->response->SetResponse(true);
+    }
+
+    public function createChannel($data)
+    {
+        $timestamp = time()-(5*60*60);
+        $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
+        $data['create_at'] = $timestamp;
+        $data['state'] = 1;
+        $data['active'] = true;
+
+        $query = $this->db
+            ->insertInto($this->table_channel, $data)
+            ->execute();
+
+        $registered = [
+            'channel_id' => $query,
+            'user_id' => $data['creator_id'],
+            'user_type' => $data['creator_type'],
+            'user_name' => $data['creator_name'],
+            'create_at' => $timestamp,
+            'update_at' => $timestamp,
+            'state' => 1
+        ];
+        $this->db
+            ->insertInto($this->table_registered_channel, $registered)
+            ->execute();
+
+        $data['id'] = $query;
+        $this->response->result = $data;
+        return $this->response->SetResponse(true);
+    }
+
+    public function addToChannel($id, $data)
+    {
+        $timestamp = time()-(5*60*60);
+        $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
+
+        foreach ($data as $valor) {
+            $valor['channel_id'] = $id;
+            $valor['create_at'] = $timestamp;
+            $valor['update_at'] = $timestamp;
+            $valor['state'] = 1;
+
+            $registered = $this->db
+                ->from($this->table_registered_channel)
+                ->where('channel_id', $valor['channel_id'])
+                ->where('user_id', $valor['user_id'])
+                ->where('user_type', $valor['user_type'])
+                ->fetch();
+
+            if (!is_object($registered)) {
+                $this->db
+                    ->insertInto($this->table_registered_channel, $valor)
+                    ->execute();
+            }
+        }
         return $this->response->SetResponse(true);
     }
 
@@ -157,43 +214,68 @@ class MessengerModel
                         ->from($this->table_tablet_token)
                         ->where('guard_id', $id)
                         ->fetch();
-
-                    if (is_object($registration)) {
-                        $message['receiver_id'] = $id;
-                        $message['receiver_type'] = $type;
-                        $firebase = new FirebaseNotification();
-                        $send_result = $firebase->send($message, $registration->registration_id);
-                        if ($send_result !== false && json_decode($send_result)->success == 1) {
-                            return $this->response->SetResponse(true);
-                        } else {
-                            return $this->response->SetResponse(true, "Error de envio de notificacion");
-                        }
-                    } else {
-                        return $this->response->SetResponse(true, 'El distinatario no tiene dispositivo registrado.');
-                    }
                 } else {
                     $registration = $this->db
                         ->from($this->table_web_token)
                         ->where('admin_id', $id)
                         ->fetch();
-
-                    if (is_object($registration)) {
-                        $message['receiver_id'] = $id;
-                        $message['receiver_type'] = $type;
-                        $firebase = new FirebaseNotification();
-                        $send_result = $firebase->send($message, $registration->registration_id);
-                        if ($send_result !== false && json_decode($send_result)->success == 1) {
-                            return $this->response->SetResponse(true);
-                        } else {
-                            return $this->response->SetResponse(true, "Error de envio de notificacion");
-                        }
+                }
+                if (is_object($registration)) {
+                    $message['receiver_id'] = $id;
+                    $message['receiver_type'] = $type;
+                    $firebase = new FirebaseNotification();
+                    $send_result = $firebase->send($message, $registration->registration_id);
+                    if ($send_result !== false && json_decode($send_result)->success == 1) {
+                        return $this->response->SetResponse(true);
                     } else {
-                        return $this->response->SetResponse(true, 'El distinatario no tiene dispositivo registrado.');
+                        return $this->response->SetResponse(true, "Error de envio de notificacion");
                     }
+                } else {
+                    return $this->response->SetResponse(true, 'El distinatario no tiene dispositivo registrado.');
                 }
             }
         } else {
-            return $this->response->SetResponse(false, 'Aun no se implementan los grupos');
+            $channel = $this->db
+                ->from($this->table_channel, $data['channel_id'])
+                ->fetch();
+            if (is_object($channel)) {
+                $timestamp = time() - (5 * 60 * 60);
+                $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
+                $message = [
+                    'channel_id' => $data['channel_id'],
+                    'text' => $data['text'],
+                    'create_at' => $timestamp,
+                    'sender_id' => $data['sender_id'],
+                    'sender_type' => $data['sender_type'],
+                    'sender_name' => $data['sender_name'],
+                    'state' => 1,
+                ];
+                $query = $this->db
+                    ->insertInto($this->table_chat_line, $message)
+                    ->execute();
+                $message['id'] = $query;
+                $this->response->result = $message;
+                foreach ($this->getChannelMembers($data['channel_id'])['data'] as $member) {
+                    if ($member->user_type === $this->GUARD) {
+                        $registration = $this->db
+                            ->from($this->table_tablet_token)
+                            ->where('guard_id', $member->user_id)
+                            ->fetch();
+                    } else {
+                        $registration = $this->db
+                            ->from($this->table_web_token)
+                            ->where('admin_id', $member->user_id)
+                            ->fetch();
+                    }
+                    if (is_object($registration)) {
+                        $message['receiver_id'] = $member->user_id;
+                        $message['receiver_type'] = $member->user_type;
+                        $firebase = new FirebaseNotification();
+                        $firebase->send($message, $registration->registration_id);
+                    }
+                }
+                return $this->response->SetResponse(true);
+            }
         }
     }
 
@@ -235,11 +317,83 @@ class MessengerModel
         ];
     }
 
+    public function getChannelsGuard($guard_id)
+    {
+        $data = $this->db
+            ->from($this->table_registered_channel)
+            ->where('user_id', $guard_id)
+            ->where('user_type', $this->GUARD)
+            ->where('channel.state', 1)
+            ->select('channel.name as channel_name')
+            ->select('channel.creator_id as channel_creator_id')
+            ->select('channel.creator_type as channel_creator_type')
+            ->select('channel.creator_name as channel_creator_name')
+            ->select('channel.create_at as channel_create_at')
+            ->select('channel.state as channel_state')
+            ->orderBy('id DESC')
+            ->fetchAll();
+
+        return [
+            'data' => $data,
+            'total' => count($data)
+        ];
+    }
+
+    public function getChannelsAdmin($admin_id)
+    {
+        $data = $this->db
+            ->from($this->table_registered_channel)
+            ->where('user_id', $admin_id)
+            ->where('user_type', $this->ADMIN)
+            ->where('channel.state', 1)
+            ->select('channel.name as channel_name')
+            ->select('channel.creator_id as channel_creator_id')
+            ->select('channel.creator_type as channel_creator_type')
+            ->select('channel.creator_name as channel_creator_name')
+            ->select('channel.create_at as channel_create_at')
+            ->select('channel.state as channel_state')
+            ->orderBy('id DESC')
+            ->fetchAll();
+
+        return [
+            'data' => $data,
+            'total' => count($data)
+        ];
+    }
+
+    public function getChannelMembers($channel_id)
+    {
+        $data = $this->db
+            ->from($this->table_registered_channel)
+            ->where('channel_id', $channel_id)
+            ->orderBy('id DESC')
+            ->fetchAll();
+
+        return [
+            'data' => $data,
+            'total' => count($data)
+        ];
+    }
+
     public function getMessages($chat_id)
     {
         $data = $this->db
             ->from($this->table_chat_line)
             ->where('chat_id', $chat_id)
+            ->orderBy('id DESC')
+            ->fetchAll();
+
+        return [
+            'data' => $data,
+            'total' => count($data)
+        ];
+    }
+
+    public function getChannelMessages($channel_id)
+    {
+        $data = $this->db
+            ->from($this->table_chat_line)
+            ->where('channel_id', $channel_id)
             ->orderBy('id DESC')
             ->fetchAll();
 

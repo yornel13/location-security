@@ -892,12 +892,31 @@ POST http://icsseseguridad.com/location-security/public/messenger/chat
     * user_2_id         (id del usuario)
     * user_2_type       (tipo de usuario/ ADMIN o GUARD)
     * user_2_name       (nombre completo del usuario) 
+    
+POST http://icsseseguridad.com/location-security/public/messenger/channel
+
+    Creacion de channel para chat grupal y agregar al creador al channel de una vez, 
+        recibe parametros en el body:
+        
+    * creator_id         (id del creador)
+    * creator_type       (tipo de usuario/ ADMIN o GUARD)
+    * creator_name       (nombre completo del creador)  
  
+POST http://icsseseguridad.com/location-security/public/messenger/channel/{channel_id}/add
+ 
+    Agrega usuarios al channel, recibe un array en el body, 
+    cada objecto dle array debe contener:
+         
+    * user_id         (id del nuevo miembro)
+    * user_type       (tipo de usuario/ ADMIN o GUARD)
+    * user_name       (nombre completo del nuevo miembro) 
+     
 POST http://icsseseguridad.com/location-security/public/messenger/send
 
     Envio de mensaje al otro usuario, recibe parametros en el body: 
     * text              (mensaje que se envia)
-    * chat_id       
+    * chat_id           (id del chat si el mensaje pertenece a un chat)
+    * channel_id        (id del channel si el mensaje pertenece a un chat grupal)
     * sender_id         (id del usuario que envia)
     * sender_type       (tipo de usuario que envia. ADMIN o GUARD)
     * sender_name       (nombre completo del que envia)
@@ -913,6 +932,22 @@ GET http://icsseseguridad.com/location-security/public/messenger/conversations/g
 GET http://icsseseguridad.com/location-security/public/messenger/conversations/chat/{id}
  
      obtiene todos los mensajes de una conversacion atravez del id dle chat
+     
+GET http://icsseseguridad.com/location-security/public/messenger/channel/guard/{id}
+ 
+     obtiene todos los channel al que esta suscrito el guardia
+     
+GET http://icsseseguridad.com/location-security/public/messenger/channel/admin/{id}
+ 
+     obtiene todos los channel al que esta suscrito el administrador
+     
+GET http://icsseseguridad.com/location-security/public/messenger/channel/{id}/members
+ 
+     obtiene todos los miembros de un channel
+     
+GET http://icsseseguridad.com/location-security/public/messenger/conversations/channel/{id}
+ 
+     obtiene todos los mensajes de un channel
      
 # * Banner [imagenes para mostras en el home de las tablets]
 

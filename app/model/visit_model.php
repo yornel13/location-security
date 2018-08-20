@@ -199,7 +199,7 @@ class VisitModel
         ];
     }
 
-    public function getByDateAndProperty($propertyName, $propertyValue, $year = false, $month = false, $day = false)
+    public function getByDateAndProperty($propertyName, $propertyValue, $status, $year = false, $month = false, $day = false)
     {
         $timestamp = time()-(5*60*60);
         if (is_bool($year) && !$year) {
@@ -211,11 +211,15 @@ class VisitModel
         if (is_bool($day) && !$day) {
             $day = gmdate("d", $timestamp);
         }
+        if ($status === 'all') {
+            $status = array(0,1);
+        }
         $data = $this->db
             ->from($this->table)
             ->where('control_visit.create_date >= ?', $year."-".$month."-".$day." 00:00:00")
             ->where('control_visit.create_date <= ?', $year."-".$month."-".$day." 23:59:59")
             ->where($propertyName, $propertyValue)
+            ->where('status', $status)
             ->select('visitor.dni AS visitor_dni')
             ->select('visitor.name AS visitor_name')
             ->select('visitor.lastname AS visitor_lastname')
@@ -230,27 +234,35 @@ class VisitModel
         ];
     }
 
-    public function getByGuardInDate($id, $year = false, $month = false, $day = false) {
-        return $this->getByDateAndProperty('guard_id', $id, $year, $month, $day);
+    public function getByGuardInDate($id, $status, $year = false, $month = false, $day = false) {
+        return $this->getByDateAndProperty('guard_id', $id, $status, $year, $month, $day);
     }
 
-    public function getByVehicleInDate($id, $year = false, $month = false, $day = false) {
-        return $this->getByDateAndProperty('vehicle_id', $id, $year, $month, $day);
+    public function getByVehicleInDate($id, $status, $year = false, $month = false, $day = false) {
+        return $this->getByDateAndProperty('vehicle_id', $id, $status, $year, $month, $day);
     }
 
-    public function getByVisitorInDate($id, $year = false, $month = false, $day = false) {
-        return $this->getByDateAndProperty('visitor_id', $id, $year, $month, $day);
+    public function getByVisitorInDate($id, $status, $year = false, $month = false, $day = false) {
+        return $this->getByDateAndProperty('visitor_id', $id, $status, $year, $month, $day);
     }
 
-    public function getByClerkInDate($id, $year = false, $month = false, $day = false) {
-        return $this->getByDateAndProperty('visited_id', $id, $year, $month, $day);
+    public function getByClerkInDate($id, $status, $year = false, $month = false, $day = false) {
+        return $this->getByDateAndProperty('visited_id', $id, $status, $year, $month, $day);
     }
 
-    public function getByGuard($id)
+    public function getByStatusInDate($status, $year = false, $month = false, $day = false) {
+        return $this->getByDateAndProperty('control_visit.id > ?', 0, $status, $year, $month, $day);
+    }
+
+    public function getByGuard($id, $status)
     {
+        if ($status === 'all') {
+            $status = array(0,1);
+        }
         $data = $this->db
             ->from($this->table)
             ->where('guard_id', $id)
+            ->where('status', $status)
             ->select('visitor.dni AS visitor_dni')
             ->select('visitor.name AS visitor_name')
             ->select('visitor.lastname AS visitor_lastname')
@@ -265,11 +277,15 @@ class VisitModel
         ];
     }
 
-    public function getByVehicle($id)
+    public function getByVehicle($id, $status)
     {
+        if ($status === 'all') {
+            $status = array(0,1);
+        }
         $data = $this->db
             ->from($this->table)
             ->where('vehicle_id', $id)
+            ->where('status', $status)
             ->select('visitor.dni AS visitor_dni')
             ->select('visitor.name AS visitor_name')
             ->select('visitor.lastname AS visitor_lastname')
@@ -284,11 +300,15 @@ class VisitModel
         ];
     }
 
-    public function getByVisitor($id)
+    public function getByVisitor($id, $status)
     {
+        if ($status === 'all') {
+            $status = array(0,1);
+        }
         $data = $this->db
             ->from($this->table)
             ->where('visitor_id', $id)
+            ->where('status', $status)
             ->select('visitor.dni AS visitor_dni')
             ->select('visitor.name AS visitor_name')
             ->select('visitor.lastname AS visitor_lastname')
@@ -303,11 +323,37 @@ class VisitModel
         ];
     }
 
-    public function getByClerk($id)
+    public function getByClerk($id, $status)
     {
+        if ($status === 'all') {
+            $status = array(0,1);
+        }
         $data = $this->db
             ->from($this->table)
             ->where('visited_id', $id)
+            ->where('status', $status)
+            ->select('visitor.dni AS visitor_dni')
+            ->select('visitor.name AS visitor_name')
+            ->select('visitor.lastname AS visitor_lastname')
+            ->leftJoin('visitor_vehicle ON visitor_vehicle.id = vehicle_id')
+            ->select('visitor_vehicle.plate')
+            ->orderBy('id DESC')
+            ->fetchAll();
+
+        return [
+            'data' => $data,
+            'total' => count($data)
+        ];
+    }
+
+    public function getByStatus($status)
+    {
+        if ($status === 'all') {
+            $status = array(0,1);
+        }
+        $data = $this->db
+            ->from($this->table)
+            ->where('status', $status)
             ->select('visitor.dni AS visitor_dni')
             ->select('visitor.name AS visitor_name')
             ->select('visitor.lastname AS visitor_lastname')

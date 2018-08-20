@@ -1,5 +1,6 @@
 <?php
 
+use App\Middleware\Auth2Middleware;
 use App\Middleware\AuthMiddleware;
 use App\Validation\AuthValidation;
 

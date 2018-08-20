@@ -30,12 +30,6 @@ $app->group('/visit', function () {
                 json_encode($this->model->visit->delete($args['id']))
             );
     });
-    $this->get('', function ($req, $res, $args) {
-        return $res->withHeader('Content-type', 'application/json')
-            ->write(
-                json_encode($this->model->visit->getAll())
-            );
-    });
     $this->get('/last/group', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
@@ -54,96 +48,104 @@ $app->group('/visit', function () {
                 json_encode($this->model->visit->getAllActive())
             );
     });
-    $this->get('/date/today', function ($req, $res, $args) {
-        return $res->withHeader('Content-type', 'application/json')
-            ->write(
-                json_encode($this->model->visit->getByDate())
-            );
-    });
-    $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
-        return $res->withHeader('Content-type', 'application/json')
-            ->write(
-                json_encode($this->model->visit->getByDate($args['year'],$args['month'],$args['day']))
-            );
-    });
-    $this->group('/guard/{id}', function () {
+    $this->group('/status/{status}', function () {
         $this->get('', function ($req, $res, $args) {
             return $res->withHeader('Content-type', 'application/json')
                 ->write(
-                    json_encode($this->model->visit->getByGuard($args['id']))
+                    json_encode($this->model->visit->getByStatus($args['status']))
                 );
         });
         $this->get('/date', function ($req, $res, $args) {
             return $res->withHeader('Content-type', 'application/json')
                 ->write(
-                    json_encode($this->model->visit->getByGuardInDate($args['id']))
+                    json_encode($this->model->visit->getByStatusInDate($args['status']))
                 );
         });
         $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
             return $res->withHeader('Content-type', 'application/json')
                 ->write(
-                    json_encode($this->model->visit->getByGuardInDate($args['id'], $args['year'],$args['month'],$args['day']))
+                    json_encode($this->model->visit->getByStatusInDate($args['status'], $args['year'],$args['month'],$args['day']))
                 );
         });
-    });
-    $this->group('/vehicle/{id}', function () {
-        $this->get('', function ($req, $res, $args) {
-            return $res->withHeader('Content-type', 'application/json')
-                ->write(
-                    json_encode($this->model->visit->getByVehicle($args['id']))
-                );
+        $this->group('/guard/{id}', function () {
+            $this->get('', function ($req, $res, $args) {
+                return $res->withHeader('Content-type', 'application/json')
+                    ->write(
+                        json_encode($this->model->visit->getByGuard($args['id'], $args['status']))
+                    );
+            });
+            $this->get('/date', function ($req, $res, $args) {
+                return $res->withHeader('Content-type', 'application/json')
+                    ->write(
+                        json_encode($this->model->visit->getByGuardInDate($args['id'], $args['status']))
+                    );
+            });
+            $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
+                return $res->withHeader('Content-type', 'application/json')
+                    ->write(
+                        json_encode($this->model->visit->getByGuardInDate($args['id'], $args['status'], $args['year'],$args['month'],$args['day']))
+                    );
+            });
         });
-        $this->get('/date', function ($req, $res, $args) {
-            return $res->withHeader('Content-type', 'application/json')
-                ->write(
-                    json_encode($this->model->visit->getByVehicleInDate($args['id']))
-                );
+        $this->group('/vehicle/{id}', function () {
+            $this->get('', function ($req, $res, $args) {
+                return $res->withHeader('Content-type', 'application/json')
+                    ->write(
+                        json_encode($this->model->visit->getByVehicle($args['id'], $args['status']))
+                    );
+            });
+            $this->get('/date', function ($req, $res, $args) {
+                return $res->withHeader('Content-type', 'application/json')
+                    ->write(
+                        json_encode($this->model->visit->getByVehicleInDate($args['id'], $args['status']))
+                    );
+            });
+            $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
+                return $res->withHeader('Content-type', 'application/json')
+                    ->write(
+                        json_encode($this->model->visit->getByVehicleInDate($args['id'], $args['status'], $args['year'],$args['month'],$args['day']))
+                    );
+            });
         });
-        $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
-            return $res->withHeader('Content-type', 'application/json')
-                ->write(
-                    json_encode($this->model->visit->getByVehicleInDate($args['id'], $args['year'],$args['month'],$args['day']))
-                );
+        $this->group('/visitor/{id}', function () {
+            $this->get('', function ($req, $res, $args) {
+                return $res->withHeader('Content-type', 'application/json')
+                    ->write(
+                        json_encode($this->model->visit->getByVisitor($args['id'], $args['status']))
+                    );
+            });
+            $this->get('/date', function ($req, $res, $args) {
+                return $res->withHeader('Content-type', 'application/json')
+                    ->write(
+                        json_encode($this->model->visit->getByVisitorInDate($args['id'], $args['status']))
+                    );
+            });
+            $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
+                return $res->withHeader('Content-type', 'application/json')
+                    ->write(
+                        json_encode($this->model->visit->getByVisitorInDate($args['id'], $args['status'], $args['year'],$args['month'],$args['day']))
+                    );
+            });
         });
-    });
-    $this->group('/visitor/{id}', function () {
-        $this->get('', function ($req, $res, $args) {
-            return $res->withHeader('Content-type', 'application/json')
-                ->write(
-                    json_encode($this->model->visit->getByVisitor($args['id']))
-                );
-        });
-        $this->get('/date', function ($req, $res, $args) {
-            return $res->withHeader('Content-type', 'application/json')
-                ->write(
-                    json_encode($this->model->visit->getByVisitorInDate($args['id']))
-                );
-        });
-        $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
-            return $res->withHeader('Content-type', 'application/json')
-                ->write(
-                    json_encode($this->model->visit->getByVisitorInDate($args['id'], $args['year'],$args['month'],$args['day']))
-                );
-        });
-    });
-    $this->group('/clerk/{id}', function () {
-        $this->get('', function ($req, $res, $args) {
-            return $res->withHeader('Content-type', 'application/json')
-                ->write(
-                    json_encode($this->model->visit->getByClerk($args['id']))
-                );
-        });
-        $this->get('/date', function ($req, $res, $args) {
-            return $res->withHeader('Content-type', 'application/json')
-                ->write(
-                    json_encode($this->model->visit->getByClerkInDate($args['id']))
-                );
-        });
-        $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
-            return $res->withHeader('Content-type', 'application/json')
-                ->write(
-                    json_encode($this->model->visit->getByClerkInDate($args['id'], $args['year'],$args['month'],$args['day']))
-                );
+        $this->group('/clerk/{id}', function () {
+            $this->get('', function ($req, $res, $args) {
+                return $res->withHeader('Content-type', 'application/json')
+                    ->write(
+                        json_encode($this->model->visit->getByClerk($args['id'], $args['status']))
+                    );
+            });
+            $this->get('/date', function ($req, $res, $args) {
+                return $res->withHeader('Content-type', 'application/json')
+                    ->write(
+                        json_encode($this->model->visit->getByClerkInDate($args['id'], $args['status']))
+                    );
+            });
+            $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
+                return $res->withHeader('Content-type', 'application/json')
+                    ->write(
+                        json_encode($this->model->visit->getByClerkInDate($args['id'], $args['status'], $args['year'],$args['month'],$args['day']))
+                    );
+            });
         });
     });
 })/*->add(new AuthMiddleware($app))*/;

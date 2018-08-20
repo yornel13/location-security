@@ -633,10 +633,6 @@ DELETE http://icsseseguridad.com/location-security/public/visitor-vehicle/{id}
     Elimina un vehiculo vitante por el id
     
 # * Visita (visit)
-
-GET http://icsseseguridad.com/location-security/public/visit
-
-    obtiene la lista de visitas
     
 GET http://icsseseguridad.com/location-security/public/visit/active/1
 
@@ -646,59 +642,63 @@ GET http://icsseseguridad.com/location-security/public/visit/{id}
 
     obtiene una visita por su id
     
-GET http://icsseseguridad.com/location-security/public/visit/date/today
+GET http://icsseseguridad.com/location-security/public/visit/status/{status}
+
+    obtiene la lista de visitas
+    
+GET http://icsseseguridad.com/location-security/public/visit/status/{status}/date
  
      obtiene todas las visitas registradas del dia actual
     
-GET http://icsseseguridad.com/location-security/public/visit/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/location-security/public/visit/status/{status}/date/{year}/{month}/{day}
 
     obtiene todas las visitas registradas del dia seleccionado
     
-GET http://icsseseguridad.com/location-security/public/visit/guard/{id}     <- by Guard
+GET http://icsseseguridad.com/location-security/public/visit/status/{status}/guard/{id}     <- by Guard
  
      obtiene todas las visitas registradas de un empleado por el id
      
-GET http://icsseseguridad.com/location-security/public/visit/guard/{id}/date
+GET http://icsseseguridad.com/location-security/public/visit/status/{status}/guard/{id}/date
  
      obtiene todas las visitas registradas de un empleado por el id del dia actual
      
-GET http://icsseseguridad.com/location-security/public/visit/guard/{id}/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/location-security/public/visit/status/{status}/guard/{id}/date/{year}/{month}/{day}
  
      obtiene todas las visitas registradas de un empleado por el id del dia seleccionado
      
-GET http://icsseseguridad.com/location-security/public/visit/vehicle/{id}       <- by Vehicle    
+GET http://icsseseguridad.com/location-security/public/visit/status/{status}/vehicle/{id}       <- by Vehicle    
  
      obtiene todas las visitas registradas por el id del vehiculo
      
-GET http://icsseseguridad.com/location-security/public/visit/vehicle/{id}/date
+GET http://icsseseguridad.com/location-security/public/visit/status/{status}/vehicle/{id}/date
  
      obtiene todas las visitas registradas por el id del vehiculo del dia actual
      
-GET http://icsseseguridad.com/location-security/public/visit/vehicle/{id}/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/location-security/public/visit/status/{status}/vehicle/{id}/date/{year}/{month}/{day}
  
      obtiene todas las visitas registradas por el id del vehiculo del dia seleccionado
      
-GET http://icsseseguridad.com/location-security/public/visit/visitor/{id}       <- by Visitor
+GET http://icsseseguridad.com/location-security/public/visit/status/{status}/visitor/{id}       <- by Visitor
  
      obtiene todas las visitas registradas por el id del visitante
      
-GET http://icsseseguridad.com/location-security/public/visit/visitor/{id}/date
+GET http://icsseseguridad.com/location-security/public/visit/status/{status}/visitor/{id}/date
  
      obtiene todas las visitas registradas por el id del visitante del dia actual
      
-GET http://icsseseguridad.com/location-security/public/visit/visitor/{id}/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/location-security/public/visit/status/{status}/visitor/{id}/date/{year}/{month}/{day}
  
      obtiene todas las visitas registradas por el id del visitante del dia seleccionado
      
-GET http://icsseseguridad.com/location-security/public/visit/clerk/{id}     <- by Clerk
+GET http://icsseseguridad.com/location-security/public/visit/status/{status}/clerk/{id}     <- by Clerk
  
      obtiene todas las visitas registradas por el id del funcionario visitado
      
-GET http://icsseseguridad.com/location-security/public/visit/clerk/{id}/date
+GET http://icsseseguridad.com/location-security/public/visit/status/{status}/clerk/{id}/date
  
      obtiene todas las visitas registradas por el id del funcionario visitado del dia actual
      
-GET http://icsseseguridad.com/location-security/public/visit/clerk/{id}/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/location-security/public/visit/status/{status}/clerk/{id}/date/{year}/{month}/{day}
  
      obtiene todas las visitas registradas por el id del funcionario visitado del dia seleccionado
     

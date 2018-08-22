@@ -898,6 +898,7 @@ POST http://icsseseguridad.com/location-security/public/messenger/channel
     Creacion de channel para chat grupal y agregar al creador al channel de una vez, 
         recibe parametros en el body:
         
+    * name               (nombre dle grupo)
     * creator_id         (id del creador)
     * creator_type       (tipo de usuario/ ADMIN o GUARD)
     * creator_name       (nombre completo del creador)  
@@ -949,7 +950,7 @@ GET http://icsseseguridad.com/location-security/public/messenger/conversations/c
  
      obtiene todos los mensajes de un channel
      
-# * Banner [imagenes para mostras en el home de las tablets]
+# * Banner [imagenes para mostrar en el home de las tablets]
 
 GET http://icsseseguridad.com/location-security/public/banner
 

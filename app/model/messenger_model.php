@@ -199,16 +199,17 @@ class MessengerModel
 
                 $id = null;
                 $type = null;
-                if ($chat->user_1_id === $data['sender_id']
-                    && $chat->user_1_type === $data['sender_type']) {
+                if ($chat->user_1_id == $data['sender_id']
+                    && $chat->user_1_type == $data['sender_type']) {
                     $id = $chat->user_2_id;
                     $type =  $chat->user_2_type;
                 }
-                if ($chat->user_2_id === $data['sender_id']
-                    && $chat->user_2_type === $data['sender_type']) {
+                if ($chat->user_2_id == $data['sender_id']
+                    && $chat->user_2_type == $data['sender_type']) {
                     $id = $chat->user_1_id;
                     $type =  $chat->user_1_type;
                 }
+
                 if ($type == $this->GUARD) {
                     $registration = $this->db
                         ->from($this->table_tablet_token)

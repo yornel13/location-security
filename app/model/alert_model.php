@@ -54,6 +54,86 @@ class AlertModel
         return $this->response->SetResponse(true);
     }
 
+    public function getByCauseInDate($cause, $year = false, $month = false, $day = false)
+    {
+        $timestamp = time()-(5*60*60);
+        if (is_bool($year) && !$year) {
+            $year = gmdate("Y", $timestamp);
+        }
+        if (is_bool($month) && !$month) {
+            $month = gmdate("m", $timestamp);
+        }
+        if (is_bool($day) && !$day) {
+            $day = gmdate("d", $timestamp);
+        }
+        if ($cause === 'all') {
+            $data = $this->db
+                ->from($this->table)
+                ->where('alert.create_date >= ?', $year . "-" . $month . "-" . $day . " 00:00:00")
+                ->where('alert.create_date <= ?', $year . "-" . $month . "-" . $day . " 23:59:59")
+                ->select("guard.dni as guard_dni")
+                ->select("guard.name as guard_name")
+                ->orderBy('id DESC')
+                ->fetchAll();
+        } else {
+            $data = $this->db
+                ->from($this->table)
+                ->where('alert.create_date >= ?', $year . "-" . $month . "-" . $day . " 00:00:00")
+                ->where('alert.create_date <= ?', $year . "-" . $month . "-" . $day . " 23:59:59")
+                ->where('cause', $cause)
+                ->select("guard.dni as guard_dni")
+                ->select("guard.name as guard_name")
+                ->orderBy('id DESC')
+                ->fetchAll();
+        }
+
+        return [
+            'data' => $data,
+            'total' => count($data)
+        ];
+    }
+
+    public function getByCauseAndGuardInDate($cause, $guard_id, $year = false, $month = false, $day = false)
+    {
+        $timestamp = time()-(5*60*60);
+        if (is_bool($year) && !$year) {
+            $year = gmdate("Y", $timestamp);
+        }
+        if (is_bool($month) && !$month) {
+            $month = gmdate("m", $timestamp);
+        }
+        if (is_bool($day) && !$day) {
+            $day = gmdate("d", $timestamp);
+        }
+        if ($cause === 'all') {
+            $data = $this->db
+                ->from($this->table)
+                ->where('alert.create_date >= ?', $year . "-" . $month . "-" . $day . " 00:00:00")
+                ->where('alert.create_date <= ?', $year . "-" . $month . "-" . $day . " 23:59:59")
+                ->where('guard_id', $guard_id)
+                ->select("guard.dni as guard_dni")
+                ->select("guard.name as guard_name")
+                ->orderBy('id DESC')
+                ->fetchAll();
+        } else {
+            $data = $this->db
+                ->from($this->table)
+                ->where('alert.create_date >= ?', $year . "-" . $month . "-" . $day . " 00:00:00")
+                ->where('alert.create_date <= ?', $year . "-" . $month . "-" . $day . " 23:59:59")
+                ->where('cause', $cause)
+                ->where('guard_id', $guard_id)
+                ->select("guard.dni as guard_dni")
+                ->select("guard.name as guard_name")
+                ->orderBy('id DESC')
+                ->fetchAll();
+        }
+
+        return [
+            'data' => $data,
+            'total' => count($data)
+        ];
+    }
+
     public function get($id)
     {
         return $this->db
@@ -66,6 +146,8 @@ class AlertModel
         $data = $this->db
             ->from($this->table)
             ->orderBy('id DESC')
+            ->select("guard.dni as guard_dni")
+            ->select("guard.name as guard_name")
             ->fetchAll();
 
         return [
@@ -80,7 +162,61 @@ class AlertModel
             ->from($this->table)
             ->where('status', 1)
             ->orderBy('id DESC')
+            ->select("guard.dni as guard_dni")
+            ->select("guard.name as guard_name")
             ->fetchAll();
+
+        return [
+            'data' => $data,
+            'total' => count($data)
+        ];
+    }
+
+    public function getByCause($cause)
+    {
+        if ($cause === 'all') {
+            $cause = null;
+            $data = $this->db
+                ->from($this->table)
+                ->select("guard.dni as guard_dni")
+                ->select("guard.name as guard_name")
+                ->orderBy('id DESC')
+                ->fetchAll();
+        } else {
+            $data = $this->db
+                ->from($this->table)
+                ->where('cause', $cause)
+                ->select("guard.dni as guard_dni")
+                ->select("guard.name as guard_name")
+                ->orderBy('id DESC')
+                ->fetchAll();
+        }
+        return [
+            'data' => $data,
+            'total' => count($data)
+        ];
+    }
+
+    public function getByGuard($cause, $guard_id)
+    {
+        if ($cause === 'all') {
+            $data = $this->db
+                ->from($this->table)
+                ->where('guard_id', $guard_id)
+                ->select("guard.dni as guard_dni")
+                ->select("guard.name as guard_name")
+                ->orderBy('id DESC')
+                ->fetchAll();
+        } else {
+            $data = $this->db
+                ->from($this->table)
+                ->where('cause', $cause)
+                ->where('guard_id', $guard_id)
+                ->select("guard.dni as guard_dni")
+                ->select("guard.name as guard_name")
+                ->orderBy('id DESC')
+                ->fetchAll();
+        }
 
         return [
             'data' => $data,

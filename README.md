@@ -741,6 +741,30 @@ GET http://icsseseguridad.com/location-security/public/alert/{id}
 
     obtiene una alerta por su id
     
+GET http://icsseseguridad.com/location-security/public/alert/cause/{cause}
+
+    obtiene la lista de alertas por su causa
+    
+GET http://icsseseguridad.com/location-security/public/alert/cause/{cause}/date
+
+    obtiene la lista de alertas por su causa del dia actual
+    
+GET http://icsseseguridad.com/location-security/public/alert/cause/{cause}/date/{year}/{month}/{day}
+
+    obtiene la lista de alertas por su causa del dia seleccionado
+    
+GET http://icsseseguridad.com/location-security/public/alert/cause/{cause}/guard/{id}
+
+    obtiene la lista de alertas por su causa y id del guardia
+    
+GET http://icsseseguridad.com/location-security/public/alert/cause/{cause}/guard/{id}/date
+
+    obtiene la lista de alertas por su causa y id del guardia del dia actual
+    
+GET http://icsseseguridad.com/location-security/public/alert/cause/{cause}/guard/{id}/date/{year}/{month}/{day}
+
+    obtiene la lista de alertas por su causa y id del guardia del dia seleccionado
+    
 POST http://icsseseguridad.com/location-security/public/alert 
 
     Registrar una visita, recibe parametros en el body:

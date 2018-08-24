@@ -23,6 +23,7 @@ class SpecialReportModel
         $data['create_date'] = $timestamp;
         $data['update_date'] = $timestamp;
         $data['status'] = 1;
+        $data['resolved'] = 1;
 
         $query = $this->db
             ->insertInto($this->table, $data)

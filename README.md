@@ -968,5 +968,54 @@ POST http://icsseseguridad.com/location-security/public/banner
 DELETE http://icsseseguridad.com/location-security/public/banner/{id}
 
     Elimina una banner por el id
+    
+# * Bounds 
+
+    Los vehiculos solo pueden estar en un cerco a la vez
+
+GET http://icsseseguridad.com/location-security/public/bounds
+
+    obtiene todas los cercos virutales
+   
+POST http://icsseseguridad.com/location-security/public/bounds 
+
+    Registrar un cerco virutal, recibe parametro en el body:
+    * name
+    * points (array string de puntos del poligono)
+
+PUT http://icsseseguridad.com/location-security/public/bounds/{id}
+
+    Edita un cerco virutal, recibe parametro en el body:
+    * name
+    * points (array string de puntos del poligono)
+    
+DELETE http://icsseseguridad.com/location-security/public/bounds/{id}
+
+    Elimina un cerco virutal.
+    
+POST http://icsseseguridad.com/location-security/public/bounds/{id}/vehicle
+
+    Agrega vehiculos al cerco virtual, recibe por el bodi un array en string de "imei"
+    
+    ejemplo: [
+             	{
+             		"imei": "867162025555004"
+             	},
+             	{
+             		"imei": "862366030046173"
+             	},
+             	{
+             		"imei": "860599001483437"
+             	}
+             ]
+             
+DELETE http://icsseseguridad.com/location-security/public/bounds/vehicle/{vehicle_id}
+
+    quita un vehiculo del cerco virtual
+    
+GET http://icsseseguridad.com/location-security/public/bounds/{id}/vehicle
+
+    obtiene todas los vehiculos asociados a un cerco virtual
+   
      
         

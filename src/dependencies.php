@@ -50,6 +50,7 @@ $container['model'] = function ($c) {
         'utility' => new App\Model\UtilityModel($c->db),
         'tablet' => new App\Model\TabletModel($c->db),
         'messenger' => new App\Model\MessengerModel($c->db),
-        'banner' => new App\Model\BannerModel($c->db)
+        'banner' => new App\Model\BannerModel($c->db),
+        'bounds' => new App\Model\BoundsModel($c->db)
     ];
 };

@@ -209,6 +209,24 @@ class WatchModel
         ];
     }
 
+    public function getAllActiveByGuard($guard_id)
+    {
+        $data = $this->db
+            ->from($this->table)
+            ->where('guard_id', $guard_id)
+            ->select('guard.dni as guard_dni')
+            ->select('guard.name as guard_name')
+            ->select('guard.lastname as guard_lastname')
+            ->where('status', 1)
+            ->orderBy('id DESC')
+            ->fetchAll();
+
+        return [
+            'data' => $data,
+            'total' => count($data)
+        ];
+    }
+
     public function getAllActive()
     {
         $watches = $this->db

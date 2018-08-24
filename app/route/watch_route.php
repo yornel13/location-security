@@ -81,6 +81,12 @@ $app->group('/watch', function () {
                     json_encode($this->model->watch->getByGuard($args['id']))
                 );
         });
+        $this->get('/active/1', function ($req, $res, $args) {
+            return $res->withHeader('Content-type', 'application/json')
+                ->write(
+                    json_encode($this->model->watch->getAllActiveByGuard($args['id']))
+                );
+        });
         $this->get('/date', function ($req, $res, $args) {
             return $res->withHeader('Content-type', 'application/json')
                 ->write(

@@ -187,6 +187,10 @@ GET http://icsseseguridad.com/location-security/public/watch/date/{year}/{month}
 GET http://icsseseguridad.com/location-security/public/watch/guard/{id}
 
     Obtiene todas las guardias por el id del guardia
+    
+GET http://icsseseguridad.com/location-security/public/watch/guard/{id}/active/1
+
+    Obtiene todas las guardias activas por el id del guardia
 
 GET http://icsseseguridad.com/location-security/public/watch/guard/{id}/date
 

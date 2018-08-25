@@ -404,4 +404,17 @@ class MessengerModel
         ];
     }
 
+    public function send_admin_notification($alert) {
+
+        $registrations = $this->db
+            ->from($this->table_web_token)
+            ->fetchAll();
+        $registrations_id = array();
+        foreach ($registrations as $registration) {
+            $registrations_id[] = $registration->registration_id;
+        }
+        $firebase = new FirebaseNotification();
+        $firebase->send_alert_web($alert, $registrations_id);
+    }
+
 }

@@ -26,5 +26,11 @@ $app->group('/vehicle', function () {
                 json_encode($this->model->vehicle->dailyHistory($args['imei'],$args['year'],$args['month'],$args['day']))
             );
     });
+    $this->get('/check/alerts', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->vehicle->checkAlerts())
+            );
+    });
 });
 

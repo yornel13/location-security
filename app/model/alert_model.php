@@ -6,6 +6,12 @@ use App\Lib\Response;
 
 class AlertModel
 {
+    const OUT_BOUNDS = "OUT_BOUNDS";
+    const IGNITION_ON = "IGNITION_ON";
+    const IGNITION_OFF = "IGNITION_OFF";
+    const SPEED_MAX = "SPEED_MAX";
+    const GENERAL = "GENERAL";
+    const INCIDENCE = "INCIDENCE";
     private $db;
     private $table = 'alert';
     private $response;
@@ -14,6 +20,23 @@ class AlertModel
     {
         $this->db = $db;
         $this->response = new Response();
+    }
+
+    public function registerGeneral($data)
+    {
+        $timestamp = time()-(5*60*60);
+        $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
+        $data['create_date'] = $timestamp;
+        $data['update_date'] = $timestamp;
+        $data['status'] = 0;
+
+        $query = $this->db
+            ->insertInto($this->table, $data)
+            ->execute();
+
+        $data['id'] = $query;
+        $this->response->result = $data;
+        return $this->response->SetResponse(true);
     }
 
     public function register($data)
@@ -73,6 +96,7 @@ class AlertModel
                 ->where('alert.create_date <= ?', $year . "-" . $month . "-" . $day . " 23:59:59")
                 ->select("guard.dni as guard_dni")
                 ->select("guard.name as guard_name")
+                ->select("guard.lastname as guard_lastname")
                 ->orderBy('id DESC')
                 ->fetchAll();
         } else {
@@ -83,6 +107,7 @@ class AlertModel
                 ->where('cause', $cause)
                 ->select("guard.dni as guard_dni")
                 ->select("guard.name as guard_name")
+                ->select("guard.lastname as guard_lastname")
                 ->orderBy('id DESC')
                 ->fetchAll();
         }
@@ -113,6 +138,7 @@ class AlertModel
                 ->where('guard_id', $guard_id)
                 ->select("guard.dni as guard_dni")
                 ->select("guard.name as guard_name")
+                ->select("guard.lastname as guard_lastname")
                 ->orderBy('id DESC')
                 ->fetchAll();
         } else {
@@ -124,6 +150,7 @@ class AlertModel
                 ->where('guard_id', $guard_id)
                 ->select("guard.dni as guard_dni")
                 ->select("guard.name as guard_name")
+                ->select("guard.lastname as guard_lastname")
                 ->orderBy('id DESC')
                 ->fetchAll();
         }
@@ -148,6 +175,7 @@ class AlertModel
             ->orderBy('id DESC')
             ->select("guard.dni as guard_dni")
             ->select("guard.name as guard_name")
+            ->select("guard.lastname as guard_lastname")
             ->fetchAll();
 
         return [
@@ -164,6 +192,7 @@ class AlertModel
             ->orderBy('id DESC')
             ->select("guard.dni as guard_dni")
             ->select("guard.name as guard_name")
+            ->select("guard.lastname as guard_lastname")
             ->fetchAll();
 
         return [
@@ -180,6 +209,7 @@ class AlertModel
                 ->from($this->table)
                 ->select("guard.dni as guard_dni")
                 ->select("guard.name as guard_name")
+                ->select("guard.lastname as guard_lastname")
                 ->orderBy('id DESC')
                 ->fetchAll();
         } else {
@@ -188,6 +218,7 @@ class AlertModel
                 ->where('cause', $cause)
                 ->select("guard.dni as guard_dni")
                 ->select("guard.name as guard_name")
+                ->select("guard.lastname as guard_lastname")
                 ->orderBy('id DESC')
                 ->fetchAll();
         }
@@ -205,6 +236,7 @@ class AlertModel
                 ->where('guard_id', $guard_id)
                 ->select("guard.dni as guard_dni")
                 ->select("guard.name as guard_name")
+                ->select("guard.lastname as guard_lastname")
                 ->orderBy('id DESC')
                 ->fetchAll();
         } else {
@@ -214,6 +246,7 @@ class AlertModel
                 ->where('guard_id', $guard_id)
                 ->select("guard.dni as guard_dni")
                 ->select("guard.name as guard_name")
+                ->select("guard.lastname as guard_lastname")
                 ->orderBy('id DESC')
                 ->fetchAll();
         }

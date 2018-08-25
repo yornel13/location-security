@@ -29,7 +29,9 @@ class SpecialReportModel
             ->insertInto($this->table, $data)
             ->execute();
 
-        $this->response->result = $this->get($query);
+        $report = $this->get($query);
+        $this->response->result = $report;
+        $this->alertIncidence($report);
         return $this->response->SetResponse(true);
     }
 
@@ -296,5 +298,28 @@ class SpecialReportModel
                 ->SetResponse(false, 'El reporte especial no exite');
         }
         return $this->response->SetResponse(true);
+    }
+
+    public function alertIncidence($report) {
+        $name = $report->watch->guard->name." ".$report->watch->guard->lastname;
+        if ($report->incidence->level > 1) {
+            $message = $name." ha creado un reporte de incidencia Importante";
+        } else {
+            $message = $name." ha creado un reporte de incidencia";
+        }
+        $alert = [
+            "guard_id" => $report->watch->guard_id,
+            "cause" => AlertModel::INCIDENCE,
+            "message" => $message,
+            "latitude" => $report->latitude,
+            "longitude" => $report->longitude,
+            "extra" => $report
+        ];
+        $alertService = new AlertModel($this->db);
+        if ($report->incidence->level > 1) {
+            $alertService->register($alert);
+        } else {
+            $alertService->registerGeneral($alert);
+        }
     }
 }

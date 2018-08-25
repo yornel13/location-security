@@ -39,6 +39,7 @@ class WatchModel
                 ->execute();
             $data['id'] = $query;
             $data['resumed'] = false;
+            $this->alertInitWatch($data['guard_id'], $data['latitude'], $data['longitude']);
         } catch (Exception $e) {
             if (strpos($e->getMessage(), "foreign key")) {
                 return $this->response->SetResponse(false, 'El guardia no existe');
@@ -67,6 +68,7 @@ class WatchModel
         if ($query === 0) {
             return $this->response->SetResponse(false, 'La guardia no exite');
         } else {
+            $this->alertFinishedWatch($data['guard_id'], $data['latitude'], $data['longitude']);
             $this->response->result = $this->get($id);
         }
         return $this->response->SetResponse(true);
@@ -271,5 +273,35 @@ class WatchModel
                     ->SetResponse(false, 'No se puede borrar esta guardia');
             }
         }
+    }
+
+    public function alertInitWatch($guard_id, $latitude, $longitude) {
+        $guardService = new GuardModel($this->db);
+        $guard = $guardService->get($guard_id);
+        $name = $guard->name." ".$guard->lastname;
+        $alert = [
+            "guard_id" => $guard_id,
+            "cause" => AlertModel::GENERAL,
+            "message" => $name." ha iniciado su guardia",
+            "latitude" => $latitude,
+            "longitude" => $longitude,
+        ];
+        $alertService = new AlertModel($this->db);
+        $alertService->registerGeneral($alert);
+    }
+
+    public function alertFinishedWatch($guard_id, $latitude, $longitude) {
+        $guardService = new GuardModel($this->db);
+        $guard = $guardService->get($guard_id);
+        $name = $guard->name." ".$guard->lastname;
+        $alert = [
+            "guard_id" => $guard_id,
+            "cause" => AlertModel::GENERAL,
+            "message" => $name." ha finalizado su guardia",
+            "latitude" => $latitude,
+            "longitude" => $longitude,
+        ];
+        $alertService = new AlertModel($this->db);
+        $alertService->registerGeneral($alert);
     }
 }

@@ -159,6 +159,8 @@ class BoundsModel
         $data = $this->db
             ->from($this->table_vehicle_bounds)
             ->where("imei", $imei)
+            ->select("bounds.name as bounds_name")
+            ->select("bounds.points as bounds_points")
             ->fetch();
 
         return $data;

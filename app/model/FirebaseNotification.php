@@ -41,4 +41,33 @@ class FirebaseNotification
         curl_close( $ch );
         return $result;
     }
+
+    public function send_alert_web($message, $registrationIds) {
+
+        $expire = array("TTL" => "0");
+        $web_push = array ("headers" => $expire);
+        $fields = array
+        (
+            'registration_ids' => $registrationIds,
+            'data'             => $message,
+            'webpush'          => $web_push
+        );
+
+        $headers = array
+        (
+            'Authorization: key=' . $this->API_ACCESS_KEY,
+            'Content-Type: application/json'
+        );
+
+        $ch = curl_init();
+        curl_setopt( $ch,CURLOPT_URL, $this->url);
+        curl_setopt( $ch,CURLOPT_POST, true );
+        curl_setopt( $ch,CURLOPT_HTTPHEADER, $headers );
+        curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
+        curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
+        curl_setopt( $ch,CURLOPT_POSTFIELDS, json_encode( $fields ) );
+        $result = curl_exec($ch );
+        curl_close( $ch );
+        return $result;
+    }
 }

@@ -68,7 +68,7 @@ class WatchModel
         if ($query === 0) {
             return $this->response->SetResponse(false, 'La guardia no exite');
         } else {
-            $this->alertFinishedWatch($data['guard_id'], $data['latitude'], $data['longitude']);
+            $this->alertFinishedWatch($watch['guard_id'], $data['latitude'], $data['longitude']);
             $this->response->result = $this->get($id);
         }
         return $this->response->SetResponse(true);

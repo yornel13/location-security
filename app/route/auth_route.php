@@ -39,6 +39,14 @@ $app->group('/auth', function () {
                 json_encode($this->model->auth->admin($parameters['dni'], $parameters['password']))
             );
     });
+    $this->post('/logout', function ($req, $res, $args) {
+        $token = $req->getHeaderLine('APP-TOKEN');
+
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->auth->sign_out($token))
+            );
+    });
     $this->get('/verify', function ($req, $res, $args) {
         $token = $req->getHeaderLine('APP-TOKEN');
         return $res->withHeader('Content-type', 'application/json')

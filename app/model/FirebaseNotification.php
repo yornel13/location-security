@@ -14,18 +14,20 @@ class FirebaseNotification
     private $url = 'https://fcm.googleapis.com/fcm/send';
     private $API_ACCESS_KEY = 'AAAA4DA7bSU:APA91bErm3rES3xAUDKX8KMBVDpiENq16FvpcScn3XEGHkIMm1yP4WwqvP_JkQUw0ny2LnElrcsXJcRs6eNI2awjHpnnwem5AxpL-0KgM9XvYMyok1f9L7SZx_KGVJuqxJEaGB09i0t9D2dBP0k-0y8ecsLx4U4O6Q';
 
-    public function send($message, $to) {
+    public function send($message, $registrationIds) {
 
-        $registrationIds = array($to);
-
-        $fields = array
-        (
+        $notification = array(
+            'title' => 'Nuevo Mensaje',
+            'body'  => 'Tienes un nuevo mensaje'
+        );
+        $fields = array(
             'registration_ids' => $registrationIds,
-            'data'             => $message
+            'data'             => $message,
+            'notification'     => $notification,
+            'tll'              => 3600
         );
 
-        $headers = array
-        (
+        $headers = array(
             'Authorization: key=' . $this->API_ACCESS_KEY,
             'Content-Type: application/json'
         );
@@ -46,15 +48,18 @@ class FirebaseNotification
 
         $expire = array("TTL" => "0");
         $web_push = array ("headers" => $expire);
-        $fields = array
-        (
+        $notification = array(
+            'title' => 'Nuevo Alerta',
+            'body'  => 'Tienes una notificación'
+        );
+        $fields = array(
             'registration_ids' => $registrationIds,
             'data'             => $message,
+            'notification'     => $notification,
             'webpush'          => $web_push
         );
 
-        $headers = array
-        (
+        $headers = array(
             'Authorization: key=' . $this->API_ACCESS_KEY,
             'Content-Type: application/json'
         );

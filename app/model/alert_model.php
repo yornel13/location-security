@@ -36,6 +36,7 @@ class AlertModel
 
         $data['id'] = $query;
         $this->response->result = $data;
+        $this->notify($data);
         return $this->response->SetResponse(true);
     }
 
@@ -53,7 +54,13 @@ class AlertModel
 
         $data['id'] = $query;
         $this->response->result = $data;
+        $this->notify($data);
         return $this->response->SetResponse(true);
+    }
+
+    private function notify($alert) {
+        $notificationService = new MessengerModel($this->db);
+        $notificationService->send_alert_notification($alert);
     }
 
     public function update($id)

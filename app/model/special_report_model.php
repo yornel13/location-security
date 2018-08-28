@@ -313,7 +313,7 @@ class SpecialReportModel
             "message" => $message,
             "latitude" => $report->latitude,
             "longitude" => $report->longitude,
-            "extra" => $report
+            "extra" => json_encode($report)
         ];
         $alertService = new AlertModel($this->db);
         if ($report->incidence->level > 1) {

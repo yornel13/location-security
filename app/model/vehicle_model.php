@@ -25,18 +25,19 @@ class VehicleModel
 
     public function getAll()
     {
-        $url = 'http://dts.location-world.com/api/fleet/onlinedevicesinfo?token='.$this->token.'&time_zone_offset=-5&culture=es';
-        $request = Requests::get($url, array('Accept' => 'application/json'));
-
-        $jsonObj = json_decode($request->body, true)["0"];
-
-        $vehicles = [];
-        foreach ($jsonObj as $vehicle) {
-            if ($vehicle['group_name'] === $this->group_name1
-                || $vehicle['group_name'] === $this->group_name2) {
-                $vehicles[count($vehicles)] = $vehicle;
-            }
-        }
+//        $url = 'http://dts.location-world.com/api/fleet/onlinedevicesinfo?token='.$this->token.'&time_zone_offset=-5&culture=es';
+//        $request = Requests::get($url, array('Accept' => 'application/json'));
+//
+//        $jsonObj = json_decode($request->body, true)["0"];
+//
+//        $vehicles = [];
+//        foreach ($jsonObj as $vehicle) {
+//            if ($vehicle['group_name'] === $this->group_name1
+//                || $vehicle['group_name'] === $this->group_name2) {
+//                $vehicles[count($vehicles)] = $vehicle;
+//            }
+//        }
+        $vehicles = $this->getAllLocal();
 
         return [
             'data' => $vehicles,
@@ -118,7 +119,7 @@ class VehicleModel
 
     public function checkAlerts() {
         try {
-            $this->checkAll();
+            return $this->checkAll();
         } catch (Exception $e) {
             return $this->response->SetResponse(false, $e->getMessage());
         }
@@ -131,12 +132,11 @@ class VehicleModel
         $vehiclesLocal = $this->getAllLocal();
         $boundsService = new BoundsModel($this->db);
 
-        $bounds = $boundsService->getAll();
-        foreach ($bounds['data'] as $bound) {
-            $associates_vehicles = $boundsService->getVehiclesBound($bound->id)['data'];
-            $bound->vehicles = $associates_vehicles;
-        }
-
+//        $bounds = $boundsService->getAll();
+//        foreach ($bounds['data'] as $bound) {
+//            $associates_vehicles = $boundsService->getVehiclesBound($bound->id)['data'];
+//            $bound->vehicles = $associates_vehicles;
+//        }
         foreach ($vehiclesExternal as $external) {
             $exist = false;
             foreach ($vehiclesLocal as $local) {

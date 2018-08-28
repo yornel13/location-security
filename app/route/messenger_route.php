@@ -110,6 +110,12 @@ $app->group('/messenger', function () {
                 json_encode($this->model->messenger->getChannelMembers($args['id']))
             );
     });
+    $this->get('/test/alert', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->messenger->send_alert_notification('hola amigo'))
+            );
+    });
 });
 
 

@@ -4,6 +4,7 @@ namespace App\Model;
 
 use App\Lib\Auth;
 use App\Lib\Response;
+use Exception;
 
 class AuthModel
 {
@@ -61,6 +62,25 @@ class AuthModel
             return $this->response->SetResponse(true);
         } else {
             return $this->response->SetResponse(false, 'Credenciales no validas');
+        }
+    }
+
+    public function sign_out($token) {
+        if (is_null($token)) {
+            return $this->response->SetResponse(false, 'debes enviar el token en el header');
+        }
+        try {
+            $auth = $this->verify($token);
+            if ($auth->isAdmin) {
+                $this->db
+                    ->deleteFrom('web_token')
+                    ->where('session', $token)
+                    ->execute();
+            }
+            return $this->response->SetResponse(true);
+
+        } catch (Exception $e) {
+            return $this->response->SetResponse(true);
         }
     }
 

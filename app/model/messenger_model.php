@@ -18,12 +18,9 @@ class MessengerModel
     private $table_web_token = 'web_token';
     private $table_tablet_token = 'tablet_token';
     private $response;
-    private $WAY1 = 'ADMIN-TO-GUARD';
-    private $WAY2 = 'GUARD-TO-ADMIN';
-    private $WAY3 = 'GUARD-TO-GUARD';
-    private $WAY4 = 'ADMIN-TO-ADMIN';
-    private $WAY5 = 'GUARD-TO-CHANNEL';
-    private $WAY6 = 'ADMIN-TO-CHANNEL';
+
+    const ALERT = 'ALERT';
+    const MESSAGE = 'MESSAGE';
 
     public function __CONSTRUCT($db)
     {
@@ -79,6 +76,9 @@ class MessengerModel
 
     public function createChat($data)
     {
+        if ($data['user_1_id'] === $data['user_2_id'] && $data['user_1_type'] === $data['user_2_type']) {
+            return $this->response->SetResponse(false, 'El chat debe ser creado con dos usuarios distintos.');
+        }
         $chat = $this->db
             ->from($this->table_chat)
             ->where('user_1_id', $data['user_1_id'])
@@ -88,7 +88,9 @@ class MessengerModel
             ->fetch();
 
         if (is_object($chat)) {
-            return $this->response->SetResponse(false, 'Ya existe una conversación entre ambos.');
+            $chat->old = true;
+            $this->response->result = $chat;
+            return $this->response->SetResponse(true, 'Ya existe una conversación entre ambos.');
         }
 
         $chat = $this->db
@@ -100,7 +102,9 @@ class MessengerModel
             ->fetch();
 
         if (is_object($chat)) {
-            return $this->response->SetResponse(false, 'Ya existe una conversación entre ambos.');
+            $chat->old = true;
+            $this->response->result = $chat;
+            return $this->response->SetResponse(true, 'Ya existe una conversación entre ambos.');
         }
 
         $timestamp = time()-(5*60*60);
@@ -112,6 +116,7 @@ class MessengerModel
             ->insertInto($this->table_chat, $data)
             ->execute();
         $data['id'] = $query;
+        $chat['old'] = false;
         $this->response->result = $data;
         return $this->response->SetResponse(true);
     }
@@ -224,16 +229,13 @@ class MessengerModel
                 if (is_object($registration)) {
                     $message['receiver_id'] = $id;
                     $message['receiver_type'] = $type;
-                    $firebase = new FirebaseNotification();
-                    $send_result = $firebase->send($message, $registration->registration_id);
-                    if ($send_result !== false && json_decode($send_result)->success == 1) {
-                        return $this->response->SetResponse(true);
-                    } else {
-                        return $this->response->SetResponse(true, "Error de envio de notificacion");
-                    }
+                    $this->send_message_notification($message, $registration->registration_id);
+                    return $this->response->SetResponse(true);
                 } else {
                     return $this->response->SetResponse(true, 'El distinatario no tiene dispositivo registrado.');
                 }
+            } else {
+                return $this->response->SetResponse(false, 'El chat no existe.');
             }
         } else {
             $channel = $this->db
@@ -271,8 +273,7 @@ class MessengerModel
                     if (is_object($registration)) {
                         $message['receiver_id'] = $member->user_id;
                         $message['receiver_type'] = $member->user_type;
-                        $firebase = new FirebaseNotification();
-                        $firebase->send($message, $registration->registration_id);
+                        $this->send_message_notification($message, $registration->registration_id);
                     }
                 }
                 return $this->response->SetResponse(true);
@@ -404,17 +405,39 @@ class MessengerModel
         ];
     }
 
-    public function send_admin_notification($alert) {
+    public function send_message_notification($message, $token) {
+        $data = [
+            'type' => MessengerModel::MESSAGE,
+            'message' => $message
+        ];
+        $registrations_id = array($token);
+        $firebase = new FirebaseNotification();
+        $firebase->send($data, $registrations_id);
+    }
 
+    public function send_alert_notification($alert) {
+        $data = [
+            'type' => MessengerModel::ALERT,
+            'message' => $alert
+        ];
         $registrations = $this->db
             ->from($this->table_web_token)
             ->fetchAll();
         $registrations_id = array();
         foreach ($registrations as $registration) {
-            $registrations_id[] = $registration->registration_id;
+//            $authService = new AuthModel($this->db);
+//            $auth = null;
+//            try {
+//                $auth = $authService->verify($registration->session);
+//            } catch (Exception $e) {}
+//           if (is_object($auth) &&
+//               ((int) $auth->id) === ((int) $registration->admin_id)) {
+               $registrations_id[] = $registration->registration_id;
+           //}
         }
-        $firebase = new FirebaseNotification();
-        $firebase->send_alert_web($alert, $registrations_id);
+        if (count($registrations_id) > 0) {
+            $firebase = new FirebaseNotification();
+            $firebase->send_alert_web($data, $registrations_id);
+        }
     }
-
 }

@@ -109,7 +109,7 @@ class WatchModel
         return $watch;
     }
 
-    public function getByDate($year = false, $month = false, $day = false)
+    public function getByDate($year = false, $month = false, $day = false, $t_year = false, $t_month = false, $t_day = false)
     {
         $timestamp = time()-(5*60*60);
         if (is_bool($year) && !$year) {
@@ -121,22 +121,31 @@ class WatchModel
         if (is_bool($day) && !$day) {
             $day = gmdate("d", $timestamp);
         }
+        if (is_bool($t_year) && !$t_year) {
+            $t_year = gmdate("Y", $timestamp);
+        }
+        if (is_bool($t_month) && !$t_month) {
+            $t_month = gmdate("m", $timestamp);
+        }
+        if (is_bool($t_day) && !$t_day) {
+            $t_day = gmdate("d", $timestamp);
+        }
         $data = $this->db
             ->from($this->table)
             ->where('watch.create_date >= ?', $year."-".$month."-".$day." 00:00:00")
-            ->where('watch.create_date <= ?', $year."-".$month."-".$day." 23:59:59")
+            ->where('watch.create_date <= ?', $t_year . "-" . $t_month . "-" . $t_day . " 23:59:59")
             ->select('guard.dni as guard_dni')
             ->select('guard.name as guard_name')
             ->select('guard.lastname as guard_lastname')
             ->fetchAll();
 
         return [
-            'data' => $data,
-            'total' => count($data)
+            'total' => count($data),
+            'data' => $data
         ];
     }
 
-    public function getByDateAndProperty($propertyName, $propertyValue, $year = false, $month = false, $day = false)
+    public function getByDateAndProperty($propertyName, $propertyValue, $year = false, $month = false, $day = false, $t_year = false, $t_month = false, $t_day = false)
     {
         $timestamp = time()-(5*60*60);
         if (is_bool($year) && !$year) {
@@ -148,10 +157,19 @@ class WatchModel
         if (is_bool($day) && !$day) {
             $day = gmdate("d", $timestamp);
         }
+        if (is_bool($t_year) && !$t_year) {
+            $t_year = gmdate("Y", $timestamp);
+        }
+        if (is_bool($t_month) && !$t_month) {
+            $t_month = gmdate("m", $timestamp);
+        }
+        if (is_bool($t_day) && !$t_day) {
+            $t_day = gmdate("d", $timestamp);
+        }
         $data = $this->db
             ->from($this->table)
             ->where('watch.create_date >= ?', $year."-".$month."-".$day." 00:00:00")
-            ->where('watch.create_date <= ?', $year."-".$month."-".$day." 23:59:59")
+            ->where('watch.create_date <= ?', $t_year . "-" . $t_month . "-" . $t_day . " 23:59:59")
             ->where($propertyName, $propertyValue)
             ->select('guard.dni as guard_dni')
             ->select('guard.name as guard_name')
@@ -160,13 +178,13 @@ class WatchModel
             ->fetchAll();
 
         return [
-            'data' => $data,
-            'total' => count($data)
+            'total' => count($data),
+            'data' => $data
         ];
     }
 
-    public function getByGuardInDate($id, $year = false, $month = false, $day = false) {
-        return $this->getByDateAndProperty('guard_id', $id, $year, $month, $day);
+    public function getByGuardInDate($id, $year = false, $month = false, $day = false, $t_year = false, $t_month = false, $t_day = false) {
+        return $this->getByDateAndProperty('guard_id', $id, $year, $month, $day, $t_year, $t_month, $t_day);
     }
 
     public function getWatchActiveByGuard($id)
@@ -189,8 +207,8 @@ class WatchModel
             ->fetchAll();
 
         return [
-            'data' => $data,
-            'total' => count($data)
+            'total' => count($data),
+            'data' => $data
         ];
     }
 
@@ -206,8 +224,8 @@ class WatchModel
             ->fetchAll();
 
         return [
-            'data' => $data,
-            'total' => count($data)
+            'total' => count($data),
+            'data' => $data
         ];
     }
 
@@ -224,8 +242,8 @@ class WatchModel
             ->fetchAll();
 
         return [
-            'data' => $data,
-            'total' => count($data)
+            'total' => count($data),
+            'data' => $data
         ];
     }
 
@@ -251,8 +269,8 @@ class WatchModel
         }
 
         return [
-            'data' => $watches,
-            'total' => count($watches)
+            'total' => count($watches),
+            'data' => $watches
         ];
     }
 

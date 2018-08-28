@@ -113,8 +113,8 @@ class VisitModel
             ->fetchAll();
 
         return [
-            'data' => $list,
-            'total' => count($list)
+            'total' => count($list),
+            'data' => $list
         ];
     }
 
@@ -127,8 +127,8 @@ class VisitModel
             ->fetchAll();
 
         return [
-            'data' => $list,
-            'total' => count($list)
+            'total' => count($list),
+            'data' => $list
         ];
     }
 
@@ -164,12 +164,12 @@ class VisitModel
             }
         }
         return [
-            'data' => $list,
-            'total' => count($list)
+            'total' => count($list),
+            'data' => $list
         ];
     }
 
-    public function getByDate($year = false, $month = false, $day = false)
+    public function getByDate($year = false, $month = false, $day = false, $t_year = false, $t_month = false, $t_day = false)
     {
         $timestamp = time()-(5*60*60);
         if (is_bool($year) && !$year) {
@@ -181,10 +181,19 @@ class VisitModel
         if (is_bool($day) && !$day) {
             $day = gmdate("d", $timestamp);
         }
+        if (is_bool($t_year) && !$t_year) {
+            $t_year = gmdate("Y", $timestamp);
+        }
+        if (is_bool($t_month) && !$t_month) {
+            $t_month = gmdate("m", $timestamp);
+        }
+        if (is_bool($t_day) && !$t_day) {
+            $t_day = gmdate("d", $timestamp);
+        }
         $data = $this->db
             ->from($this->table)
             ->where('control_visit.create_date >= ?', $year."-".$month."-".$day." 00:00:00")
-            ->where('control_visit.create_date <= ?', $year."-".$month."-".$day." 23:59:59")
+            ->where('control_visit.create_date <= ?', $t_year . "-" . $t_month . "-" . $t_day . " 23:59:59")
             ->select('visitor.dni AS visitor_dni')
             ->select('visitor.name AS visitor_name')
             ->select('visitor.lastname AS visitor_lastname')
@@ -194,12 +203,12 @@ class VisitModel
             ->fetchAll();
 
         return [
-            'data' => $data,
-            'total' => count($data)
+            'total' => count($data),
+            'data' => $data
         ];
     }
 
-    public function getByDateAndProperty($propertyName, $propertyValue, $status, $year = false, $month = false, $day = false)
+    public function getByDateAndProperty($propertyName, $propertyValue, $status, $year = false, $month = false, $day = false, $t_year = false, $t_month = false, $t_day = false)
     {
         $timestamp = time()-(5*60*60);
         if (is_bool($year) && !$year) {
@@ -211,13 +220,22 @@ class VisitModel
         if (is_bool($day) && !$day) {
             $day = gmdate("d", $timestamp);
         }
+        if (is_bool($t_year) && !$t_year) {
+            $t_year = gmdate("Y", $timestamp);
+        }
+        if (is_bool($t_month) && !$t_month) {
+            $t_month = gmdate("m", $timestamp);
+        }
+        if (is_bool($t_day) && !$t_day) {
+            $t_day = gmdate("d", $timestamp);
+        }
         if ($status === 'all') {
             $status = array(0,1);
         }
         $data = $this->db
             ->from($this->table)
             ->where('control_visit.create_date >= ?', $year."-".$month."-".$day." 00:00:00")
-            ->where('control_visit.create_date <= ?', $year."-".$month."-".$day." 23:59:59")
+            ->where('control_visit.create_date <= ?', $t_year . "-" . $t_month . "-" . $t_day . " 23:59:59")
             ->where($propertyName, $propertyValue)
             ->where('status', $status)
             ->select('visitor.dni AS visitor_dni')
@@ -229,29 +247,29 @@ class VisitModel
             ->fetchAll();
 
         return [
-            'data' => $data,
-            'total' => count($data)
+            'total' => count($data),
+            'data' => $data
         ];
     }
 
-    public function getByGuardInDate($id, $status, $year = false, $month = false, $day = false) {
-        return $this->getByDateAndProperty('guard_id', $id, $status, $year, $month, $day);
+    public function getByGuardInDate($id, $status, $year = false, $month = false, $day = false, $t_year = false, $t_month = false, $t_day = false) {
+        return $this->getByDateAndProperty('guard_id', $id, $status, $year, $month, $day, $t_year, $t_month, $t_day);
     }
 
-    public function getByVehicleInDate($id, $status, $year = false, $month = false, $day = false) {
-        return $this->getByDateAndProperty('vehicle_id', $id, $status, $year, $month, $day);
+    public function getByVehicleInDate($id, $status, $year = false, $month = false, $day = false, $t_year = false, $t_month = false, $t_day = false) {
+        return $this->getByDateAndProperty('vehicle_id', $id, $status, $year, $month, $day, $t_year, $t_month, $t_day);
     }
 
-    public function getByVisitorInDate($id, $status, $year = false, $month = false, $day = false) {
-        return $this->getByDateAndProperty('visitor_id', $id, $status, $year, $month, $day);
+    public function getByVisitorInDate($id, $status, $year = false, $month = false, $day = false, $t_year = false, $t_month = false, $t_day = false) {
+        return $this->getByDateAndProperty('visitor_id', $id, $status, $year, $month, $day, $t_year, $t_month, $t_day);
     }
 
-    public function getByClerkInDate($id, $status, $year = false, $month = false, $day = false) {
-        return $this->getByDateAndProperty('visited_id', $id, $status, $year, $month, $day);
+    public function getByClerkInDate($id, $status, $year = false, $month = false, $day = false, $t_year = false, $t_month = false, $t_day = false) {
+        return $this->getByDateAndProperty('visited_id', $id, $status, $year, $month, $day, $t_year, $t_month, $t_day);
     }
 
-    public function getByStatusInDate($status, $year = false, $month = false, $day = false) {
-        return $this->getByDateAndProperty('control_visit.id > ?', 0, $status, $year, $month, $day);
+    public function getByStatusInDate($status, $year = false, $month = false, $day = false, $t_year = false, $t_month = false, $t_day = false) {
+        return $this->getByDateAndProperty('control_visit.id > ?', 0, $status, $year, $month, $day, $t_year, $t_month, $t_day);
     }
 
     public function getByGuard($id, $status)
@@ -272,8 +290,8 @@ class VisitModel
             ->fetchAll();
 
         return [
-            'data' => $data,
-            'total' => count($data)
+            'total' => count($data),
+            'data' => $data
         ];
     }
 
@@ -295,8 +313,8 @@ class VisitModel
             ->fetchAll();
 
         return [
-            'data' => $data,
-            'total' => count($data)
+            'total' => count($data),
+            'data' => $data
         ];
     }
 
@@ -318,8 +336,8 @@ class VisitModel
             ->fetchAll();
 
         return [
-            'data' => $data,
-            'total' => count($data)
+            'total' => count($data),
+            'data' => $data
         ];
     }
 
@@ -341,8 +359,8 @@ class VisitModel
             ->fetchAll();
 
         return [
-            'data' => $data,
-            'total' => count($data)
+            'total' => count($data),
+            'data' => $data
         ];
     }
 
@@ -363,8 +381,8 @@ class VisitModel
             ->fetchAll();
 
         return [
-            'data' => $data,
-            'total' => count($data)
+            'total' => count($data),
+            'data' => $data
         ];
     }
 

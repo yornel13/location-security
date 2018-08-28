@@ -61,10 +61,10 @@ $app->group('/visit', function () {
                     json_encode($this->model->visit->getByStatusInDate($args['status']))
                 );
         });
-        $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
+        $this->get('/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}', function ($req, $res, $args) {
             return $res->withHeader('Content-type', 'application/json')
                 ->write(
-                    json_encode($this->model->visit->getByStatusInDate($args['status'], $args['year'],$args['month'],$args['day']))
+                    json_encode($this->model->visit->getByStatusInDate($args['status'], $args['year'],$args['month'],$args['day'], $args['t_year'],$args['t_month'],$args['t_day']))
                 );
         });
         $this->group('/guard/{id}', function () {
@@ -80,10 +80,10 @@ $app->group('/visit', function () {
                         json_encode($this->model->visit->getByGuardInDate($args['id'], $args['status']))
                     );
             });
-            $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
+            $this->get('/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}', function ($req, $res, $args) {
                 return $res->withHeader('Content-type', 'application/json')
                     ->write(
-                        json_encode($this->model->visit->getByGuardInDate($args['id'], $args['status'], $args['year'],$args['month'],$args['day']))
+                        json_encode($this->model->visit->getByGuardInDate($args['id'], $args['status'], $args['year'],$args['month'],$args['day'], $args['t_year'],$args['t_month'],$args['t_day']))
                     );
             });
         });
@@ -100,10 +100,10 @@ $app->group('/visit', function () {
                         json_encode($this->model->visit->getByVehicleInDate($args['id'], $args['status']))
                     );
             });
-            $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
+            $this->get('/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}', function ($req, $res, $args) {
                 return $res->withHeader('Content-type', 'application/json')
                     ->write(
-                        json_encode($this->model->visit->getByVehicleInDate($args['id'], $args['status'], $args['year'],$args['month'],$args['day']))
+                        json_encode($this->model->visit->getByVehicleInDate($args['id'], $args['status'], $args['year'],$args['month'],$args['day'], $args['t_year'],$args['t_month'],$args['t_day']))
                     );
             });
         });
@@ -120,10 +120,10 @@ $app->group('/visit', function () {
                         json_encode($this->model->visit->getByVisitorInDate($args['id'], $args['status']))
                     );
             });
-            $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
+            $this->get('/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}', function ($req, $res, $args) {
                 return $res->withHeader('Content-type', 'application/json')
                     ->write(
-                        json_encode($this->model->visit->getByVisitorInDate($args['id'], $args['status'], $args['year'],$args['month'],$args['day']))
+                        json_encode($this->model->visit->getByVisitorInDate($args['id'], $args['status'], $args['year'],$args['month'],$args['day'], $args['t_year'],$args['t_month'],$args['t_day']))
                     );
             });
         });
@@ -140,10 +140,10 @@ $app->group('/visit', function () {
                         json_encode($this->model->visit->getByClerkInDate($args['id'], $args['status']))
                     );
             });
-            $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
+            $this->get('/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}', function ($req, $res, $args) {
                 return $res->withHeader('Content-type', 'application/json')
                     ->write(
-                        json_encode($this->model->visit->getByClerkInDate($args['id'], $args['status'], $args['year'],$args['month'],$args['day']))
+                        json_encode($this->model->visit->getByClerkInDate($args['id'], $args['status'], $args['year'],$args['month'],$args['day'], $args['t_year'],$args['t_month'],$args['t_day']))
                     );
             });
         });

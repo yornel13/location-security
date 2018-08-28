@@ -62,29 +62,31 @@ $app->group('/alert', function () {
                     json_encode($this->model->alert->getByCauseInDate($args['cause']))
                 );
         });
-        $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
+        $this->get('/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}', function ($req, $res, $args) {
             return $res->withHeader('Content-type', 'application/json')
                 ->write(
-                    json_encode($this->model->alert->getByCauseInDate($args['cause'], $args['year'],$args['month'],$args['day']))
+                    json_encode($this->model->alert->getByCauseInDate($args['cause'], $args['year'],$args['month'],$args['day'], $args['t_year'],$args['t_month'],$args['t_day']))
                 );
         });
-        $this->get('/guard/{id}', function ($req, $res, $args) {
-            return $res->withHeader('Content-type', 'application/json')
-                ->write(
-                    json_encode($this->model->alert->getByGuard($args['cause'], $args['id']))
-                );
-        });
-        $this->get('/guard/{id}/date', function ($req, $res, $args) {
-            return $res->withHeader('Content-type', 'application/json')
-                ->write(
-                    json_encode($this->model->alert->getByCauseAndGuardInDate($args['cause'], $args['id']))
-                );
-        });
-        $this->get('/guard/{id}/date/{year}/{month}/{day}', function ($req, $res, $args) {
-            return $res->withHeader('Content-type', 'application/json')
-                ->write(
-                    json_encode($this->model->alert->getByCauseAndGuardInDate($args['cause'], $args['id'], $args['year'],$args['month'],$args['day']))
-                );
+        $this->group('/guard/{id}', function () {
+            $this->get('', function ($req, $res, $args) {
+                return $res->withHeader('Content-type', 'application/json')
+                    ->write(
+                        json_encode($this->model->alert->getByGuard($args['cause'], $args['id']))
+                    );
+            });
+            $this->get('/date', function ($req, $res, $args) {
+                return $res->withHeader('Content-type', 'application/json')
+                    ->write(
+                        json_encode($this->model->alert->getByCauseAndGuardInDate($args['cause'], $args['id']))
+                    );
+            });
+            $this->get('/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}', function ($req, $res, $args) {
+                return $res->withHeader('Content-type', 'application/json')
+                    ->write(
+                        json_encode($this->model->alert->getByCauseAndGuardInDate($args['cause'], $args['id'], $args['year'],$args['month'],$args['day'], $args['t_year'],$args['t_month'],$args['t_day']))
+                    );
+            });
         });
     });
 })/*->add(new AuthMiddleware($app))*/;

@@ -66,10 +66,10 @@ $app->group('/binnacle', function () {
                     json_encode($this->model->specialReport->getByResolvedInDate($args['resolved']))
                 );
         });
-        $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
+        $this->get('/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}', function ($req, $res, $args) {
             return $res->withHeader('Content-type', 'application/json')
                 ->write(
-                    json_encode($this->model->specialReport->getByResolvedInDate($args['resolved'], $args['year'],$args['month'],$args['day']))
+                    json_encode($this->model->specialReport->getByResolvedInDate($args['resolved'], $args['year'],$args['month'],$args['day'], $args['t_year'],$args['t_month'],$args['t_day']))
                 );
         });
         $this->group('/guard/{id}', function () {
@@ -85,10 +85,10 @@ $app->group('/binnacle', function () {
                         json_encode($this->model->specialReport->getByGuardInDate($args['id'], $args['resolved']))
                     );
             });
-            $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
+            $this->get('/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}', function ($req, $res, $args) {
                 return $res->withHeader('Content-type', 'application/json')
                     ->write(
-                        json_encode($this->model->specialReport->getByGuardInDate($args['id'], $args['resolved'], $args['year'],$args['month'],$args['day']))
+                        json_encode($this->model->specialReport->getByGuardInDate($args['id'], $args['resolved'], $args['year'],$args['month'],$args['day'], $args['t_year'],$args['t_month'],$args['t_day']))
                     );
             });
         });
@@ -105,10 +105,10 @@ $app->group('/binnacle', function () {
                         json_encode($this->model->specialReport->getByWatchInDate($args['id'], $args['resolved']))
                     );
             });
-            $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
+            $this->get('/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}', function ($req, $res, $args) {
                 return $res->withHeader('Content-type', 'application/json')
                     ->write(
-                        json_encode($this->model->specialReport->getByWatchInDate($args['id'], $args['resolved'], $args['year'],$args['month'],$args['day']))
+                        json_encode($this->model->specialReport->getByWatchInDate($args['id'], $args['resolved'], $args['year'],$args['month'],$args['day'], $args['t_year'],$args['t_month'],$args['t_day']))
                     );
             });
         });
@@ -125,10 +125,10 @@ $app->group('/binnacle', function () {
                         json_encode($this->model->specialReport->getByIncidenceInDate($args['id'], $args['resolved']))
                     );
             });
-            $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
+            $this->get('/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}', function ($req, $res, $args) {
                 return $res->withHeader('Content-type', 'application/json')
                     ->write(
-                        json_encode($this->model->specialReport->getByIncidenceInDate($args['id'], $args['resolved'], $args['year'],$args['month'],$args['day']))
+                        json_encode($this->model->specialReport->getByIncidenceInDate($args['id'], $args['resolved'], $args['year'],$args['month'],$args['day'], $args['t_year'],$args['t_month'],$args['t_day']))
                     );
             });
         });

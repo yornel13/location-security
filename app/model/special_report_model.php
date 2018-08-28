@@ -111,7 +111,7 @@ class SpecialReportModel
         return $query;
     }
 
-    public function getByDate($year = false, $month = false, $day = false)
+    public function getByDate($year = false, $month = false, $day = false, $t_year = false, $t_month = false, $t_day = false)
     {
         $timestamp = time()-(5*60*60);
         if (is_bool($year) && !$year) {
@@ -122,21 +122,30 @@ class SpecialReportModel
         }
         if (is_bool($day) && !$day) {
             $day = gmdate("d", $timestamp);
+        }
+        if (is_bool($t_year) && !$t_year) {
+            $t_year = gmdate("Y", $timestamp);
+        }
+        if (is_bool($t_month) && !$t_month) {
+            $t_month = gmdate("m", $timestamp);
+        }
+        if (is_bool($t_day) && !$t_day) {
+            $t_day = gmdate("d", $timestamp);
         }
         $data = $this->db
             ->from($this->table)
             ->where('create_date >= ?', $year."-".$month."-".$day." 00:00:00")
-            ->where('create_date <= ?', $year."-".$month."-".$day." 23:59:59")
+            ->where('create_date <= ?', $t_year."-".$t_month."-".$t_day." 23:59:59")
             ->orderBy('id DESC')
             ->fetchAll();
 
         return [
-            'data' => $data,
-            'total' => count($data)
+            'total' => count($data),
+            'data' => $data
         ];
     }
 
-    public function getByDateAndProperty($propertyName, $propertyValue, $resolved, $year = false, $month = false, $day = false)
+    public function getByDateAndProperty($propertyName, $propertyValue, $resolved, $year = false, $month = false, $day = false, $t_year = false, $t_month = false, $t_day = false)
     {
         $timestamp = time()-(5*60*60);
         if (is_bool($year) && !$year) {
@@ -147,6 +156,15 @@ class SpecialReportModel
         }
         if (is_bool($day) && !$day) {
             $day = gmdate("d", $timestamp);
+        }
+        if (is_bool($t_year) && !$t_year) {
+            $t_year = gmdate("Y", $timestamp);
+        }
+        if (is_bool($t_month) && !$t_month) {
+            $t_month = gmdate("m", $timestamp);
+        }
+        if (is_bool($t_day) && !$t_day) {
+            $t_day = gmdate("d", $timestamp);
         }
         if ($resolved === 'all') {
             $resolved = array(0,1,2);
@@ -157,7 +175,7 @@ class SpecialReportModel
         $data = $this->db
             ->from($this->table)
             ->where('special_report.create_date >= ?', $year."-".$month."-".$day." 00:00:00")
-            ->where('special_report.create_date <= ?', $year."-".$month."-".$day." 23:59:59")
+            ->where('special_report.create_date <= ?', $t_year . "-" . $t_month . "-" . $t_day . " 23:59:59")
             ->where($propertyName, $propertyValue)
             ->where('resolved', $resolved)
             ->select('watch.guard.dni AS guard_dni')
@@ -165,25 +183,25 @@ class SpecialReportModel
             ->fetchAll();
 
         return [
-            'data' => $data,
-            'total' => count($data)
+            'total' => count($data),
+            'data' => $data
         ];
     }
 
-    public function getByGuardInDate($id, $resolved, $year = false, $month = false, $day = false) {
-        return $this->getByDateAndProperty('watch.guard_id', $id, $resolved, $year, $month, $day);
+    public function getByGuardInDate($id, $resolved, $year = false, $month = false, $day = false, $t_year = false, $t_month = false, $t_day = false) {
+        return $this->getByDateAndProperty('watch.guard_id', $id, $resolved, $year, $month, $day, $t_year, $t_month, $t_day);
     }
 
-    public function getByWatchInDate($id, $resolved, $year = false, $month = false, $day = false) {
-        return $this->getByDateAndProperty('watch_id', $id, $resolved, $year, $month, $day);
+    public function getByWatchInDate($id, $resolved, $year = false, $month = false, $day = false, $t_year = false, $t_month = false, $t_day = false) {
+        return $this->getByDateAndProperty('watch_id', $id, $resolved, $year, $month, $day, $t_year, $t_month, $t_day);
     }
 
-    public function getByIncidenceInDate($id, $resolved, $year = false, $month = false, $day = false) {
-        return $this->getByDateAndProperty('incidence_id', $id, $resolved, $year, $month, $day);
+    public function getByIncidenceInDate($id, $resolved, $year = false, $month = false, $day = false, $t_year = false, $t_month = false, $t_day = false) {
+        return $this->getByDateAndProperty('incidence_id', $id, $resolved, $year, $month, $day, $t_year, $t_month, $t_day);
     }
 
-    public function getByResolvedInDate($resolved, $year = false, $month = false, $day = false) {
-        return $this->getByDateAndProperty('special_report.id > ?', 0, $resolved, $year, $month, $day);
+    public function getByResolvedInDate($resolved, $year = false, $month = false, $day = false, $t_year = false, $t_month = false, $t_day = false) {
+        return $this->getByDateAndProperty('special_report.id > ?', 0, $resolved, $year, $month, $day, $t_year, $t_month, $t_day);
     }
 
     public function getByIncidence($id, $resolved)
@@ -203,8 +221,8 @@ class SpecialReportModel
             ->fetchAll();
 
         return [
-            'data' => $data,
-            'total' => count($data)
+            'total' => count($data),
+            'data' => $data
         ];
     }
 
@@ -225,8 +243,8 @@ class SpecialReportModel
             ->fetchAll();
 
         return [
-            'data' => $data,
-            'total' => count($data)
+            'total' => count($data),
+            'data' => $data
         ];
     }
 
@@ -247,8 +265,8 @@ class SpecialReportModel
             ->fetchAll();
 
         return [
-            'data' => $data,
-            'total' => count($data)
+            'total' => count($data),
+            'data' => $data
         ];
     }
 
@@ -268,8 +286,8 @@ class SpecialReportModel
             ->fetchAll();
 
         return [
-            'data' => $data,
-            'total' => count($data)
+            'total' => count($data),
+            'data' => $data
         ];
     }
 
@@ -283,8 +301,8 @@ class SpecialReportModel
             ->fetchAll();
 
         return [
-            'data' => $data,
-            'total' => count($data)
+            'total' => count($data),
+            'data' => $data
         ];
     }
 

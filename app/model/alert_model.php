@@ -84,7 +84,7 @@ class AlertModel
         return $this->response->SetResponse(true);
     }
 
-    public function getByCauseInDate($cause, $year = false, $month = false, $day = false)
+    public function getByCauseInDate($cause, $year = false, $month = false, $day = false, $t_year = false, $t_month = false, $t_day = false)
     {
         $timestamp = time()-(5*60*60);
         if (is_bool($year) && !$year) {
@@ -96,11 +96,20 @@ class AlertModel
         if (is_bool($day) && !$day) {
             $day = gmdate("d", $timestamp);
         }
+        if (is_bool($t_year) && !$t_year) {
+            $t_year = gmdate("Y", $timestamp);
+        }
+        if (is_bool($t_month) && !$t_month) {
+            $t_month = gmdate("m", $timestamp);
+        }
+        if (is_bool($t_day) && !$t_day) {
+            $t_day = gmdate("d", $timestamp);
+        }
         if ($cause === 'all') {
             $data = $this->db
                 ->from($this->table)
                 ->where('alert.create_date >= ?', $year . "-" . $month . "-" . $day . " 00:00:00")
-                ->where('alert.create_date <= ?', $year . "-" . $month . "-" . $day . " 23:59:59")
+                ->where('alert.create_date <= ?', $t_year . "-" . $t_month . "-" . $t_day . " 23:59:59")
                 ->select("guard.dni as guard_dni")
                 ->select("guard.name as guard_name")
                 ->select("guard.lastname as guard_lastname")
@@ -110,7 +119,7 @@ class AlertModel
             $data = $this->db
                 ->from($this->table)
                 ->where('alert.create_date >= ?', $year . "-" . $month . "-" . $day . " 00:00:00")
-                ->where('alert.create_date <= ?', $year . "-" . $month . "-" . $day . " 23:59:59")
+                ->where('alert.create_date <= ?', $t_year . "-" . $t_month . "-" . $t_day . " 23:59:59")
                 ->where('cause', $cause)
                 ->select("guard.dni as guard_dni")
                 ->select("guard.name as guard_name")
@@ -120,12 +129,12 @@ class AlertModel
         }
 
         return [
-            'data' => $data,
-            'total' => count($data)
+            'total' => count($data),
+            'data' => $data
         ];
     }
 
-    public function getByCauseAndGuardInDate($cause, $guard_id, $year = false, $month = false, $day = false)
+    public function getByCauseAndGuardInDate($cause, $guard_id, $year = false, $month = false, $day = false, $t_year = false, $t_month = false, $t_day = false)
     {
         $timestamp = time()-(5*60*60);
         if (is_bool($year) && !$year) {
@@ -137,11 +146,20 @@ class AlertModel
         if (is_bool($day) && !$day) {
             $day = gmdate("d", $timestamp);
         }
+        if (is_bool($t_year) && !$t_year) {
+            $t_year = gmdate("Y", $timestamp);
+        }
+        if (is_bool($t_month) && !$t_month) {
+            $t_month = gmdate("m", $timestamp);
+        }
+        if (is_bool($t_day) && !$t_day) {
+            $t_day = gmdate("d", $timestamp);
+        }
         if ($cause === 'all') {
             $data = $this->db
                 ->from($this->table)
                 ->where('alert.create_date >= ?', $year . "-" . $month . "-" . $day . " 00:00:00")
-                ->where('alert.create_date <= ?', $year . "-" . $month . "-" . $day . " 23:59:59")
+                ->where('alert.create_date <= ?', $t_year . "-" . $t_month . "-" . $t_day . " 23:59:59")
                 ->where('guard_id', $guard_id)
                 ->select("guard.dni as guard_dni")
                 ->select("guard.name as guard_name")
@@ -152,7 +170,7 @@ class AlertModel
             $data = $this->db
                 ->from($this->table)
                 ->where('alert.create_date >= ?', $year . "-" . $month . "-" . $day . " 00:00:00")
-                ->where('alert.create_date <= ?', $year . "-" . $month . "-" . $day . " 23:59:59")
+                ->where('alert.create_date <= ?', $t_year . "-" . $t_month . "-" . $t_day . " 23:59:59")
                 ->where('cause', $cause)
                 ->where('guard_id', $guard_id)
                 ->select("guard.dni as guard_dni")
@@ -163,8 +181,8 @@ class AlertModel
         }
 
         return [
-            'data' => $data,
-            'total' => count($data)
+            'total' => count($data),
+            'data' => $data
         ];
     }
 
@@ -186,8 +204,8 @@ class AlertModel
             ->fetchAll();
 
         return [
-            'data' => $data,
-            'total' => count($data)
+            'total' => count($data),
+            'data' => $data
         ];
     }
 
@@ -203,8 +221,8 @@ class AlertModel
             ->fetchAll();
 
         return [
-            'data' => $data,
-            'total' => count($data)
+            'total' => count($data),
+            'data' => $data
         ];
     }
 
@@ -230,8 +248,8 @@ class AlertModel
                 ->fetchAll();
         }
         return [
-            'data' => $data,
-            'total' => count($data)
+            'total' => count($data),
+            'data' => $data
         ];
     }
 
@@ -259,8 +277,8 @@ class AlertModel
         }
 
         return [
-            'data' => $data,
-            'total' => count($data)
+            'total' => count($data),
+            'data' => $data
         ];
     }
 

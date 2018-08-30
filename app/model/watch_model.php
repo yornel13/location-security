@@ -9,7 +9,6 @@ class WatchModel
 {
     private $db;
     private $table = 'watch';
-    private $tableF = 'finish_watch';
     private $response;
 
     public function __CONSTRUCT($db)
@@ -18,12 +17,11 @@ class WatchModel
         $this->response = new Response();
     }
 
-    public function register($data)
+    public function start($data)
     {
         $timestamp = time()-(5*60*60);
         $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
         $data['create_date'] = $timestamp;
-        $data['update_date'] = $timestamp;
         $data['status'] = 1;
 
         $watch = $this->getWatchActiveByGuard($data['guard_id']);
@@ -39,73 +37,51 @@ class WatchModel
                 ->execute();
             $data['id'] = $query;
             $data['resumed'] = false;
-            $this->alertInitWatch($data['guard_id'], $data['latitude'], $data['longitude']);
+            $this->alertStart($data['guard_id'], $data['latitude'], $data['longitude']);
         } catch (Exception $e) {
             if (strpos($e->getMessage(), "foreign key")) {
-                return $this->response->SetResponse(false, 'El guardia no existe');
+                return $this->response->SetResponse(false, 'Asociacion erronea');
             }
-            return $this->response->SetResponse(false);
+            return $this->response->SetResponse(false, $e->getMessage());
         }
 
         $this->response->result = $data;
         return $this->response->SetResponse(true);
     }
 
-    public function finish($data, $id)
+    public function end($data, $id)
     {
-        $this->finishWatch($data, $id);
         $timestamp = time()-(5*60*60);
         $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
-
-        $watch = null;
-        $watch['update_date'] = $timestamp;
-        $watch['status'] = 0;
+        $data['update_date'] = $timestamp;
+        $data['status'] = 0;
 
         $query = $this->db
-            ->update($this->table, $watch, $id)
+            ->update($this->table, $data, $id)
             ->execute();
 
         if ($query === 0) {
             return $this->response->SetResponse(false, 'La guardia no exite');
         } else {
-            $this->alertFinishedWatch($watch['guard_id'], $data['latitude'], $data['longitude']);
-            $this->response->result = $this->get($id);
+            $watch = $this->get($id);
+            $this->response->result = $watch;
+            $this->alertEnd($watch->guard_id, $watch->f_latitude, $watch->f_longitude);
         }
         return $this->response->SetResponse(true);
-    }
-
-    public function finishWatch($data, $id)
-    {
-        $data['watch_id'] = $id;
-        $timestamp = time()-(5*60*60);
-        $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
-        $data['create_date'] = $timestamp;
-
-        $query = $this->db
-            ->insertInto($this->tableF, $data)
-            ->execute();
-
-        $data['id'] = $query;
-
-        return $data;
     }
 
     public function get($id)
     {
         $watch = $this->db
             ->from($this->table, $id)
+            ->select('guard.dni as guard_dni')
+            ->select('guard.name as guard_name')
+            ->select('guard.lastname as guard_lastname')
+            ->select('stand.name as stand_name')
+            ->select('stand.address as stand_address')
+            ->select('tablet.imei as tablet_imei')
             ->fetch();
-        if ($watch != null) {
-            $finishWatch = $this->db
-                ->from($this->tableF)
-                ->where('watch_id', $watch->id)
-                ->fetch();
-            if ($finishWatch != null) {
-                $watch->finish = $finishWatch;
-            }
-            $guardModel = new GuardModel($this->db);
-            $watch->guard = $guardModel->get($watch->guard_id);
-        }
+
         return $watch;
     }
 
@@ -137,6 +113,10 @@ class WatchModel
             ->select('guard.dni as guard_dni')
             ->select('guard.name as guard_name')
             ->select('guard.lastname as guard_lastname')
+            ->select('stand.name as stand_name')
+            ->select('stand.address as stand_address')
+            ->select('tablet.imei as tablet_imei')
+            ->orderBy('watch.id DESC')
             ->fetchAll();
 
         return [
@@ -174,7 +154,10 @@ class WatchModel
             ->select('guard.dni as guard_dni')
             ->select('guard.name as guard_name')
             ->select('guard.lastname as guard_lastname')
-            ->orderBy('id DESC')
+            ->select('stand.name as stand_name')
+            ->select('stand.address as stand_address')
+            ->select('tablet.imei as tablet_imei')
+            ->orderBy('watch.id DESC')
             ->fetchAll();
 
         return [
@@ -191,8 +174,14 @@ class WatchModel
     {
         return $this->db
             ->from($this->table)
-            ->where('status', 1)
+            ->where('watch.status', 1)
             ->where('guard_id', $id)
+            ->select('guard.dni as guard_dni')
+            ->select('guard.name as guard_name')
+            ->select('guard.lastname as guard_lastname')
+            ->select('stand.name as stand_name')
+            ->select('stand.address as stand_address')
+            ->select('tablet.imei as tablet_imei')
             ->fetch();
     }
 
@@ -203,7 +192,10 @@ class WatchModel
             ->select('guard.dni as guard_dni')
             ->select('guard.name as guard_name')
             ->select('guard.lastname as guard_lastname')
-            ->orderBy('id DESC')
+            ->select('stand.name as stand_name')
+            ->select('stand.address as stand_address')
+            ->select('tablet.imei as tablet_imei')
+            ->orderBy('watch.id DESC')
             ->fetchAll();
 
         return [
@@ -220,7 +212,10 @@ class WatchModel
             ->select('guard.dni as guard_dni')
             ->select('guard.name as guard_name')
             ->select('guard.lastname as guard_lastname')
-            ->orderBy('id DESC')
+            ->select('stand.name as stand_name')
+            ->select('stand.address as stand_address')
+            ->select('tablet.imei as tablet_imei')
+            ->orderBy('watch.id DESC')
             ->fetchAll();
 
         return [
@@ -237,8 +232,11 @@ class WatchModel
             ->select('guard.dni as guard_dni')
             ->select('guard.name as guard_name')
             ->select('guard.lastname as guard_lastname')
-            ->where('status', 1)
-            ->orderBy('id DESC')
+            ->select('stand.name as stand_name')
+            ->select('stand.address as stand_address')
+            ->select('tablet.imei as tablet_imei')
+            ->where('watch.status', 1)
+            ->orderBy('watch.id DESC')
             ->fetchAll();
 
         return [
@@ -252,25 +250,18 @@ class WatchModel
         $watches = $this->db
             ->from($this->table)
             ->where('status', 1)
-            ->orderBy('id DESC')
+            ->select('guard.dni as guard_dni')
+            ->select('guard.name as guard_name')
+            ->select('guard.lastname as guard_lastname')
+            ->select('stand.name as stand_name')
+            ->select('stand.address as stand_address')
+            ->select('tablet.imei as tablet_imei')
+            ->orderBy('watch.id DESC')
             ->fetchAll();
-
-        $guards = $this->db
-            ->from('guard')
-            ->orderBy('id DESC')
-            ->fetchAll();
-
-        foreach ($watches as $watch) {
-            foreach ($guards as $guard) {
-                if ($watch->guard_id == $guard->id) {
-                    $watch->guard = $guard;
-                }
-            }
-        }
 
         return [
-            'total' => count($watches),
-            'data' => $watches
+            'data' => $watches,
+            'total' => count($watches)
         ];
     }
 
@@ -293,7 +284,7 @@ class WatchModel
         }
     }
 
-    public function alertInitWatch($guard_id, $latitude, $longitude) {
+    public function alertStart($guard_id, $latitude, $longitude) {
         $guardService = new GuardModel($this->db);
         $guard = $guardService->get($guard_id);
         $name = $guard->name." ".$guard->lastname;
@@ -308,7 +299,7 @@ class WatchModel
         $alertService->registerGeneral($alert);
     }
 
-    public function alertFinishedWatch($guard_id, $latitude, $longitude) {
+    public function alertEnd($guard_id, $latitude, $longitude) {
         $guardService = new GuardModel($this->db);
         $guard = $guardService->get($guard_id);
         $name = $guard->name." ".$guard->lastname;

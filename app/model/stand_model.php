@@ -3,6 +3,7 @@ namespace App\Model;
 
 
 use App\Lib\Response;
+use Exception;
 
 class StandModel
 {
@@ -71,6 +72,22 @@ class StandModel
             $this->response->result = $this->get($id);
         }
         return $this->response->SetResponse(true);
+    }
+
+    public function addToStand($data, $id)
+    {
+        if (is_array($data)) {
+            foreach ($data as $valor) {
+                try {
+                    $this->db
+                        ->update('tablet', [ 'stand_id' => $id ], $valor['id'])
+                        ->execute();
+                } catch (Exception $e) {}
+            }
+            return $this->response->SetResponse(true);
+        } else {
+            return $this->response->SetResponse(false, 'la data debe ser un array de ids');
+        }
     }
 
     public function get($id)

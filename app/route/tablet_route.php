@@ -2,11 +2,38 @@
 
 use App\Middleware\AuthMiddleware;
 use App\Validation\GuardValidation;
+use App\Validation\TabletPositionValidation;
 use App\Validation\TabletValidation;
 
 $app->group('/tablet', function () {
     $this->post('', function ($req, $res, $args) {
         $r = TabletValidation::validate($req->getParsedBody());
+
+        if (!$r->response) {
+            return $res->withHeader('Content-type', 'application/json')
+                ->withStatus(422)
+                ->write(json_encode($r));
+        }
+
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->tablet->registerTablet($req->getParsedBody()))
+            );
+    });
+    $this->put('/{id}/active/{active}', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->tablet->active($args['id'], $args['active']))
+            );
+    });
+    $this->get('/active/{active}', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->tablet->getTabletsByStatus($args['active']))
+            );
+    });
+    $this->post('/position', function ($req, $res, $args) {
+        $r = TabletPositionValidation::validate($req->getParsedBody());
 
         if (!$r->response) {
             return $res->withHeader('Content-type', 'application/json')

@@ -415,29 +415,58 @@ class MessengerModel
         $firebase->send($data, $registrations_id);
     }
 
+//    public function send_alert_notification($alert) {
+//        $data = [
+//            'type' => MessengerModel::ALERT,
+//            'message' => $alert
+//        ];
+//        $registrations = $this->db
+//            ->from($this->table_web_token)
+//            ->fetchAll();
+//        $registrations_id = array();
+//        foreach ($registrations as $registration) {
+////            $authService = new AuthModel($this->db);
+////            $auth = null;
+////            try {
+////                $auth = $authService->verify($registration->session);
+////            } catch (Exception $e) {}
+////           if (is_object($auth) &&
+////               ((int) $auth->id) === ((int) $registration->admin_id)) {
+//               $registrations_id[] = $registration->registration_id;
+//           //}
+//        }
+//        if (count($registrations_id) > 0) {
+//            $firebase = new FirebaseNotification();
+//            $firebase->send_alert_web($data, $registrations_id);
+//        }
+//    }
+
     public function send_alert_notification($alert) {
+        $id = $alert['id'];
         $data = [
-            'type' => MessengerModel::ALERT,
-            'message' => $alert
+            "fields" => $this->firestoreMap($alert)
         ];
-        $registrations = $this->db
-            ->from($this->table_web_token)
-            ->fetchAll();
-        $registrations_id = array();
-        foreach ($registrations as $registration) {
-//            $authService = new AuthModel($this->db);
-//            $auth = null;
-//            try {
-//                $auth = $authService->verify($registration->session);
-//            } catch (Exception $e) {}
-//           if (is_object($auth) &&
-//               ((int) $auth->id) === ((int) $registration->admin_id)) {
-               $registrations_id[] = $registration->registration_id;
-           //}
+        $firebase = new FirestoreDatabase();
+        return $firebase->save($data, $id);
+    }
+
+    function fireStoreMap($data) {
+        $data = $array =  (array) $data;
+        $new_data = [];
+        foreach (array_keys($data) as $key) {
+            if (is_string($data[$key])) {
+                $new_data[$key] = [ "stringValue" => $data[$key] ];
+            }
+            if (is_int($data[$key])) {
+                $new_data[$key] = [ "integerValue" => $data[$key] ];
+            }
+            if (is_double($data[$key])) {
+                $new_data[$key] = [ "doubleValue" => $data[$key] ];
+            }
+            if (is_bool($data[$key])) {
+                $new_data[$key] = [ "booleanValue" => $data[$key] ];
+            }
         }
-        if (count($registrations_id) > 0) {
-            $firebase = new FirebaseNotification();
-            $firebase->send_alert_web($data, $registrations_id);
-        }
+        return $new_data;
     }
 }

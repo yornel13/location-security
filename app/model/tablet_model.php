@@ -3,11 +3,13 @@ namespace App\Model;
 
 
 use App\Lib\Response;
+use Exception;
 
 class TabletModel
 {
     private $db;
-    private $table = 'tablet_position';
+    private $table = 'tablet';
+    private $table_position = 'tablet_position';
     private $response;
 
     public function __CONSTRUCT($db)
@@ -16,11 +18,23 @@ class TabletModel
         $this->response = new Response();
     }
 
-    public function register($data)
+    public function registerTablet($data)
     {
         $timestamp = time()-(5*60*60);
         $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
-        $data['generated_time'] = $timestamp;
+        $data['create_at'] = $timestamp;
+        $data['status'] = 1;
+
+        $tablet = $this->db
+            ->from($this->table)
+            ->where('imei', $data['imei'])
+            ->fetch();
+
+        if (!empty($tablet)) {
+            $key = 'imei';
+            $this->response->errors[$key][] = 'El imei se encuentra ya registrado';
+            return $this->response->SetResponse(false);
+        }
 
         $query = $this->db
             ->insertInto($this->table, $data)
@@ -31,10 +45,92 @@ class TabletModel
         return $this->response->SetResponse(true);
     }
 
-    public function get($id)
+    public function active($id, $active)
+    {
+        try {
+            $data = [
+                'status' => $active
+            ];
+            $query = $this->db
+                ->update($this->table, $data, $id)
+                ->execute();
+
+            if ($query === 0) {
+                return $this->response->SetResponse(false, 'La tablet no existe o ya tiene este estado');
+            } else {
+                $this->response->result = $this->getTablet($id);
+            }
+
+            return $this->response->SetResponse(true);
+        } catch (Exception $e) {
+            return $this->response->SetResponse(false, $e->getMessage());
+        }
+    }
+
+    public function getTablet($id)
     {
         return $this->db
             ->from($this->table, $id)
+            ->fetch();
+    }
+
+    public function getTabletsByStatus($status)
+    {
+        if ($status == 'all') {
+            $data = $this->db
+                ->from($this->table)
+                ->orderBy('id DESC')
+                ->fetchAll();
+        } else {
+            $data = $this->db
+                ->from($this->table)
+                ->where('status', $status)
+                ->orderBy('id DESC')
+                ->fetchAll();
+        }
+
+        return [
+            'total' => count($data),
+            'data' => $data
+        ];
+    }
+
+    public function getTabletsByStand($standId)
+    {
+        $data = $this->db
+            ->from($this->table)
+            ->where('stand_id', $standId)
+            ->orderBy('id DESC')
+            ->fetchAll();
+
+        return [
+            'total' => count($data),
+            'data' => $data
+        ];
+    }
+
+    /*
+     * Tablet Position
+     */
+    public function register($data)
+    {
+        $timestamp = time()-(5*60*60);
+        $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
+        $data['generated_time'] = $timestamp;
+
+        $query = $this->db
+            ->insertInto($this->table_position, $data)
+            ->execute();
+
+        $data['id'] = $query;
+        $this->response->result = $data;
+        return $this->response->SetResponse(true);
+    }
+
+    public function getPosition($id)
+    {
+        return $this->db
+            ->from($this->table_position, $id)
             ->fetch();
     }
 
@@ -76,7 +172,7 @@ class TabletModel
             $day = gmdate("d", $timestamp);
         }
         $data = $this->db
-            ->from($this->table)
+            ->from($this->table_position)
             ->where('generated_time >= ?', $year."-".$month."-".$day." 00:00:00")
             ->where('generated_time <= ?', $year."-".$month."-".$day." 23:59:59")
             ->where($propertyName, $propertyValue)
@@ -108,7 +204,7 @@ class TabletModel
     public function getByWatch($watchId)
     {
         $data = $this->db
-            ->from($this->table)
+            ->from($this->table_position)
             ->where('watch_id', $watchId)
             ->orderBy('id DESC')
             ->fetchAll();
@@ -122,7 +218,7 @@ class TabletModel
     public function getByGuard($id)
     {
         $data = $this->db
-            ->from($this->table)
+            ->from($this->table_position)
             ->where('watch.guard_id', $id)
             ->orderBy('id DESC')
             ->fetchAll();
@@ -136,7 +232,7 @@ class TabletModel
     public function getByImei($imei)
     {
         $data = $this->db
-            ->from($this->table)
+            ->from($this->table_position)
             ->where('imei', $imei)
             ->orderBy('id DESC')
             ->fetchAll();
@@ -150,7 +246,7 @@ class TabletModel
     public function getByMessage($message)
     {
         $data = $this->db
-            ->from($this->table)
+            ->from($this->table_position)
             ->where('message', $message)
             ->orderBy('id DESC')
             ->fetchAll();
@@ -161,10 +257,10 @@ class TabletModel
         ];
     }
 
-    public function getAll()
+    public function getAllPositions()
     {
         $data = $this->db
-            ->from($this->table)
+            ->from($this->table_position)
             ->orderBy('id DESC')
             ->fetchAll();
 
@@ -177,7 +273,7 @@ class TabletModel
     public function getLast()
     {
         $data = $this->db
-            ->from($this->table)
+            ->from($this->table_position)
             ->where('generated_time in (SELECT MAX(generated_time) FROM tablet_position GROUP BY imei)')
             ->disableSmartJoin()
             ->leftJoin('watch.guard AS guard')

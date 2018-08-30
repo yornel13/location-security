@@ -319,7 +319,7 @@ class SpecialReportModel
     }
 
     public function alertIncidence($report) {
-        $name = $report->watch->guard->name." ".$report->watch->guard->lastname;
+        $name = $report->watch->guard_name." ".$report->watch->guard_lastname;
         if ($report->incidence->level > 1) {
             $message = $name." ha creado un reporte de incidencia Importante";
         } else {

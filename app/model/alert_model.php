@@ -60,7 +60,7 @@ class AlertModel
 
     private function notify($alert) {
         $notificationService = new MessengerModel($this->db);
-        $notificationService->send_alert_notification($alert);
+        return $notificationService->send_alert_notification($alert);
     }
 
     public function update($id)

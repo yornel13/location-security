@@ -1,6 +1,6 @@
 # REST API
 
-* Url basico http://icsseseguridad.com/location-security/public/
+* Url basico http://icsseseguridad.com/api/public/
 * la api acepta consultas GET, POST, PUT y DELETE  segun sea el caso
 * todas las respuesta son en formato JSON
 * todas las consulta con POST y PUT el body va con formato JSON
@@ -8,15 +8,15 @@
 * Probar los GET, POST, PUT, DELETE para entender los resultados y trabajar con ellos
 * En las url, lo que este entre {} es por lo que debe remplazar. Ejemplo:
 
-"http://icsseseguridad.com/location-security/public/vehicle/{imei}"
+"http://icsseseguridad.com/api/public/vehicle/{imei}"
 
 se rempleaza por 
 
-"http://icsseseguridad.com/location-security/public/vehicle/867162025555236"
+"http://icsseseguridad.com/api/public/vehicle/867162025555236"
 
 los GET responden con la lista de objectos solicitados y el total
 
-    http://icsseseguridad.com/location-security/public/incidence
+    http://icsseseguridad.com/api/public/incidence
     
     {
         "data": [
@@ -38,7 +38,7 @@ los GET responden con la lista de objectos solicitados y el total
 
 Si es un GET especifico, osea con un id, cedula, etc, la respuesta es el objecto solamente
 
-    http://icsseseguridad.com/location-security/public/incidence/5
+    http://icsseseguridad.com/api/public/incidence/5
     
     {
         "id": "5",
@@ -47,7 +47,7 @@ Si es un GET especifico, osea con un id, cedula, etc, la respuesta es el objecto
 
 Si la solicitud get al objecto especifico no arroja ninguna resultado la respuesta sera un simple false
     
-    http://icsseseguridad.com/location-security/public/incidence/58
+    http://icsseseguridad.com/api/public/incidence/58
     
     false
     
@@ -91,18 +91,18 @@ y habra un mensaje en 'message' y en 'errors' una lista de lo errores.
 # Las URL existentes
 
 
-Recomendacion: Se deberia agregar una variable estatica de sistema con el siguiente valor = http://icsseseguridad.com/location-security/public/ y agregarle el path
+Recomendacion: Se deberia agregar una variable estatica de sistema con el siguiente valor = http://icsseseguridad.com/api/public/ y agregarle el path
 asi en caso de cambiar la url del servidor solo de modificara la variable estatica.
 
 # Logeo (auth)
-POST http://icsseseguridad.com/location-security/public/auth/admin
+POST http://icsseseguridad.com/api/public/auth/admin
 
     logeo de administradores, recibe por body
     * dni
     * password
     
     
-POST http://icsseseguridad.com/location-security/public/auth/guard
+POST http://icsseseguridad.com/api/public/auth/guard
 
     logeo de guardias, recibe por body
     * dni
@@ -119,7 +119,7 @@ tanto en logeo de admin como de guardia la respuesta de ser exitosa sera como la
 
 y el 'result' sera  el token de session
 
-GET http://icsseseguridad.com/location-security/public/auth/verify
+GET http://icsseseguridad.com/api/public/auth/verify
 
     recibe por la cabezera (header) el token como:
     * APP-TOKEN
@@ -129,19 +129,19 @@ GET http://icsseseguridad.com/location-security/public/auth/verify
 # * Vehiculos (Vehicles)
 (Vehiculos proporcianados por claro-flatas)
 
-GET http://icsseseguridad.com/location-security/public/vehicle
+GET http://icsseseguridad.com/api/public/vehicle
 
     Obtiene la lista de vehiculos con su ultima ubicacion
 
-GET http://icsseseguridad.com/location-security/public/vehicle/{imei}
+GET http://icsseseguridad.com/api/public/vehicle/{imei}
 
     Obtiene el vehiculo por el imei
 
-GET http://icsseseguridad.com/location-security/public/vehicle/history/{imei}
+GET http://icsseseguridad.com/api/public/vehicle/history/{imei}
 
     Obtiene el historial del vehiculo con el imei del dia actual
 
-GET http://icsseseguridad.com/location-security/public/vehicle/history/{imei}/{year}/{month}/{day}
+GET http://icsseseguridad.com/api/public/vehicle/history/{imei}/{year}/{month}/{day}
 
     Obtiene el historial del vehiculo con el imei del dia seleccionado
 
@@ -164,47 +164,47 @@ GET http://icsseseguridad.com/location-security/public/vehicle/history/{imei}/{y
         "status": "1"  <------ Estatus
     }
 
-GET http://icsseseguridad.com/location-security/public/watch/active/1
+GET http://icsseseguridad.com/api/public/watch/active/1
 
     Obtiene todas las watches activas
 
-GET http://icsseseguridad.com/location-security/public/watch
+GET http://icsseseguridad.com/api/public/watch
 
     Obtiene todas las guardias hechas
 
-GET http://icsseseguridad.com/location-security/public/watch/{id}
+GET http://icsseseguridad.com/api/public/watch/{id}
 
     Obtiene una guardia por su id
     
-GET http://icsseseguridad.com/location-security/public/watch/date/today
+GET http://icsseseguridad.com/api/public/watch/date/today
 
     Obtiene todas las guardias del dia actual
 
-GET http://icsseseguridad.com/location-security/public/watch/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/api/public/watch/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}
 
     Obtiene todas las guardias del dia seleccionado
     
-GET http://icsseseguridad.com/location-security/public/watch/guard/{id}
+GET http://icsseseguridad.com/api/public/watch/guard/{id}
 
     Obtiene todas las guardias por el id del guardia
     
-GET http://icsseseguridad.com/location-security/public/watch/guard/{id}/active/1
+GET http://icsseseguridad.com/api/public/watch/guard/{id}/active/1
 
     Obtiene todas las guardias activas por el id del guardia
 
-GET http://icsseseguridad.com/location-security/public/watch/guard/{id}/date
+GET http://icsseseguridad.com/api/public/watch/guard/{id}/date
 
     Obtiene todas las guardias por el id del guardia del dia actual
 
-GET http://icsseseguridad.com/location-security/public/watch/guard/{id}/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/api/public/watch/guard/{id}/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}
 
     Obtiene todas las guardias por el id del guardia del dia seleccionado
     
-GET http://icsseseguridad.com/location-security/public/watch/{id}/history
+GET http://icsseseguridad.com/api/public/watch/{id}/history
 
     Obtiene todas los registro de una guardia
 
-POST http://icsseseguridad.com/location-security/public/watch
+POST http://icsseseguridad.com/api/public/watch
 
     Registrar (inicia) una guardia, recibe parametros en el body:
     * guard_id
@@ -212,7 +212,7 @@ POST http://icsseseguridad.com/location-security/public/watch
     * longitude
     * observation (opcional)
 
-PUT http://icsseseguridad.com/location-security/public/watch/{watch_id}
+PUT http://icsseseguridad.com/api/public/watch/{watch_id}
 
     Finaliza una guardia por el id, recibe parametros en el body:
     * latitude
@@ -221,27 +221,27 @@ PUT http://icsseseguridad.com/location-security/public/watch/{watch_id}
 
 # * Empleados (Guards)
 
-GET http://icsseseguridad.com/location-security/public/guard
+GET http://icsseseguridad.com/api/public/guard
 
     obtiene la lista de empleados
     
-GET http://icsseseguridad.com/location-security/public/guard/active/1
+GET http://icsseseguridad.com/api/public/guard/active/1
 
     obtiene la lista de empleados activos
     
-GET http://icsseseguridad.com/location-security/public/guard/active/1
+GET http://icsseseguridad.com/api/public/guard/active/1
 
     obtiene la lista de empleados desactivados
 
-GET http://icsseseguridad.com/location-security/public/guard/{id}
+GET http://icsseseguridad.com/api/public/guard/{id}
 
     obtiene un empleado por su id
     
-GET http://icsseseguridad.com/location-security/public/guard/dni/{dni}
+GET http://icsseseguridad.com/api/public/guard/dni/{dni}
 
     obtiene un empleado por la cedula
     
-POST http://icsseseguridad.com/location-security/public/guard 
+POST http://icsseseguridad.com/api/public/guard 
 
     Registrar un empleado, recibe parametros en el body:
     * dni
@@ -250,7 +250,7 @@ POST http://icsseseguridad.com/location-security/public/guard
     * email
     * password
     
-PUT http://icsseseguridad.com/location-security/public/guard/{id} 
+PUT http://icsseseguridad.com/api/public/guard/{id} 
 
     Edita un empleado, recibe parametros en el body:
     * dni
@@ -259,20 +259,20 @@ PUT http://icsseseguridad.com/location-security/public/guard/{id}
     * email
     * password (opcional)
     
-PUT http://icsseseguridad.com/location-security/public/guard/{id}/photo
+PUT http://icsseseguridad.com/api/public/guard/{id}/photo
 
     Edita un empleado, recibe en el body solo:
     * photo (url)
     
-PUT http://icsseseguridad.com/location-security/public/guard/{id}/active/0 
+PUT http://icsseseguridad.com/api/public/guard/{id}/active/0 
 
     Desactiva un guardia
     
-PUT http://icsseseguridad.com/location-security/public/guard/{id}/active/1
+PUT http://icsseseguridad.com/api/public/guard/{id}/active/1
 
     Activa un guardia
 
-DELETE http://icsseseguridad.com/location-security/public/guard/{id}
+DELETE http://icsseseguridad.com/api/public/guard/{id}
 
     Elimina un empleado por el id, si el guardia tiene elementos asociados 
     no se podra borrar y se desactivara, y la respuesta seguiria siendo OK
@@ -280,23 +280,23 @@ DELETE http://icsseseguridad.com/location-security/public/guard/{id}
     
 # * Administradores (admins)
 
-GET http://icsseseguridad.com/location-security/public/admin
+GET http://icsseseguridad.com/api/public/admin
 
     obtiene la lista de administradores
     
-GET http://icsseseguridad.com/location-security/public/admin/active/1
+GET http://icsseseguridad.com/api/public/admin/active/1
 
     obtiene la lista de administradores activos
 
-GET http://icsseseguridad.com/location-security/public/admin/{id}
+GET http://icsseseguridad.com/api/public/admin/{id}
 
     obtiene un administrador por su id
     
-GET http://icsseseguridad.com/location-security/public/admin/dni/{dni}
+GET http://icsseseguridad.com/api/public/admin/dni/{dni}
 
     obtiene un administrador por la cedula
     
-POST http://icsseseguridad.com/location-security/public/admin 
+POST http://icsseseguridad.com/api/public/admin 
 
     Registrar un administrador, recibe parametros en el body:
     * dni
@@ -305,7 +305,7 @@ POST http://icsseseguridad.com/location-security/public/admin
     * email
     * password
     
-PUT http://icsseseguridad.com/location-security/public/admin/{id} 
+PUT http://icsseseguridad.com/api/public/admin/{id} 
 
     Edita un administrador, recibe parametros en el body:
     * dni
@@ -314,20 +314,20 @@ PUT http://icsseseguridad.com/location-security/public/admin/{id}
     * email
     * password (opcional)
     
-PUT http://icsseseguridad.com/location-security/public/admin/{id}/photo
+PUT http://icsseseguridad.com/api/public/admin/{id}/photo
 
     Edita un empleado, recibe en el body solo:
     * photo (url)
     
-PUT http://icsseseguridad.com/location-security/public/admin/{id}/active/0 
+PUT http://icsseseguridad.com/api/public/admin/{id}/active/0 
 
     Desactiva un administrador
     
-PUT http://icsseseguridad.com/location-security/public/admin/{id}/active/1
+PUT http://icsseseguridad.com/api/public/admin/{id}/active/1
 
     Activa un administrador
 
-DELETE http://icsseseguridad.com/location-security/public/admin/{id}
+DELETE http://icsseseguridad.com/api/public/admin/{id}
 
     Elimina un administrador por el id, si el administrador tiene elementos asociados 
     no se podra borrar y se desactivara, y la respuesta seguiria siendo OK
@@ -335,31 +335,31 @@ DELETE http://icsseseguridad.com/location-security/public/admin/{id}
     
 # * Incidencias (incidences) [son los tipos de indicencias]
 
-GET http://icsseseguridad.com/location-security/public/incidence
+GET http://icsseseguridad.com/api/public/incidence
 
     obtiene la lista de incidencias
 
-GET http://icsseseguridad.com/location-security/public/incidence/{id}
+GET http://icsseseguridad.com/api/public/incidence/{id}
 
     obtiene una incidencia por su id
     
-GET http://icsseseguridad.com/location-security/public/incidence/name/{name}
+GET http://icsseseguridad.com/api/public/incidence/name/{name}
 
     obtiene una incidencia por su nombre
     
-POST http://icsseseguridad.com/location-security/public/incidence 
+POST http://icsseseguridad.com/api/public/incidence 
 
     Registrar una incidencia, recibe parametros en el body:
     * name
     * level
     
-PUT http://icsseseguridad.com/location-security/public/incidence/{id} 
+PUT http://icsseseguridad.com/api/public/incidence/{id} 
 
     Edita una incidencia, recibe parametros en el body:
     * name
     * level
 
-DELETE http://icsseseguridad.com/location-security/public/incidence/{id}
+DELETE http://icsseseguridad.com/api/public/incidence/{id}
 
     Elimina una incidencia por el id
     
@@ -368,15 +368,15 @@ DELETE http://icsseseguridad.com/location-security/public/incidence/{id}
 * El estatus 1 significa que aun no se ha aceptado la notificacion 
 * El estatus 2 significa que ya se ha aceptado la notificacion
 
-GET http://icsseseguridad.com/location-security/public/binnacle
+GET http://icsseseguridad.com/api/public/binnacle
 
     obtiene la lista de reportes
     
-GET http://icsseseguridad.com/location-security/public/binnacle/{id}
+GET http://icsseseguridad.com/api/public/binnacle/{id}
 
     obtiene un reporte por su id
     
-GET http://icsseseguridad.com/location-security/public/binnacle/active/1
+GET http://icsseseguridad.com/api/public/binnacle/active/1
 
     obtiene la lista de reportes a los cuales no se le ha aceptado la notificacion
     
@@ -392,71 +392,71 @@ Sobre el estado de resuelto (resolved)
         resolved = 1    -> abiertos 
         resolved = 2    -> reabiertos 
     
-GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}
+GET http://icsseseguridad.com/api/public/binnacle/resolved/{resolved}
 
     obtiene la lista de reportes del dia actual
     
-GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}/date
+GET http://icsseseguridad.com/api/public/binnacle/resolved/{resolved}/date
 
     obtiene la lista de reportes del dia actual
     
-GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/api/public/binnacle/resolved/{resolved}/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}
 
     obtiene la lista de reportes del dia seleccionado
     
-GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}/incidence/{id}     <- by Incidence
+GET http://icsseseguridad.com/api/public/binnacle/resolved/{resolved}/incidence/{id}     <- by Incidence
  
      obtiene todas los reportes registrados de un tipo incidence por el id
      
-GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}/incidence/{id}/date
+GET http://icsseseguridad.com/api/public/binnacle/resolved/{resolved}/incidence/{id}/date
  
      obtiene todas los reportes registrados de un tipo incidence por el id del dia actual
      
-GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}/incidence/{id}/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/api/public/binnacle/resolved/{resolved}/incidence/{id}/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}
  
      obtiene todas los reportes registrados de un tipo incidence por el id del dia seleccionado
          
-GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}/guard/{id}     <- by Guard
+GET http://icsseseguridad.com/api/public/binnacle/resolved/{resolved}/guard/{id}     <- by Guard
  
      obtiene todas los reportes registrados de un empleado por el id
      
-GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}/guard/{id}/date
+GET http://icsseseguridad.com/api/public/binnacle/resolved/{resolved}/guard/{id}/date
  
      obtiene todas las visitas registrados de un empleado por el id del dia actual
      
-GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}/guard/{id}/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/api/public/binnacle/resolved/{resolved}/guard/{id}/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}
  
      obtiene todas las visitas registrados de un empleado por el id del dia seleccionado
     
-GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}/watch/{id}     <- by Watch
+GET http://icsseseguridad.com/api/public/binnacle/resolved/{resolved}/watch/{id}     <- by Watch
  
      obtiene todas los reportes registrados en una guardia por el id
      
-GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}/watch/{id}/date
+GET http://icsseseguridad.com/api/public/binnacle/resolved/{resolved}/watch/{id}/date
  
      obtiene todas las visitas registrados en una guardia por el id del dia actual
      
-GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}/watch/{id}/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/api/public/binnacle/resolved/{resolved}/watch/{id}/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}
  
      obtiene todas las visitas registrados en una guardia por el id del dia seleccionado
      
-GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}     <- by resolved
+GET http://icsseseguridad.com/api/public/binnacle/resolved/{resolved}     <- by resolved
  
      obtiene todas los reportes registrados en estado de su resolucion
      
-GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}/date
+GET http://icsseseguridad.com/api/public/binnacle/resolved/{resolved}/date
  
      obtiene todas los reportes registrados en estado de su resolucion del dia actual
      
-GET http://icsseseguridad.com/location-security/public/binnacle/resolved/{resolved}/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/api/public/binnacle/resolved/{resolved}/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}
  
      obtiene todas los reportes registrados en estado de su resolucion del dia seleccionado
     
-GET http://icsseseguridad.com/location-security/public/binnacle/{id}/replies
+GET http://icsseseguridad.com/api/public/binnacle/{id}/replies
 
     obtiene la lista de comentarios hechos a un reporte
     
-POST http://icsseseguridad.com/location-security/public/binnacle/binnacle 
+POST http://icsseseguridad.com/api/public/binnacle/binnacle 
 
     Registrar un reporte, recibe parametros en el body:
     * incidence_id
@@ -466,7 +466,7 @@ POST http://icsseseguridad.com/location-security/public/binnacle/binnacle
     * latitude
     * longitude
     
-PUT http://icsseseguridad.com/location-security/public/binnacle/accept/{id} 
+PUT http://icsseseguridad.com/api/public/binnacle/accept/{id} 
 
     Pasa el status del reporte a 2, que quiere decir que ya se acepto la notificacion, 
     no recibe parametros.
@@ -474,33 +474,33 @@ PUT http://icsseseguridad.com/location-security/public/binnacle/accept/{id}
     1 -> Creado
     2 -> Aceptado
     
-PUT http://icsseseguridad.com/location-security/public/binnacle/resolved/{id} 
+PUT http://icsseseguridad.com/api/public/binnacle/resolved/{id} 
 
     Pasa el estado resuelto a 0, 
     0 -> resuelto.
     1 -> Caso Abierto
     2 -> Caso Reabierto
     
-PUT http://icsseseguridad.com/location-security/public/binnacle/open/{id} 
+PUT http://icsseseguridad.com/api/public/binnacle/open/{id} 
 
     Pasa el estado resuelto a 2, (reabierto) 
   
-DELETE http://icsseseguridad.com/location-security/public/binnacle/{id}
+DELETE http://icsseseguridad.com/api/public/binnacle/{id}
 (no se usara el delete, los reportes creados no se pueden eliminar)
 
     Elimina el reporte por el id
     
 # * Comentarios al reporte especial (replies)
 
-GET http://icsseseguridad.com/location-security/public/binnacle-reply
+GET http://icsseseguridad.com/api/public/binnacle-reply
 
     obtiene la lista de comentarios
 
-GET http://icsseseguridad.com/location-security/public//binnacle-reply/{id}
+GET http://icsseseguridad.com/api/public//binnacle-reply/{id}
 
     obtiene un comentario por su id
     
-POST http://icsseseguridad.com/location-security/public//binnacle-reply
+POST http://icsseseguridad.com/api/public//binnacle-reply
 
     Registrar un comentario, recibe parametros en el body:
     enviar admin_id si comenta un administrador, enviar guard_id si comenta un empleado
@@ -511,29 +511,29 @@ POST http://icsseseguridad.com/location-security/public//binnacle-reply
     * guard_id (obligatorio si no tiene admin_id) 
     
 
-DELETE http://icsseseguridad.com/location-security/public/binnacle-reply/{id} 
+DELETE http://icsseseguridad.com/api/public/binnacle-reply/{id} 
 
     Elimina un comentario por el id
     
 # * Visitantes (Visitors)
 
-GET http://icsseseguridad.com/location-security/public/visitor
+GET http://icsseseguridad.com/api/public/visitor
 
     obtiene la lista de visitantes
     
-GET http://icsseseguridad.com/location-security/public/visitor/active/1
+GET http://icsseseguridad.com/api/public/visitor/active/1
 
     obtiene la lista de visitantes activos
 
-GET http://icsseseguridad.com/location-security/public/visitor/{id}
+GET http://icsseseguridad.com/api/public/visitor/{id}
 
     obtiene un visitante por su id
     
-GET http://icsseseguridad.com/location-security/public/visitor/dni/{dni}
+GET http://icsseseguridad.com/api/public/visitor/dni/{dni}
 
     obtiene un visitante por la cedula
     
-POST http://icsseseguridad.com/location-security/public/visitor 
+POST http://icsseseguridad.com/api/public/visitor 
 
     Registrar un visitante, recibe parametros en el body:
     * dni
@@ -543,7 +543,7 @@ POST http://icsseseguridad.com/location-security/public/visitor
     * photo (opcional)(url)
    
     
-PUT http://icsseseguridad.com/location-security/public/visitor/{id} 
+PUT http://icsseseguridad.com/api/public/visitor/{id} 
 
     Actualiza un visitante, recibe parametros en el body:
     * dni
@@ -552,29 +552,29 @@ PUT http://icsseseguridad.com/location-security/public/visitor/{id}
     * company (opcional)
     * photo (opcional)(url)
 
-DELETE http://icsseseguridad.com/location-security/public/visitor/{id}
+DELETE http://icsseseguridad.com/api/public/visitor/{id}
 
     Elimina un visitante por el id
     
 # * Funcionario (Clerks)
 
-GET http://icsseseguridad.com/location-security/public/clerk
+GET http://icsseseguridad.com/api/public/clerk
 
     obtiene la lista de funcionarios
     
-GET http://icsseseguridad.com/location-security/public/clerk/active/1
+GET http://icsseseguridad.com/api/public/clerk/active/1
 
     obtiene la lista de funcionarios activos
 
-GET http://icsseseguridad.com/location-security/public/clerk/{id}
+GET http://icsseseguridad.com/api/public/clerk/{id}
 
     obtiene un funcionario por su id
     
-GET http://icsseseguridad.com/location-security/public/clerk/dni/{dni}
+GET http://icsseseguridad.com/api/public/clerk/dni/{dni}
 
     obtiene un funcionario por la cedula
     
-POST http://icsseseguridad.com/location-security/public/clerk 
+POST http://icsseseguridad.com/api/public/clerk 
 
     Registrar un funcionario, recibe parametros en el body:
     * dni
@@ -583,7 +583,7 @@ POST http://icsseseguridad.com/location-security/public/clerk
     * address (opcional)
    
     
-PUT http://icsseseguridad.com/location-security/public/clerk/{id} 
+PUT http://icsseseguridad.com/api/public/clerk/{id} 
 
     Actualiza un funcionario, recibe parametros en el body:
     * dni
@@ -591,29 +591,29 @@ PUT http://icsseseguridad.com/location-security/public/clerk/{id}
     * lastname
     * address (opcional)
 
-DELETE http://icsseseguridad.com/location-security/public/clerk/{id}
+DELETE http://icsseseguridad.com/api/public/clerk/{id}
 
     Elimina un funcionario por el id
     
 # * Vehiculo Visitante (Visitor vehicle)
 
-GET http://icsseseguridad.com/location-security/public/visitor-vehicle
+GET http://icsseseguridad.com/api/public/visitor-vehicle
 
     obtiene la lista de vehiculos visitantes
     
-GET http://icsseseguridad.com/location-security/public/visitor-vehicle/active/1
+GET http://icsseseguridad.com/api/public/visitor-vehicle/active/1
 
     obtiene la lista de vehiculos visitantes activos
 
-GET http://icsseseguridad.com/location-security/public/visitor-vehicle/{id}
+GET http://icsseseguridad.com/api/public/visitor-vehicle/{id}
 
     obtiene un vehiculo vitante por su id
     
-GET http://icsseseguridad.com/location-security/public/visitor-vehicle/plate/{plate}
+GET http://icsseseguridad.com/api/public/visitor-vehicle/plate/{plate}
 
     obtiene un vehiculo vitante por la placa
     
-POST http://icsseseguridad.com/location-security/public/visitor-vehicle/register 
+POST http://icsseseguridad.com/api/public/visitor-vehicle/register 
 
     Registrar un vehiculo vitante, recibe parametros en el body:
     * plate
@@ -623,7 +623,7 @@ POST http://icsseseguridad.com/location-security/public/visitor-vehicle/register
     * photo (opcional)
    
     
-PUT http://icsseseguridad.com/location-security/public/visitor-vehicle/{id} 
+PUT http://icsseseguridad.com/api/public/visitor-vehicle/{id} 
 
     Actualiza un vehiculo vitante, recibe parametros en el body:
     * plate
@@ -632,17 +632,17 @@ PUT http://icsseseguridad.com/location-security/public/visitor-vehicle/{id}
     * vehicle (opcional)
     * photo (opcional)
 
-DELETE http://icsseseguridad.com/location-security/public/visitor-vehicle/{id}
+DELETE http://icsseseguridad.com/api/public/visitor-vehicle/{id}
 
     Elimina un vehiculo vitante por el id
     
 # * Visita (visit)
     
-GET http://icsseseguridad.com/location-security/public/visit/active/1
+GET http://icsseseguridad.com/api/public/visit/active/1
 
     obtiene la lista de visitas activas
 
-GET http://icsseseguridad.com/location-security/public/visit/{id}
+GET http://icsseseguridad.com/api/public/visit/{id}
 
     obtiene una visita por su id
     
@@ -651,67 +651,67 @@ Ahora las visitas requieren el status en la url
     status = 0     -> visitas finalizadas
     status = all   -> todos los status
     
-GET http://icsseseguridad.com/location-security/public/visit/status/{status}
+GET http://icsseseguridad.com/api/public/visit/status/{status}
 
     obtiene la lista de visitas
     
-GET http://icsseseguridad.com/location-security/public/visit/status/{status}/date
+GET http://icsseseguridad.com/api/public/visit/status/{status}/date
  
      obtiene todas las visitas registradas del dia actual
     
-GET http://icsseseguridad.com/location-security/public/visit/status/{status}/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/api/public/visit/status/{status}/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}
 
-    obtiene todas las visitas registradas del dia seleccionado
+    obtiene todas las visitas registradas del rango seleccionado
     
-GET http://icsseseguridad.com/location-security/public/visit/status/{status}/guard/{id}     <- by Guard
+GET http://icsseseguridad.com/api/public/visit/status/{status}/guard/{id}     <- by Guard
  
      obtiene todas las visitas registradas de un empleado por el id
      
-GET http://icsseseguridad.com/location-security/public/visit/status/{status}/guard/{id}/date
+GET http://icsseseguridad.com/api/public/visit/status/{status}/guard/{id}/date
  
      obtiene todas las visitas registradas de un empleado por el id del dia actual
      
-GET http://icsseseguridad.com/location-security/public/visit/status/{status}/guard/{id}/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/api/public/visit/status/{status}/guard/{id}/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}
  
      obtiene todas las visitas registradas de un empleado por el id del dia seleccionado
      
-GET http://icsseseguridad.com/location-security/public/visit/status/{status}/vehicle/{id}       <- by Vehicle    
+GET http://icsseseguridad.com/api/public/visit/status/{status}/vehicle/{id}       <- by Vehicle    
  
      obtiene todas las visitas registradas por el id del vehiculo
      
-GET http://icsseseguridad.com/location-security/public/visit/status/{status}/vehicle/{id}/date
+GET http://icsseseguridad.com/api/public/visit/status/{status}/vehicle/{id}/date
  
      obtiene todas las visitas registradas por el id del vehiculo del dia actual
      
-GET http://icsseseguridad.com/location-security/public/visit/status/{status}/vehicle/{id}/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/api/public/visit/status/{status}/vehicle/{id}/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}
  
      obtiene todas las visitas registradas por el id del vehiculo del dia seleccionado
      
-GET http://icsseseguridad.com/location-security/public/visit/status/{status}/visitor/{id}       <- by Visitor
+GET http://icsseseguridad.com/api/public/visit/status/{status}/visitor/{id}       <- by Visitor
  
      obtiene todas las visitas registradas por el id del visitante
      
-GET http://icsseseguridad.com/location-security/public/visit/status/{status}/visitor/{id}/date
+GET http://icsseseguridad.com/api/public/visit/status/{status}/visitor/{id}/date
  
      obtiene todas las visitas registradas por el id del visitante del dia actual
      
-GET http://icsseseguridad.com/location-security/public/visit/status/{status}/visitor/{id}/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/api/public/visit/status/{status}/visitor/{id}/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}
  
      obtiene todas las visitas registradas por el id del visitante del dia seleccionado
      
-GET http://icsseseguridad.com/location-security/public/visit/status/{status}/clerk/{id}     <- by Clerk
+GET http://icsseseguridad.com/api/public/visit/status/{status}/clerk/{id}     <- by Clerk
  
      obtiene todas las visitas registradas por el id del funcionario visitado
      
-GET http://icsseseguridad.com/location-security/public/visit/status/{status}/clerk/{id}/date
+GET http://icsseseguridad.com/api/public/visit/status/{status}/clerk/{id}/date
  
      obtiene todas las visitas registradas por el id del funcionario visitado del dia actual
      
-GET http://icsseseguridad.com/location-security/public/visit/status/{status}/clerk/{id}/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/api/public/visit/status/{status}/clerk/{id}/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}
  
      obtiene todas las visitas registradas por el id del funcionario visitado del dia seleccionado
     
-POST http://icsseseguridad.com/location-security/public/visit 
+POST http://icsseseguridad.com/api/public/visit 
 
     Registrar una visita, recibe parametros en el body:
     * visitor_id
@@ -723,53 +723,53 @@ POST http://icsseseguridad.com/location-security/public/visit
     * longitude
     * observation (opcional)
    
-PUT http://icsseseguridad.com/location-security/public/visit/{id} 
+PUT http://icsseseguridad.com/api/public/visit/{id} 
 
     Finaliza la visita por el id
 
-DELETE http://icsseseguridad.com/location-security/public/visit/{id}
+DELETE http://icsseseguridad.com/api/public/visit/{id}
 
     Elimina una visita por el id
     
 # * Alerta (alert)
 
-GET http://icsseseguridad.com/location-security/public/alert
+GET http://icsseseguridad.com/api/public/alert
 
     obtiene la lista de alertas
     
-GET http://icsseseguridad.com/location-security/public/alert/active/1
+GET http://icsseseguridad.com/api/public/alert/active/1
 
     obtiene la lista de alertas activas
 
-GET http://icsseseguridad.com/location-security/public/alert/{id}
+GET http://icsseseguridad.com/api/public/alert/{id}
 
     obtiene una alerta por su id
     
-GET http://icsseseguridad.com/location-security/public/alert/cause/{cause}
+GET http://icsseseguridad.com/api/public/alert/cause/{cause}
 
     obtiene la lista de alertas por su causa
     
-GET http://icsseseguridad.com/location-security/public/alert/cause/{cause}/date
+GET http://icsseseguridad.com/api/public/alert/cause/{cause}/date
 
     obtiene la lista de alertas por su causa del dia actual
     
-GET http://icsseseguridad.com/location-security/public/alert/cause/{cause}/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/api/public/alert/cause/{cause}/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}
 
     obtiene la lista de alertas por su causa del dia seleccionado
     
-GET http://icsseseguridad.com/location-security/public/alert/cause/{cause}/guard/{id}
+GET http://icsseseguridad.com/api/public/alert/cause/{cause}/guard/{id}
 
     obtiene la lista de alertas por su causa y id del guardia
     
-GET http://icsseseguridad.com/location-security/public/alert/cause/{cause}/guard/{id}/date
+GET http://icsseseguridad.com/api/public/alert/cause/{cause}/guard/{id}/date
 
     obtiene la lista de alertas por su causa y id del guardia del dia actual
     
-GET http://icsseseguridad.com/location-security/public/alert/cause/{cause}/guard/{id}/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/api/public/alert/cause/{cause}/guard/{id}/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}
 
     obtiene la lista de alertas por su causa y id del guardia del dia seleccionado
     
-POST http://icsseseguridad.com/location-security/public/alert 
+POST http://icsseseguridad.com/api/public/alert 
 
     Registrar una visita, recibe parametros en el body:
     * guard_id
@@ -778,51 +778,51 @@ POST http://icsseseguridad.com/location-security/public/alert
     * latitude
     * longitude
     
-PUT http://icsseseguridad.com/location-security/public/alert/{id} 
+PUT http://icsseseguridad.com/api/public/alert/{id} 
 
     Pone la alerta como solventada
 
-DELETE http://icsseseguridad.com/location-security/public/alert/{id}
+DELETE http://icsseseguridad.com/api/public/alert/{id}
 
     Elimina una alerta por el id
     
 # * Configuracion (utility)
 
-GET http://icsseseguridad.com/location-security/public/utility
+GET http://icsseseguridad.com/api/public/utility
 
     obtiene la lista de configuraciones
     
 
-GET http://icsseseguridad.com/location-security/public/utility/{id}
+GET http://icsseseguridad.com/api/public/utility/{id}
 
     obtiene una configuracion por su id
     
-GET http://icsseseguridad.com/location-security/public/utility/name/{name}
+GET http://icsseseguridad.com/api/public/utility/name/{name}
 
     obtiene una configuracion por su nombre
     
-POST http://icsseseguridad.com/location-security/public/alert 
+POST http://icsseseguridad.com/api/public/alert 
 
     Registrar una configuracion, recibe parametros en el body:
     * name
     * value
     
-PUT http://icsseseguridad.com/location-security/public/utility/{id} 
+PUT http://icsseseguridad.com/api/public/utility/{id} 
 
     Edita el valor de una configuracion, recibe parametros en el body:
     * value 
 
-DELETE http://icsseseguridad.com/location-security/public/utility/{id}
+DELETE http://icsseseguridad.com/api/public/utility/{id}
 
     Borra una configuracion
     
 # * Position de las Tablets (tablet-position)
 
-GET http://icsseseguridad.com/location-security/public/tablet
+GET http://icsseseguridad.com/api/public/tablet
 
     Obtiene el ultimo registro de cada tablet
 
-POST http://icsseseguridad.com/location-security/public/tablet
+POST http://icsseseguridad.com/api/public/tablet
 
     Registrar la posicion, recibe parametros en el body:
     * latitude
@@ -831,87 +831,87 @@ POST http://icsseseguridad.com/location-security/public/tablet
     * imei
     * message
     
-GET http://icsseseguridad.com/location-security/public/tablet/all
+GET http://icsseseguridad.com/api/public/tablet/all
 
     obtiene todas las posiciones registrar (usar solo para pruebas, no poner en produccion)
     
-GET http://icsseseguridad.com/location-security/public/tablet/id/{id}
+GET http://icsseseguridad.com/api/public/tablet/id/{id}
  
      obtiene una posicion por su id
     
-GET http://icsseseguridad.com/location-security/public/tablet/date/today
+GET http://icsseseguridad.com/api/public/tablet/date/today
  
      obtiene todas las posiciones registradas del dia actual
     
-GET http://icsseseguridad.com/location-security/public/tablet/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/api/public/tablet/date/{year}/{month}/{day}
  
      obtiene todas las posiciones registradas del dia seleccionado
      
-GET http://icsseseguridad.com/location-security/public/tablet/watch/{id}
+GET http://icsseseguridad.com/api/public/tablet/watch/{id}
  
      obtiene todas las posiciones registradas de una guardia por el id
      
-GET http://icsseseguridad.com/location-security/public/tablet/watch/{id}/date
+GET http://icsseseguridad.com/api/public/tablet/watch/{id}/date
  
      obtiene todas las posiciones registradas de una guardia por el id del dia actual
      
-GET http://icsseseguridad.com/location-security/public/tablet/watch/{id}/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/api/public/tablet/watch/{id}/date/{year}/{month}/{day}
  
      obtiene todas las posiciones registradas de una guardia por el id del dia seleccionado
      
-GET http://icsseseguridad.com/location-security/public/tablet/guard/{id}
+GET http://icsseseguridad.com/api/public/tablet/guard/{id}
  
      obtiene todas las posiciones registradas de un empleado por el id
      
-GET http://icsseseguridad.com/location-security/public/tablet/guard/{id}/date
+GET http://icsseseguridad.com/api/public/tablet/guard/{id}/date
  
      obtiene todas las posiciones registradas de un empleado por el id del dia actual
      
-GET http://icsseseguridad.com/location-security/public/tablet/guard/{id}/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/api/public/tablet/guard/{id}/date/{year}/{month}/{day}
  
      obtiene todas las posiciones registradas de un empleado por el id del dia seleccionado
      
-GET http://icsseseguridad.com/location-security/public/tablet/imei/{imei}
+GET http://icsseseguridad.com/api/public/tablet/imei/{imei}
  
      obtiene todas las posiciones registradas de una tablet por su imei
      
-GET http://icsseseguridad.com/location-security/public/tablet/imei/{imei}/date
+GET http://icsseseguridad.com/api/public/tablet/imei/{imei}/date
  
      obtiene todas las posiciones registradas de una tablet por su imei del dia actual
      
-GET http://icsseseguridad.com/location-security/public/tablet/imei/{imei}/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/api/public/tablet/imei/{imei}/date/{year}/{month}/{day}
  
      obtiene todas las posiciones registradas de una tablet por su imei del dia seleccionado
      
-GET http://icsseseguridad.com/location-security/public/tablet/message/{message}
+GET http://icsseseguridad.com/api/public/tablet/message/{message}
  
      obtiene todas las posiciones registradas con ese message
      
-GET http://icsseseguridad.com/location-security/public/tablet/message/{message}/date
+GET http://icsseseguridad.com/api/public/tablet/message/{message}/date
  
      obtiene todas las posiciones registradas con ese message del dia actual
      
-GET http://icsseseguridad.com/location-security/public/tablet/message/{message}/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/api/public/tablet/message/{message}/date/{year}/{month}/{day}
  
      obtiene todas las posiciones registradas con ese message del dia seleccionado
      
 # * Messenger (CHAT)
 
-POST http://icsseseguridad.com/location-security/public/messenger/register/web
+POST http://icsseseguridad.com/api/public/messenger/register/web
 
     Registrar el token de la pagina web, recibe parametros en el body:
     * registration_id   (token firebase)
     * admin_id
     * session  (identificador de session o ip, esta en veremos el uso) 
     
-POST http://icsseseguridad.com/location-security/public/messenger/register/tablet
+POST http://icsseseguridad.com/api/public/messenger/register/tablet
 
     Registrar el token de la los dispositivos, recibe parametros en el body:
     * registration_id   (token firebase)
     * guard_id
     * imei   
   
-POST http://icsseseguridad.com/location-security/public/messenger/chat
+POST http://icsseseguridad.com/api/public/messenger/chat
 
     Creacion de chat con otro individuo, recibe parametros en el body:
     * user_1_id         (id del usuario)
@@ -921,7 +921,7 @@ POST http://icsseseguridad.com/location-security/public/messenger/chat
     * user_2_type       (tipo de usuario/ ADMIN o GUARD)
     * user_2_name       (nombre completo del usuario) 
     
-POST http://icsseseguridad.com/location-security/public/messenger/channel
+POST http://icsseseguridad.com/api/public/messenger/channel
 
     Creacion de channel para chat grupal y agregar al creador al channel de una vez, 
         recibe parametros en el body:
@@ -931,7 +931,7 @@ POST http://icsseseguridad.com/location-security/public/messenger/channel
     * creator_type       (tipo de usuario/ ADMIN o GUARD)
     * creator_name       (nombre completo del creador)  
  
-POST http://icsseseguridad.com/location-security/public/messenger/channel/{channel_id}/add
+POST http://icsseseguridad.com/api/public/messenger/channel/{channel_id}/add
  
     Agrega usuarios al channel, recibe un array en el body, 
     cada objecto dle array debe contener:
@@ -940,7 +940,7 @@ POST http://icsseseguridad.com/location-security/public/messenger/channel/{chann
     * user_type       (tipo de usuario/ ADMIN o GUARD)
     * user_name       (nombre completo del nuevo miembro) 
      
-POST http://icsseseguridad.com/location-security/public/messenger/send
+POST http://icsseseguridad.com/api/public/messenger/send
 
     Envio de mensaje al otro usuario, recibe parametros en el body: 
     * text              (mensaje que se envia)
@@ -950,50 +950,50 @@ POST http://icsseseguridad.com/location-security/public/messenger/send
     * sender_type       (tipo de usuario que envia. ADMIN o GUARD)
     * sender_name       (nombre completo del que envia)
     
-GET http://icsseseguridad.com/location-security/public/messenger/conversations/admin/{id}
+GET http://icsseseguridad.com/api/public/messenger/conversations/admin/{id}
  
      obtiene todas los chat abiertos de un administrador por su id
      
-GET http://icsseseguridad.com/location-security/public/messenger/conversations/guard/{id}
+GET http://icsseseguridad.com/api/public/messenger/conversations/guard/{id}
  
      obtiene todas los chat abiertos de un guardia por su id
      
-GET http://icsseseguridad.com/location-security/public/messenger/conversations/chat/{id}
+GET http://icsseseguridad.com/api/public/messenger/conversations/chat/{id}
  
      obtiene todos los mensajes de una conversacion atravez del id dle chat
      
-GET http://icsseseguridad.com/location-security/public/messenger/channel/guard/{id}
+GET http://icsseseguridad.com/api/public/messenger/channel/guard/{id}
  
      obtiene todos los channel al que esta suscrito el guardia
      
-GET http://icsseseguridad.com/location-security/public/messenger/channel/admin/{id}
+GET http://icsseseguridad.com/api/public/messenger/channel/admin/{id}
  
      obtiene todos los channel al que esta suscrito el administrador
      
-GET http://icsseseguridad.com/location-security/public/messenger/channel/{id}/members
+GET http://icsseseguridad.com/api/public/messenger/channel/{id}/members
  
      obtiene todos los miembros de un channel
      
-GET http://icsseseguridad.com/location-security/public/messenger/conversations/channel/{id}
+GET http://icsseseguridad.com/api/public/messenger/conversations/channel/{id}
  
      obtiene todos los mensajes de un channel
      
 # * Banner [imagenes para mostrar en el home de las tablets]
 
-GET http://icsseseguridad.com/location-security/public/banner
+GET http://icsseseguridad.com/api/public/banner
 
     obtiene la lista de banners
 
-GET http://icsseseguridad.com/location-security/public/banner/{id}
+GET http://icsseseguridad.com/api/public/banner/{id}
 
     obtiene un banner por su id
    
-POST http://icsseseguridad.com/location-security/public/banner 
+POST http://icsseseguridad.com/api/public/banner 
 
     Registrar una banner, recibe parametro en el body:
     * photo (url)
 
-DELETE http://icsseseguridad.com/location-security/public/banner/{id}
+DELETE http://icsseseguridad.com/api/public/banner/{id}
 
     Elimina una banner por el id
     
@@ -1001,27 +1001,27 @@ DELETE http://icsseseguridad.com/location-security/public/banner/{id}
 
     Los vehiculos solo pueden estar en un cerco a la vez
 
-GET http://icsseseguridad.com/location-security/public/bounds
+GET http://icsseseguridad.com/api/public/bounds
 
     obtiene todas los cercos virutales
    
-POST http://icsseseguridad.com/location-security/public/bounds 
+POST http://icsseseguridad.com/api/public/bounds 
 
     Registrar un cerco virutal, recibe parametro en el body:
     * name
     * points (array string de puntos del poligono)
 
-PUT http://icsseseguridad.com/location-security/public/bounds/{id}
+PUT http://icsseseguridad.com/api/public/bounds/{id}
 
     Edita un cerco virutal, recibe parametro en el body:
     * name
     * points (array string de puntos del poligono)
     
-DELETE http://icsseseguridad.com/location-security/public/bounds/{id}
+DELETE http://icsseseguridad.com/api/public/bounds/{id}
 
     Elimina un cerco virutal.
     
-POST http://icsseseguridad.com/location-security/public/bounds/{id}/vehicle
+POST http://icsseseguridad.com/api/public/bounds/{id}/vehicle
 
     Agrega vehiculos al cerco virtual, recibe por el bodi un array en string de "imei"
     
@@ -1037,11 +1037,11 @@ POST http://icsseseguridad.com/location-security/public/bounds/{id}/vehicle
              	}
              ]
              
-DELETE http://icsseseguridad.com/location-security/public/bounds/vehicle/{vehicle_id}
+DELETE http://icsseseguridad.com/api/public/bounds/vehicle/{vehicle_id}
 
     quita un vehiculo del cerco virtual
     
-GET http://icsseseguridad.com/location-security/public/bounds/{id}/vehicle
+GET http://icsseseguridad.com/api/public/bounds/{id}/vehicle
 
     obtiene todas los vehiculos asociados a un cerco virtual
    

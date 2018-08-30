@@ -4,32 +4,28 @@ use App\Middleware\AuthMiddleware;
 use App\Validation\WatchValidation;
 
 $app->group('/watch', function () {
-    $this->post('', function ($req, $res, $args) {
-        $r = WatchValidation::validate($req->getParsedBody());
-
+    $this->post('/start', function ($req, $res, $args) {
+        $r = WatchValidation::validateStart($req->getParsedBody());
         if (!$r->response) {
             return $res->withHeader('Content-type', 'application/json')
-                ->withStatus(422)
-                ->write(json_encode($r));
+                ->withStatus(422)->write(json_encode($r));
         }
 
         return $res->withHeader('Content-type', 'application/json')
             ->write(
-                json_encode($this->model->watch->register($req->getParsedBody()))
+                json_encode($this->model->watch->start($req->getParsedBody()))
             );
     });
-    $this->put('/{id}', function ($req, $res, $args) {
-        $r = WatchValidation::validate($req->getParsedBody(), true);
-
+    $this->put('/{id}/end', function ($req, $res, $args) {
+        $r = WatchValidation::validateEnd($req->getParsedBody(), true);
         if (!$r->response) {
             return $res->withHeader('Content-type', 'application/json')
-                ->withStatus(422)
-                ->write(json_encode($r));
+                ->withStatus(422)->write(json_encode($r));
         }
 
         return $res->withHeader('Content-type', 'application/json')
             ->write(
-                json_encode($this->model->watch->finish($req->getParsedBody(), $args['id']))
+                json_encode($this->model->watch->end($req->getParsedBody(), $args['id']))
             );
     });
     $this->delete('/{id}', function ($req, $res, $args) {

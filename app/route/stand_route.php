@@ -33,6 +33,12 @@ $app->group('/stand', function () {
                 json_encode($this->model->stand->update($req->getParsedBody(), $args['id']))
             );
     });
+    $this->post('/{id}/tablet/add', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->stand->addToStand($req->getParsedBody(), $args['id']))
+            );
+    });
     $this->delete('/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(

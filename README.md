@@ -204,20 +204,21 @@ GET http://icsseseguridad.com/api/public/watch/{id}/history
 
     Obtiene todas los registro de una guardia
 
-POST http://icsseseguridad.com/api/public/watch
+POST http://icsseseguridad.com/api/public/watch/start
 
     Registrar (inicia) una guardia, recibe parametros en el body:
     * guard_id
+    * tablet_id
+    * stand_id
     * latitude
     * longitude
     * observation (opcional)
 
-PUT http://icsseseguridad.com/api/public/watch/{watch_id}
+PUT http://icsseseguridad.com/api/public/watch/{watch_id}/end
 
     Finaliza una guardia por el id, recibe parametros en el body:
-    * latitude
-    * longitude
-    * observation (opcional)
+    * f_latitude
+    * f_longitude
 
 # * Empleados (Guards)
 
@@ -815,85 +816,6 @@ PUT http://icsseseguridad.com/api/public/utility/{id}
 DELETE http://icsseseguridad.com/api/public/utility/{id}
 
     Borra una configuracion
-    
-# * Position de las Tablets (tablet-position)
-
-GET http://icsseseguridad.com/api/public/tablet
-
-    Obtiene el ultimo registro de cada tablet
-
-POST http://icsseseguridad.com/api/public/tablet
-
-    Registrar la posicion, recibe parametros en el body:
-    * latitude
-    * longitude
-    * watch_id
-    * imei
-    * message
-    
-GET http://icsseseguridad.com/api/public/tablet/all
-
-    obtiene todas las posiciones registrar (usar solo para pruebas, no poner en produccion)
-    
-GET http://icsseseguridad.com/api/public/tablet/id/{id}
- 
-     obtiene una posicion por su id
-    
-GET http://icsseseguridad.com/api/public/tablet/date/today
- 
-     obtiene todas las posiciones registradas del dia actual
-    
-GET http://icsseseguridad.com/api/public/tablet/date/{year}/{month}/{day}
- 
-     obtiene todas las posiciones registradas del dia seleccionado
-     
-GET http://icsseseguridad.com/api/public/tablet/watch/{id}
- 
-     obtiene todas las posiciones registradas de una guardia por el id
-     
-GET http://icsseseguridad.com/api/public/tablet/watch/{id}/date
- 
-     obtiene todas las posiciones registradas de una guardia por el id del dia actual
-     
-GET http://icsseseguridad.com/api/public/tablet/watch/{id}/date/{year}/{month}/{day}
- 
-     obtiene todas las posiciones registradas de una guardia por el id del dia seleccionado
-     
-GET http://icsseseguridad.com/api/public/tablet/guard/{id}
- 
-     obtiene todas las posiciones registradas de un empleado por el id
-     
-GET http://icsseseguridad.com/api/public/tablet/guard/{id}/date
- 
-     obtiene todas las posiciones registradas de un empleado por el id del dia actual
-     
-GET http://icsseseguridad.com/api/public/tablet/guard/{id}/date/{year}/{month}/{day}
- 
-     obtiene todas las posiciones registradas de un empleado por el id del dia seleccionado
-     
-GET http://icsseseguridad.com/api/public/tablet/imei/{imei}
- 
-     obtiene todas las posiciones registradas de una tablet por su imei
-     
-GET http://icsseseguridad.com/api/public/tablet/imei/{imei}/date
- 
-     obtiene todas las posiciones registradas de una tablet por su imei del dia actual
-     
-GET http://icsseseguridad.com/api/public/tablet/imei/{imei}/date/{year}/{month}/{day}
- 
-     obtiene todas las posiciones registradas de una tablet por su imei del dia seleccionado
-     
-GET http://icsseseguridad.com/api/public/tablet/message/{message}
- 
-     obtiene todas las posiciones registradas con ese message
-     
-GET http://icsseseguridad.com/api/public/tablet/message/{message}/date
- 
-     obtiene todas las posiciones registradas con ese message del dia actual
-     
-GET http://icsseseguridad.com/api/public/tablet/message/{message}/date/{year}/{month}/{day}
- 
-     obtiene todas las posiciones registradas con ese message del dia seleccionado
      
 # * Messenger (CHAT)
 
@@ -1009,12 +931,14 @@ POST http://icsseseguridad.com/api/public/bounds
 
     Registrar un cerco virutal, recibe parametro en el body:
     * name
+    * color (deberia ser en hexadecimal)
     * points (array string de puntos del poligono)
 
 PUT http://icsseseguridad.com/api/public/bounds/{id}
 
     Edita un cerco virutal, recibe parametro en el body:
     * name
+    * color (deberia ser en hexadecimal)
     * points (array string de puntos del poligono)
     
 DELETE http://icsseseguridad.com/api/public/bounds/{id}
@@ -1044,6 +968,224 @@ DELETE http://icsseseguridad.com/api/public/bounds/vehicle/{vehicle_id}
 GET http://icsseseguridad.com/api/public/bounds/{id}/vehicle
 
     obtiene todas los vehiculos asociados a un cerco virtual
+    
+# * Bounds Groups (Grupos para cercos virtuales)
+
+POST http://icsseseguridad.com/api/public/bounds_group
+
+    Registrar un grupo, recibe parametro en el body:
+    * name
+    
+PUT http://icsseseguridad.com/api/public/bounds_group/{bounds_group_id}
+
+    Edita el grupo seleccionado, recibe parametro en el body:
+    * name
+    
+DELETE http://icsseseguridad.com/api/public/bounds_group/{bounds_group_id}
+
+    Borrar un grupo, si no se puede borrar se desactiva
+    
+GET http://icsseseguridad.com/api/public/bounds_group
+
+    obtiene todos los grupos
+    
+POST http://icsseseguridad.com/api/public/bounds_group/{bounds_group_id}/bounds/add
+
+    Agrega cercos virtuales al grupo, recibe por el body un array en string de "id" de los cercos
+    
+    ejemplo: [
+             	{
+             		"id": 1
+             	},
+             	{
+             		"id": 2
+             	},
+             	{
+             		"id": 3
+             	}
+             ]
+             
+GET http://icsseseguridad.com/api/public/bounds/group/{bounds_group_id}
+
+    obtiene todas los cerco por el grupo 
+    
+PUT http://icsseseguridad.com/api/public/bounds/{bounds_id}/group/remove
+
+    remueve el cerco del grupo
+    
+# * Tablets
+
+POST http://icsseseguridad.com/api/public/tablet
+
+    Registrar una tablet, recibe parametro en el body:
+    * imei
+    
+PUT http://icsseseguridad.com/api/public/tablet/{tablet_id}/active/1
+
+    Registrar activa una tablet
+    
+PUT http://icsseseguridad.com/api/public/tablet/{tablet_id}/active/0
+
+    Registrar desactiva una tablet
+    
+GET http://icsseseguridad.com/api/public/tablet/active/{status}
+
+    obtiene una lista de tablets, 
+    all => Todas
+    1   => Activas
+    0   => Desactivadas
+    
+DELETE http://icsseseguridad.com/api/public/tablet/{tablet_id}
+
+    Borrar la tablet por el id, si esta asociada solo la desactiva
+    
    
+# * Stands
+
+POST http://icsseseguridad.com/api/public/stand
+
+    Registrar un puesto para las tablets, recibe parametro en el body:
+    * name
+    * address
+    
+PUT http://icsseseguridad.com/api/public/stand/{stand_id}
+
+    Edita el puesto seleccionado, recibe parametro en el body:
+    * name
+    * address
+    
+DELETE http://icsseseguridad.com/api/public/stand/{stand_id}
+
+    Borrar un puesto
+    
+GET http://icsseseguridad.com/api/public/stand
+
+    obtiene todos los puestos
+    
+POST http://icsseseguridad.com/api/public/stand/{id}/tablet/add
+
+    Agrega tablets al puesto, recibe por el body un array en string de "id" de tablets
+    
+    ejemplo: [
+             	{
+             		"id": 1
+             	},
+             	{
+             		"id": 2
+             	},
+             	{
+             		"id": 3
+             	}
+             ]
+             
+POST http://icsseseguridad.com/api/public/stand/{id}/guard/add
+
+    Agrega guardias al puesto, recibe por el body un array en string de "id" de guardias
+    
+    ejemplo: [
+             	{
+             		"id": 1
+             	},
+             	{
+             		"id": 2
+             	},
+             	{
+             		"id": 3
+             	}
+             ]    
+   
+GET http://icsseseguridad.com/api/public/tablet/stand/{stand_id}
+
+    obtiene todas las tablets asociadas a un puesto
+    
+GET http://icsseseguridad.com/api/public/guard/stand/{stand_id}
+    
+    obtiene todas los guardias asociadas a un puesto
+    
+PUT http://icsseseguridad.com/api/public/guard/{guard_id}/stand/remove
+
+    remueve el guardia del puesto
+    
+PUT http://icsseseguridad.com/api/public/tablet/{tablet_id}/stand/remove
+
+    remueve la tablet del puesto
+    
+    
+# * Position de las Tablets (tablet-position)
+
+GET http://icsseseguridad.com/api/public/tablet
+
+    Obtiene el ultimo registro de cada tablet
+
+POST http://icsseseguridad.com/api/public/tablet
+
+    Registrar la posicion, recibe parametros en el body:
+    * latitude
+    * longitude
+    * watch_id
+    * imei
+    * message
+    
+GET http://icsseseguridad.com/api/public/tablet/all
+
+    obtiene todas las posiciones registrar (usar solo para pruebas, no poner en produccion)
+    
+GET http://icsseseguridad.com/api/public/tablet/id/{id}
+ 
+     obtiene una posicion por su id
+    
+GET http://icsseseguridad.com/api/public/tablet/date/today
+ 
+     obtiene todas las posiciones registradas del dia actual
+    
+GET http://icsseseguridad.com/api/public/tablet/date/{year}/{month}/{day}
+ 
+     obtiene todas las posiciones registradas del dia seleccionado
      
-        
+GET http://icsseseguridad.com/api/public/tablet/watch/{id}
+ 
+     obtiene todas las posiciones registradas de una guardia por el id
+     
+GET http://icsseseguridad.com/api/public/tablet/watch/{id}/date
+ 
+     obtiene todas las posiciones registradas de una guardia por el id del dia actual
+     
+GET http://icsseseguridad.com/api/public/tablet/watch/{id}/date/{year}/{month}/{day}
+ 
+     obtiene todas las posiciones registradas de una guardia por el id del dia seleccionado
+     
+GET http://icsseseguridad.com/api/public/tablet/guard/{id}
+ 
+     obtiene todas las posiciones registradas de un empleado por el id
+     
+GET http://icsseseguridad.com/api/public/tablet/guard/{id}/date
+ 
+     obtiene todas las posiciones registradas de un empleado por el id del dia actual
+     
+GET http://icsseseguridad.com/api/public/tablet/guard/{id}/date/{year}/{month}/{day}
+ 
+     obtiene todas las posiciones registradas de un empleado por el id del dia seleccionado
+     
+GET http://icsseseguridad.com/api/public/tablet/imei/{imei}
+ 
+     obtiene todas las posiciones registradas de una tablet por su imei
+     
+GET http://icsseseguridad.com/api/public/tablet/imei/{imei}/date
+ 
+     obtiene todas las posiciones registradas de una tablet por su imei del dia actual
+     
+GET http://icsseseguridad.com/api/public/tablet/imei/{imei}/date/{year}/{month}/{day}
+ 
+     obtiene todas las posiciones registradas de una tablet por su imei del dia seleccionado
+     
+GET http://icsseseguridad.com/api/public/tablet/message/{message}
+ 
+     obtiene todas las posiciones registradas con ese message
+     
+GET http://icsseseguridad.com/api/public/tablet/message/{message}/date
+ 
+     obtiene todas las posiciones registradas con ese message del dia actual
+     
+GET http://icsseseguridad.com/api/public/tablet/message/{message}/date/{year}/{month}/{day}
+ 
+     obtiene todas las posiciones registradas con ese message del dia seleccionado

@@ -152,6 +152,34 @@ class GuardModel
         ];
     }
 
+    public function getByStand($standId)
+    {
+        $data = $this->db
+            ->from($this->table)
+            ->where('stand_id', $standId)
+            ->select('stand.name as stand_name')
+            ->select('stand.address as stand_address')
+            ->orderBy('id DESC')
+            ->fetchAll();
+
+        return [
+            'total' => count($data),
+            'data' => $data
+        ];
+    }
+
+    public function removeStand($id)
+    {
+        $data = [
+            'stand_id' => null
+        ];
+        $query = $this->db
+            ->update($this->table, $data, $id)
+            ->execute();
+
+        return $this->response->SetResponse(true);
+    }
+
     public function getByActive($active)
     {
         try {

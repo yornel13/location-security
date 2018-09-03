@@ -31,9 +31,7 @@ class TabletModel
             ->fetch();
 
         if (!empty($tablet)) {
-            $key = 'imei';
-            $this->response->errors[$key][] = 'El imei se encuentra ya registrado';
-            return $this->response->SetResponse(false);
+            return $this->response->SetResponse(true, 'El imei se encuentra ya registrado');
         }
 
         $query = $this->db
@@ -74,6 +72,16 @@ class TabletModel
             ->fetch();
     }
 
+    public function getTabletByImei($imei)
+    {
+        return $this->db
+            ->from($this->table)
+            ->where('imei', $imei)
+            ->select('stand.name as stand_name')
+            ->select('stand.address as stand_address')
+            ->fetch();
+    }
+
     public function getTabletsByStatus($status)
     {
         if ($status == 'all') {
@@ -100,6 +108,8 @@ class TabletModel
         $data = $this->db
             ->from($this->table)
             ->where('stand_id', $standId)
+            ->select('stand.name as stand_name')
+            ->select('stand.address as stand_address')
             ->orderBy('id DESC')
             ->fetchAll();
 
@@ -107,6 +117,44 @@ class TabletModel
             'total' => count($data),
             'data' => $data
         ];
+    }
+
+    public function removeStand($id)
+    {
+        $data = [
+            'stand_id' => null
+        ];
+        $query = $this->db
+            ->update($this->table, $data, $id)
+            ->execute();
+
+        return $this->response->SetResponse(true);
+    }
+
+    public function deleteTablet($id)
+    {
+        try {
+            $query = $this->db
+                ->deleteFrom($this->table, $id)
+                ->execute();
+            if ($query === 0) {
+                return $this->response
+                    ->SetResponse(false, 'La tablet no exite');
+            }
+        } catch (Exception $e) {
+            if (strpos($e->getMessage(), "FOREIGN KEY")) {
+                $set = null;
+                $set['status'] = 0;
+                $this->db
+                    ->update($this->table, $set, $id)
+                    ->execute();
+                $this->response->result = $this->get($id);
+                return $this->response->SetResponse(true, 'DISABLED');
+            } else {
+                return $this->response->SetResponse(false);
+            }
+        }
+        return $this->response->SetResponse(true);
     }
 
     /*

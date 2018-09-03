@@ -7,11 +7,19 @@ use App\Lib\Response;
 class AlertModel
 {
     const OUT_BOUNDS = "OUT_BOUNDS";
+    const IN_BOUNDS = "IN_BOUNDS";
     const IGNITION_ON = "IGNITION_ON";
     const IGNITION_OFF = "IGNITION_OFF";
     const SPEED_MAX = "SPEED_MAX";
     const GENERAL = "GENERAL";
+    const INIT_WATCH = "INIT_WATCH";
+    const FINISH_WATCH = "FINISH_WATCH";
     const INCIDENCE = "INCIDENCE";
+    const INCIDENCE_LEVEL_1 = "INCIDENCE_LEVEL_1";
+    const INCIDENCE_LEVEL_2 = "INCIDENCE_LEVEL_2";
+    const DROP = "DROP";
+    const SOS1 = "SOS1";
+
     private $db;
     private $table = 'alert';
     private $response;

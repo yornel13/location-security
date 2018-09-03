@@ -55,11 +55,8 @@ class IncidenceModel
             ->update($this->table, $data, $id)
             ->execute();
 
-        if ($query === 0) {
-            return $this->response->SetResponse(false, 'La incidencia no exite');
-        } else {
-            $this->response->result = $this->get($id);
-        }
+        $this->response->result = $this->get($id);
+
         return $this->response->SetResponse(true);
     }
 

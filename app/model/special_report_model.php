@@ -322,12 +322,15 @@ class SpecialReportModel
         $name = $report->watch->guard_name." ".$report->watch->guard_lastname;
         if ($report->incidence->level > 1) {
             $message = $name." ha creado un reporte de incidencia Importante";
+            $type = AlertModel::INCIDENCE_LEVEL_2;
         } else {
             $message = $name." ha creado un reporte de incidencia";
+            $type = AlertModel::INCIDENCE_LEVEL_1;
         }
         $alert = [
             "guard_id" => $report->watch->guard_id,
             "cause" => AlertModel::INCIDENCE,
+            "type" => $type,
             "message" => $message,
             "latitude" => $report->latitude,
             "longitude" => $report->longitude,

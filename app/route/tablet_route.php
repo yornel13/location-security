@@ -26,6 +26,24 @@ $app->group('/tablet', function () {
                 json_encode($this->model->tablet->active($args['id'], $args['active']))
             );
     });
+    $this->put('/{id}/stand/remove', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->tablet->removeStand($args['id']))
+            );
+    });
+    $this->delete('/{id}', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->tablet->deleteTablet($args['id']))
+            );
+    });
+    $this->get('/stand/{stand_id}', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->tablet->getTabletsByStand($args['stand_id']))
+            );
+    });
     $this->get('/active/{active}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(

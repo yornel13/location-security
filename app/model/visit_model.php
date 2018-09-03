@@ -50,15 +50,15 @@ class VisitModel
         }
     }
 
-    public function finish($id)
+    public function finish($id, $data)
     {
         $timestamp = time()-(5*60*60);
         $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
-        $dataF['finish_date'] = $timestamp;
-        $dataF['status'] = 0;
+        $data['finish_date'] = $timestamp;
+        $data['status'] = 0;
 
         $query = $this->db
-            ->update($this->table, $dataF, $id)
+            ->update($this->table, $data, $id)
             ->execute();
 
         if ($query === 0) {

@@ -131,6 +131,33 @@ class BoundsModel
         return $this->response->SetResponse(true);
     }
 
+
+    public function getByGroup($group_id)
+    {
+        $data = $this->db
+            ->from($this->table)
+            ->where('bounds_group_id', $group_id)
+            ->orderBy('id DESC')
+            ->fetchAll();
+
+        return [
+            'total' => count($data),
+            'data' => $data
+        ];
+    }
+
+    public function removeGroup($id)
+    {
+        $data = [
+            'bounds_group_id' => null
+        ];
+        $query = $this->db
+            ->update($this->table, $data, $id)
+            ->execute();
+
+        return $this->response->SetResponse(true);
+    }
+
     public function getVehiclesBound($bounds_id)
     {
         $data = $this->db

@@ -848,7 +848,7 @@ POST http://icsseseguridad.com/api/public/messenger/channel
     Creacion de channel para chat grupal y agregar al creador al channel de una vez, 
         recibe parametros en el body:
         
-    * name               (nombre dle grupo)
+    * name               (nombre del grupo)
     * creator_id         (id del creador)
     * creator_type       (tipo de usuario/ ADMIN o GUARD)
     * creator_name       (nombre completo del creador)  
@@ -856,7 +856,7 @@ POST http://icsseseguridad.com/api/public/messenger/channel
 POST http://icsseseguridad.com/api/public/messenger/channel/{channel_id}/add
  
     Agrega usuarios al channel, recibe un array en el body, 
-    cada objecto dle array debe contener:
+    cada objecto del array debe contener:
          
     * user_id         (id del nuevo miembro)
     * user_type       (tipo de usuario/ ADMIN o GUARD)
@@ -882,7 +882,7 @@ GET http://icsseseguridad.com/api/public/messenger/conversations/guard/{id}
      
 GET http://icsseseguridad.com/api/public/messenger/conversations/chat/{id}
  
-     obtiene todos los mensajes de una conversacion atravez del id dle chat
+     obtiene todos los mensajes de una conversacion atravez del id del chat
      
 GET http://icsseseguridad.com/api/public/messenger/channel/guard/{id}
  
@@ -1022,15 +1022,15 @@ POST http://icsseseguridad.com/api/public/tablet
     
 PUT http://icsseseguridad.com/api/public/tablet/{tablet_id}/active/1
 
-    Registrar activa una tablet
+    activa una tablet
     
 PUT http://icsseseguridad.com/api/public/tablet/{tablet_id}/active/0
 
-    Registrar desactiva una tablet
+    desactiva una tablet
     
 GET http://icsseseguridad.com/api/public/tablet/active/{status}
 
-    obtiene una lista de tablets, 
+    obtiene la lista de tablets por el estado, 
     all => Todas
     1   => Activas
     0   => Desactivadas
@@ -1117,7 +1117,7 @@ GET http://icsseseguridad.com/api/public/tablet
 
     Obtiene el ultimo registro de cada tablet
 
-POST http://icsseseguridad.com/api/public/tablet
+POST http://icsseseguridad.com/api/public/tablet/position
 
     Registrar la posicion, recibe parametros en el body:
     * latitude

@@ -5,7 +5,7 @@ use App\Lib\Response;
 
 class ReplyValidation
 {
-    public static function validate($data, $update = false)
+    public static function validate($data)
     {
         $response = new Response();
 
@@ -17,12 +17,6 @@ class ReplyValidation
         $key = 'text';
         if (empty($data[$key])) {
             $response->errors[$key][] = 'Este campo es obligatorio';
-        } else {
-            $value = $data[$key];
-
-            if (strlen($value) < 10) {
-                $response->errors[$key][] = 'debe contener como minimo 10 caracteres';
-            }
         }
 
         $keyA = 'admin_id';

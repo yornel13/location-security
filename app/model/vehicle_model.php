@@ -192,7 +192,13 @@ class VehicleModel
                             $count++;
                         }
                         if (((int) $local['in_polygon']) === $this->OUT && $external['in_polygon'] === $this->IN) {
-                            // alert vehicle is enter in polygon
+                            $this->alertOut(
+                                $local['imei'],
+                                $local['alias'],
+                                $local['latitude'],
+                                $local['longitude'],
+                                $association->bounds_points
+                            );
                             $count++;
                         }
                     }
@@ -234,7 +240,22 @@ class VehicleModel
         $alert = [
             "imei" => $imei,
             "cause" => AlertModel::OUT_BOUNDS,
+            "type" => AlertModel::OUT_BOUNDS,
             "message" => "El vehiculo ".$alias." ha salido de la zona establecida",
+            "extra" => $points,
+            "latitude" => $latitude,
+            "longitude" => $longitude
+        ];
+        $alertService = new AlertModel($this->db);
+        $alertService->registerGeneral($alert);
+    }
+
+    public function alertIn($imei, $alias, $latitude, $longitude, $points) {
+        $alert = [
+            "imei" => $imei,
+            "cause" => AlertModel::OUT_BOUNDS,
+            "type" => AlertModel::IN_BOUNDS,
+            "message" => "El vehiculo ".$alias." ha entrado nuevamente a su zona establecida",
             "extra" => $points,
             "latitude" => $latitude,
             "longitude" => $longitude
@@ -247,6 +268,7 @@ class VehicleModel
         $alert = [
             "imei" => $imei,
             "cause" => AlertModel::GENERAL,
+            "type" => AlertModel::IGNITION_ON,
             "message" => "El vehiculo ".$alias." fue encendido",
             "latitude" => $latitude,
             "longitude" => $longitude
@@ -259,6 +281,7 @@ class VehicleModel
         $alert = [
             "imei" => $imei,
             "cause" => AlertModel::GENERAL,
+            "type" => AlertModel::IGNITION_OFF,
             "message" => "El vehiculo ".$alias." fue apagado",
             "latitude" => $latitude,
             "longitude" => $longitude
@@ -271,6 +294,7 @@ class VehicleModel
         $alert = [
             "imei" => $imei,
             "cause" => AlertModel::GENERAL,
+            "type" => AlertModel::SPEED_MAX,
             "message" => "El vehiculo ".$alias." sobre paso los 100KM/h",
             "latitude" => $latitude,
             "longitude" => $longitude,
@@ -278,10 +302,4 @@ class VehicleModel
         $alertService = new AlertModel($this->db);
         $alertService->registerGeneral($alert);
     }
-
-
-
-
-
-
 }

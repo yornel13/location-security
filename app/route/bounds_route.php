@@ -40,6 +40,18 @@ $app->group('/bounds', function () {
                 json_encode($this->model->bounds->getByName($args['name']))
             );
     });
+    $this->get('/group/{group_id}', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->bounds->getByGroup($args['group_id']))
+            );
+    });
+    $this->put('/{id}/group/remove', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->bounds->removeGroup($args['id']))
+            );
+    });
     $this->post('/{id}/vehicle', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(

@@ -19,9 +19,28 @@ class WatchModel
 
     public function start($data)
     {
+        $guard_service = new GuardModel($this->db);
+        $guard = $guard_service->get($data['guard_id']);
+        $tablet_service = new TabletModel($this->db);
+        $tablet = $tablet_service->getTabletByImei($data['tablet_imei']);
+        if ($guard->stand_id == null) {
+            return $this->response->SetResponse(false, 'Debes estar asociado a este puesto para poder iniciar.');
+        }
+
+        if (is_object($tablet) && ((int) $tablet->status) == 1) {
+            if ((int) $guard->stand_id != (int) $tablet->stand_id) {
+                return $this->response->SetResponse(false, 'El dispositivo no pertenece a tu puesto');
+            }
+        } else {
+            return $this->response->SetResponse(false, 'El dispositivo no esta asociado a un puesto');
+        }
+
         $timestamp = time()-(5*60*60);
         $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
         $data['create_date'] = $timestamp;
+        $data['stand_id'] = $tablet->stand_id;
+        $data['stand_name'] = $tablet->stand_name;
+        $data['stand_address'] = $tablet->stand_address;
         $data['status'] = 1;
 
         $watch = $this->getWatchActiveByGuard($data['guard_id']);
@@ -77,9 +96,8 @@ class WatchModel
             ->select('guard.dni as guard_dni')
             ->select('guard.name as guard_name')
             ->select('guard.lastname as guard_lastname')
-            ->select('stand.name as stand_name')
-            ->select('stand.address as stand_address')
-            ->select('tablet.imei as tablet_imei')
+            ->select('guard.email as guard_email')
+            ->select('guard.photo as guard_photo')
             ->fetch();
 
         return $watch;
@@ -113,9 +131,8 @@ class WatchModel
             ->select('guard.dni as guard_dni')
             ->select('guard.name as guard_name')
             ->select('guard.lastname as guard_lastname')
-            ->select('stand.name as stand_name')
-            ->select('stand.address as stand_address')
-            ->select('tablet.imei as tablet_imei')
+            ->select('guard.email as guard_email')
+            ->select('guard.photo as guard_photo')
             ->orderBy('watch.id DESC')
             ->fetchAll();
 
@@ -154,9 +171,8 @@ class WatchModel
             ->select('guard.dni as guard_dni')
             ->select('guard.name as guard_name')
             ->select('guard.lastname as guard_lastname')
-            ->select('stand.name as stand_name')
-            ->select('stand.address as stand_address')
-            ->select('tablet.imei as tablet_imei')
+            ->select('guard.email as guard_email')
+            ->select('guard.photo as guard_photo')
             ->orderBy('watch.id DESC')
             ->fetchAll();
 
@@ -179,9 +195,8 @@ class WatchModel
             ->select('guard.dni as guard_dni')
             ->select('guard.name as guard_name')
             ->select('guard.lastname as guard_lastname')
-            ->select('stand.name as stand_name')
-            ->select('stand.address as stand_address')
-            ->select('tablet.imei as tablet_imei')
+            ->select('guard.email as guard_email')
+            ->select('guard.photo as guard_photo')
             ->fetch();
     }
 
@@ -192,10 +207,9 @@ class WatchModel
             ->select('guard.dni as guard_dni')
             ->select('guard.name as guard_name')
             ->select('guard.lastname as guard_lastname')
-            ->select('stand.name as stand_name')
-            ->select('stand.address as stand_address')
-            ->select('tablet.imei as tablet_imei')
-            ->orderBy('watch.id DESC')
+            ->select('guard.email as guard_email')
+            ->select('guard.photo as guard_photo')
+            ->orderBy('id DESC')
             ->fetchAll();
 
         return [
@@ -212,9 +226,8 @@ class WatchModel
             ->select('guard.dni as guard_dni')
             ->select('guard.name as guard_name')
             ->select('guard.lastname as guard_lastname')
-            ->select('stand.name as stand_name')
-            ->select('stand.address as stand_address')
-            ->select('tablet.imei as tablet_imei')
+            ->select('guard.email as guard_email')
+            ->select('guard.photo as guard_photo')
             ->orderBy('watch.id DESC')
             ->fetchAll();
 
@@ -229,13 +242,12 @@ class WatchModel
         $data = $this->db
             ->from($this->table)
             ->where('guard_id', $guard_id)
+            ->where('watch.status', 1)
             ->select('guard.dni as guard_dni')
             ->select('guard.name as guard_name')
             ->select('guard.lastname as guard_lastname')
-            ->select('stand.name as stand_name')
-            ->select('stand.address as stand_address')
-            ->select('tablet.imei as tablet_imei')
-            ->where('watch.status', 1)
+            ->select('guard.email as guard_email')
+            ->select('guard.photo as guard_photo')
             ->orderBy('watch.id DESC')
             ->fetchAll();
 
@@ -253,9 +265,8 @@ class WatchModel
             ->select('guard.dni as guard_dni')
             ->select('guard.name as guard_name')
             ->select('guard.lastname as guard_lastname')
-            ->select('stand.name as stand_name')
-            ->select('stand.address as stand_address')
-            ->select('tablet.imei as tablet_imei')
+            ->select('guard.email as guard_email')
+            ->select('guard.photo as guard_photo')
             ->orderBy('watch.id DESC')
             ->fetchAll();
 
@@ -291,6 +302,7 @@ class WatchModel
         $alert = [
             "guard_id" => $guard_id,
             "cause" => AlertModel::GENERAL,
+            "type" => AlertModel::INIT_WATCH,
             "message" => $name." ha iniciado su guardia",
             "latitude" => $latitude,
             "longitude" => $longitude,
@@ -306,6 +318,7 @@ class WatchModel
         $alert = [
             "guard_id" => $guard_id,
             "cause" => AlertModel::GENERAL,
+            "type" => AlertModel::FINISH_WATCH,
             "message" => $name." ha finalizado su guardia",
             "latitude" => $latitude,
             "longitude" => $longitude,

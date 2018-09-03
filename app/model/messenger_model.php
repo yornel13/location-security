@@ -126,6 +126,7 @@ class MessengerModel
         $timestamp = time()-(5*60*60);
         $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
         $data['create_at'] = $timestamp;
+        $data['update_at'] = $timestamp;
         $data['state'] = 1;
         $data['active'] = true;
 
@@ -202,6 +203,12 @@ class MessengerModel
                 $message['id'] = $query;
                 $this->response->result = $message;
 
+                /* Update chat time */
+                $this->db
+                    ->update($this->table_chat, ['update_at' => $timestamp], $data['chat_id'])
+                    ->execute();
+                /*********************/
+
                 $id = null;
                 $type = null;
                 if ($chat->user_1_id == $data['sender_id']
@@ -258,22 +265,33 @@ class MessengerModel
                     ->execute();
                 $message['id'] = $query;
                 $this->response->result = $message;
+
+                /* Update chat time */
+                $this->db
+                    ->update($this->table_channel, ['update_at' => $timestamp], $data['channel_id'])
+                    ->execute();
+                /*********************/
+
                 foreach ($this->getChannelMembers($data['channel_id'])['data'] as $member) {
-                    if ($member->user_type === $this->GUARD) {
-                        $registration = $this->db
-                            ->from($this->table_tablet_token)
-                            ->where('guard_id', $member->user_id)
-                            ->fetch();
+                    if ($member->user_id == $data['sender_id'] && $member->user_type == $data['sender_type']) {
+                        // nothing to do
                     } else {
-                        $registration = $this->db
-                            ->from($this->table_web_token)
-                            ->where('admin_id', $member->user_id)
-                            ->fetch();
-                    }
-                    if (is_object($registration)) {
-                        $message['receiver_id'] = $member->user_id;
-                        $message['receiver_type'] = $member->user_type;
-                        $this->send_message_notification($message, $registration->registration_id);
+                        if ($member->user_type === $this->GUARD) {
+                            $registration = $this->db
+                                ->from($this->table_tablet_token)
+                                ->where('guard_id', $member->user_id)
+                                ->fetch();
+                        } else {
+                            $registration = $this->db
+                                ->from($this->table_web_token)
+                                ->where('admin_id', $member->user_id)
+                                ->fetch();
+                        }
+                        if (is_object($registration)) {
+                            $message['receiver_id'] = $member->user_id;
+                            $message['receiver_type'] = $member->user_type;
+                            $this->send_message_notification($message, $registration->registration_id);
+                        }
                     }
                 }
                 return $this->response->SetResponse(true);
@@ -331,6 +349,7 @@ class MessengerModel
             ->select('channel.creator_type as channel_creator_type')
             ->select('channel.creator_name as channel_creator_name')
             ->select('channel.create_at as channel_create_at')
+            ->select('channel.update_at as channel_update_at')
             ->select('channel.state as channel_state')
             ->orderBy('id DESC')
             ->fetchAll();
@@ -353,6 +372,7 @@ class MessengerModel
             ->select('channel.creator_type as channel_creator_type')
             ->select('channel.creator_name as channel_creator_name')
             ->select('channel.create_at as channel_create_at')
+            ->select('channel.update_at as channel_update_at')
             ->select('channel.state as channel_state')
             ->orderBy('id DESC')
             ->fetchAll();
@@ -451,20 +471,32 @@ class MessengerModel
     }
 
     function fireStoreMap($data) {
-        $data = $array =  (array) $data;
+        $data = $array = (array) $data;
         $new_data = [];
         foreach (array_keys($data) as $key) {
+            if ($key == 'id') {
+                $new_data[$key] = [ "doubleValue" => ((int) $data[$key]) ];
+                continue;
+            }
             if (is_string($data[$key])) {
                 $new_data[$key] = [ "stringValue" => $data[$key] ];
+                continue;
             }
             if (is_int($data[$key])) {
-                $new_data[$key] = [ "integerValue" => $data[$key] ];
+                $new_data[$key] = [ "doubleValue" => $data[$key] ];
+                continue;
+            }
+            if (is_long($data[$key])) {
+                $new_data[$key] = [ "doubleValue" => $data[$key] ];
+                continue;
             }
             if (is_double($data[$key])) {
                 $new_data[$key] = [ "doubleValue" => $data[$key] ];
+                continue;
             }
             if (is_bool($data[$key])) {
                 $new_data[$key] = [ "booleanValue" => $data[$key] ];
+                continue;
             }
         }
         return $new_data;

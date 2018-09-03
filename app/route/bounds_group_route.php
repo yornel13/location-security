@@ -4,9 +4,9 @@ use App\Middleware\AuthMiddleware;
 use App\Validation\IncidenceValidation;
 use App\Validation\StandValidation;
 
-$app->group('/stand', function () {
+$app->group('/bounds_group', function () {
     $this->post('', function ($req, $res, $args) {
-        $r = StandValidation::validate($req->getParsedBody());
+        $r = IncidenceValidation::validate($req->getParsedBody());
 
         if (!$r->response) {
             return $res->withHeader('Content-type', 'application/json')
@@ -16,11 +16,11 @@ $app->group('/stand', function () {
 
         return $res->withHeader('Content-type', 'application/json')
             ->write(
-                json_encode($this->model->stand->register($req->getParsedBody()))
+                json_encode($this->model->bgroup->register($req->getParsedBody()))
             );
     });
     $this->put('/{id}', function ($req, $res, $args) {
-        $r = StandValidation::validate($req->getParsedBody());
+        $r = IncidenceValidation::validate($req->getParsedBody());
 
         if (!$r->response) {
             return $res->withHeader('Content-type', 'application/json')
@@ -30,43 +30,37 @@ $app->group('/stand', function () {
 
         return $res->withHeader('Content-type', 'application/json')
             ->write(
-                json_encode($this->model->stand->update($req->getParsedBody(), $args['id']))
+                json_encode($this->model->bgroup->update($req->getParsedBody(), $args['id']))
             );
     });
-    $this->post('/{id}/tablet/add', function ($req, $res, $args) {
+    $this->post('/{id}/bounds/add', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
-                json_encode($this->model->stand->addToStand($req->getParsedBody(), $args['id']))
-            );
-    });
-    $this->post('/{id}/guard/add', function ($req, $res, $args) {
-        return $res->withHeader('Content-type', 'application/json')
-            ->write(
-                json_encode($this->model->stand->addGuardsToStand($req->getParsedBody(), $args['id']))
+                json_encode($this->model->bgroup->addToGroup($req->getParsedBody(), $args['id']))
             );
     });
     $this->delete('/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
-                json_encode($this->model->stand->delete($args['id']))
+                json_encode($this->model->bgroup->delete($args['id']))
             );
     });
     $this->get('', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
-                json_encode($this->model->stand->getAll())
+                json_encode($this->model->bgroup->getAll())
             );
     });
     $this->get('/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
-                json_encode($this->model->stand->get($args['id']))
+                json_encode($this->model->bgroup->get($args['id']))
             );
     });
     $this->get('/name/{name}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
-                json_encode($this->model->stand->getByName($args['name']))
+                json_encode($this->model->bgroup->getByName($args['name']))
             );
     });
 })/*->add(new AuthMiddleware($app))*/;

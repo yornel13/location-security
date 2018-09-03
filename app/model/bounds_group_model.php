@@ -5,10 +5,10 @@ namespace App\Model;
 use App\Lib\Response;
 use Exception;
 
-class StandModel
+class BoundsGroupModel
 {
     private $db;
-    private $table = 'stand';
+    private $table = 'bounds_group';
     private $response;
 
     public function __CONSTRUCT($db)
@@ -21,8 +21,7 @@ class StandModel
     {
         $timestamp = time()-(5*60*60);
         $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
-        $data['create_date'] = $timestamp;
-        $data['update_date'] = $timestamp;
+        $data['create_at'] = $timestamp;
         $data['status'] = 1;
 
         $object = $this->db
@@ -32,7 +31,7 @@ class StandModel
 
         if (!empty($object)) {
             $key = 'name';
-            $this->response->errors[$key][] = 'Ya existe un puesto con este nombre';
+            $this->response->errors[$key][] = 'Ya un grupo con este nombre';
             return $this->response->SetResponse(false);
         }
 
@@ -47,10 +46,6 @@ class StandModel
 
     public function update($data, $id)
     {
-        $timestamp = time()-(5*60*60);
-        $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
-        $data['update_date'] = $timestamp;
-
         $object = $this->db
             ->from($this->table)
             ->where('name', $data['name'])
@@ -58,7 +53,7 @@ class StandModel
 
         if (!empty($object) && $object->id !== $id) {
             $key = 'name';
-            $this->response->errors[$key][] = 'Ya existe un puesto con este nombre';
+            $this->response->errors[$key][] = 'Ya existe un grupo con este nombre';
             return $this->response->SetResponse(false);
         }
 
@@ -67,36 +62,20 @@ class StandModel
             ->execute();
 
         if ($query === 0) {
-            return $this->response->SetResponse(false, 'El puesto no exite');
+            return $this->response->SetResponse(false, 'El grupo no exite');
         } else {
             $this->response->result = $this->get($id);
         }
         return $this->response->SetResponse(true);
     }
 
-    public function addToStand($data, $id)
+    public function addToGroup($data, $id)
     {
         if (is_array($data)) {
             foreach ($data as $valor) {
                 try {
                     $this->db
-                        ->update('tablet', [ 'stand_id' => $id ], $valor['id'])
-                        ->execute();
-                } catch (Exception $e) {}
-            }
-            return $this->response->SetResponse(true);
-        } else {
-            return $this->response->SetResponse(false, 'la data debe ser un array de ids');
-        }
-    }
-
-    public function addGuardsToStand($data, $id)
-    {
-        if (is_array($data)) {
-            foreach ($data as $valor) {
-                try {
-                    $this->db
-                        ->update('guard', [ 'stand_id' => $id ], $valor['id'])
+                        ->update('bounds', [ 'bounds_group_id' => $id ], $valor['id'])
                         ->execute();
                 } catch (Exception $e) {}
             }
@@ -142,14 +121,11 @@ class StandModel
                 ->execute();
             if ($query === 0) {
                 return $this->response
-                    ->SetResponse(false, 'El puesto no exite');
+                    ->SetResponse(false, 'El grupo no exite');
             }
         } catch (Exception $e) {
             if (strpos($e->getMessage(), "FOREIGN KEY")) {
-                $timestamp = time() - (5 * 60 * 60);
-                $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
                 $set = null;
-                $set['update_date'] = $timestamp;
                 $set['status'] = 0;
                 $this->db
                     ->update($this->table, $set, $id)

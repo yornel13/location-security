@@ -27,11 +27,16 @@ class AuthModel
             ->fetch();
 
         if (is_object($guard)) {
+            if ($guard->stand_id == null) {
+                return $this->response->SetResponse(false, 'No puedes iniciar session si no estas asociado a una zona');
+            }
             $token = Auth::SignIn([
                 'id' => $guard->id,
                 'dni' => $guard->dni,
                 'name' => $guard->name,
                 'lastname' => $guard->lastname,
+                'email' => $guard->email,
+                'photo' => $guard->photo,
                 'isAdmin' => false
             ]);
             $guard->token = $token;

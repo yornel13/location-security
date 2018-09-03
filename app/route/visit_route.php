@@ -21,7 +21,7 @@ $app->group('/visit', function () {
     $this->put('/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
-                json_encode($this->model->visit->finish($args['id']))
+                json_encode($this->model->visit->finish($args['id'], $req->getParsedBody()))
             );
     });
     $this->delete('/{id}', function ($req, $res, $args) {

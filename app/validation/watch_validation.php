@@ -14,12 +14,7 @@ class WatchValidation
             $response->errors[$key][] = 'Este campo es obligatorio';
         }
 
-        $key = 'tablet_id';
-        if (!isset($data[$key])) {
-            $response->errors[$key][] = 'Este campo es obligatorio';
-        }
-
-        $key = 'stand_id';
+        $key = 'tablet_imei';
         if (!isset($data[$key])) {
             $response->errors[$key][] = 'Este campo es obligatorio';
         }

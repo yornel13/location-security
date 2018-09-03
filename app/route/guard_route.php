@@ -44,6 +44,12 @@ $app->group('/guard', function () {
                 json_encode($this->model->guard->active($args['id'], $args['active']))
             );
     });
+    $this->put('/{id}/stand/remove', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->guard->removeStand($args['id']))
+            );
+    });
     $this->delete('/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
@@ -72,6 +78,12 @@ $app->group('/guard', function () {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
                 json_encode($this->model->guard->getByDni($args['dni']))
+            );
+    });
+    $this->get('/stand/{stand_id}', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->guard->getByStand($args['stand_id']))
             );
     });
 })/*->add(new AuthMiddleware($app))*/;

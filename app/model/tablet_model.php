@@ -182,7 +182,7 @@ class TabletModel
             ->fetch();
     }
 
-    public function getByDate($year = false, $month = false, $day = false)
+    public function getByDate($year = false, $month = false, $day = false, $t_year = false, $t_month = false, $t_day = false)
     {
         $timestamp = time()-(5*60*60);
         if (is_bool($year) && !$year) {
@@ -194,36 +194,24 @@ class TabletModel
         if (is_bool($day) && !$day) {
             $day = gmdate("d", $timestamp);
         }
-        $data = $this->db
-            ->from($this->table)
-            ->where('generated_time >= ?', $year."-".$month."-".$day." 00:00:00")
-            ->where('generated_time <= ?', $year."-".$month."-".$day." 23:59:59")
-            ->orderBy('id DESC')
-            ->fetchAll();
-
-        return [
-            'data' => $data,
-            'total' => count($data)
-        ];
-    }
-
-    public function getByDateAndProperty($propertyName, $propertyValue, $year = false, $month = false, $day = false)
-    {
-        $timestamp = time()-(5*60*60);
-        if (is_bool($year) && !$year) {
-            $year = gmdate("Y", $timestamp);
+        if (is_bool($t_year) && !$t_year) {
+            $t_year = gmdate("Y", $timestamp);
         }
-        if (is_bool($month) && !$month) {
-            $month = gmdate("m", $timestamp);
+        if (is_bool($t_month) && !$t_month) {
+            $t_month = gmdate("m", $timestamp);
         }
-        if (is_bool($day) && !$day) {
-            $day = gmdate("d", $timestamp);
+        if (is_bool($t_day) && !$t_day) {
+            $t_day = gmdate("d", $timestamp);
         }
         $data = $this->db
             ->from($this->table_position)
             ->where('generated_time >= ?', $year."-".$month."-".$day." 00:00:00")
-            ->where('generated_time <= ?', $year."-".$month."-".$day." 23:59:59")
-            ->where($propertyName, $propertyValue)
+            ->where('generated_time <= ?', $t_year."-".$t_month."-".$t_day." 23:59:59")
+            ->leftJoin('watch.guard AS guard')
+            ->select('guard.id AS guard_id')
+            ->select('guard.dni AS guard_dni')
+            ->select('guard.name AS guard_name')
+            ->select('guard.lastname AS guard_lastname')
             ->orderBy('id DESC')
             ->fetchAll();
 
@@ -233,20 +221,60 @@ class TabletModel
         ];
     }
 
-    public function getByWatchInDate($watchId, $year = false, $month = false, $day = false) {
-        return $this->getByDateAndProperty('watch_id', $watchId, $year, $month, $day);
+    public function getByDateAndProperty($propertyName, $propertyValue, $year = false, $month = false, $day = false, $t_year = false, $t_month = false, $t_day = false)
+    {
+        $timestamp = time()-(5*60*60);
+        if (is_bool($year) && !$year) {
+            $year = gmdate("Y", $timestamp);
+        }
+        if (is_bool($month) && !$month) {
+            $month = gmdate("m", $timestamp);
+        }
+        if (is_bool($day) && !$day) {
+            $day = gmdate("d", $timestamp);
+        }
+        if (is_bool($t_year) && !$t_year) {
+            $t_year = gmdate("Y", $timestamp);
+        }
+        if (is_bool($t_month) && !$t_month) {
+            $t_month = gmdate("m", $timestamp);
+        }
+        if (is_bool($t_day) && !$t_day) {
+            $t_day = gmdate("d", $timestamp);
+        }
+        $data = $this->db
+            ->from($this->table_position)
+            ->where('generated_time >= ?', $year."-".$month."-".$day." 00:00:00")
+            ->where('generated_time <= ?', $t_year."-".$t_month."-".$t_day." 23:59:59")
+            ->where($propertyName, $propertyValue)
+            ->leftJoin('watch.guard AS guard')
+            ->select('guard.id AS guard_id')
+            ->select('guard.dni AS guard_dni')
+            ->select('guard.name AS guard_name')
+            ->select('guard.lastname AS guard_lastname')
+            ->orderBy('id DESC')
+            ->fetchAll();
+
+        return [
+            'data' => $data,
+            'total' => count($data)
+        ];
     }
 
-    public function getByGuardInDate($guardId, $year = false, $month = false, $day = false) {
-        return $this->getByDateAndProperty('watch.guard_id', $guardId, $year, $month, $day);
+    public function getByWatchInDate($watchId, $year = false, $month = false, $day = false, $t_year = false, $t_month = false, $t_day = false) {
+        return $this->getByDateAndProperty('watch_id', $watchId, $year, $month, $day, $t_year, $t_month, $t_day);
     }
 
-    public function getByImeiInDate($imei, $year = false, $month = false, $day = false) {
-        return $this->getByDateAndProperty('imei', $imei, $year, $month, $day);
+    public function getByGuardInDate($guardId, $year = false, $month = false, $day = false, $t_year = false, $t_month = false, $t_day = false) {
+        return $this->getByDateAndProperty('watch.guard_id', $guardId, $year, $month, $day, $t_year, $t_month, $t_day);
     }
 
-    public function getByMessageInDate($message, $year = false, $month = false, $day = false) {
-        return $this->getByDateAndProperty('message', $message, $year, $month, $day);
+    public function getByImeiInDate($imei, $year = false, $month = false, $day = false, $t_year = false, $t_month = false, $t_day = false) {
+        return $this->getByDateAndProperty('imei', $imei, $year, $month, $day, $t_year, $t_month, $t_day);
+    }
+
+    public function getByMessageInDate($message, $year = false, $month = false, $day = false, $t_year = false, $t_month = false, $t_day = false) {
+        return $this->getByDateAndProperty('message', $message, $year, $month, $day, $t_year, $t_month, $t_day);
     }
 
     public function getByWatch($watchId)
@@ -254,6 +282,11 @@ class TabletModel
         $data = $this->db
             ->from($this->table_position)
             ->where('watch_id', $watchId)
+            ->leftJoin('watch.guard AS guard')
+            ->select('guard.id AS guard_id')
+            ->select('guard.dni AS guard_dni')
+            ->select('guard.name AS guard_name')
+            ->select('guard.lastname AS guard_lastname')
             ->orderBy('id DESC')
             ->fetchAll();
 
@@ -268,6 +301,11 @@ class TabletModel
         $data = $this->db
             ->from($this->table_position)
             ->where('watch.guard_id', $id)
+            ->leftJoin('watch.guard AS guard')
+            ->select('guard.id AS guard_id')
+            ->select('guard.dni AS guard_dni')
+            ->select('guard.name AS guard_name')
+            ->select('guard.lastname AS guard_lastname')
             ->orderBy('id DESC')
             ->fetchAll();
 
@@ -282,6 +320,11 @@ class TabletModel
         $data = $this->db
             ->from($this->table_position)
             ->where('imei', $imei)
+            ->leftJoin('watch.guard AS guard')
+            ->select('guard.id AS guard_id')
+            ->select('guard.dni AS guard_dni')
+            ->select('guard.name AS guard_name')
+            ->select('guard.lastname AS guard_lastname')
             ->orderBy('id DESC')
             ->fetchAll();
 
@@ -296,6 +339,11 @@ class TabletModel
         $data = $this->db
             ->from($this->table_position)
             ->where('message', $message)
+            ->leftJoin('watch.guard AS guard')
+            ->select('guard.id AS guard_id')
+            ->select('guard.dni AS guard_dni')
+            ->select('guard.name AS guard_name')
+            ->select('guard.lastname AS guard_lastname')
             ->orderBy('id DESC')
             ->fetchAll();
 
@@ -309,6 +357,11 @@ class TabletModel
     {
         $data = $this->db
             ->from($this->table_position)
+            ->leftJoin('watch.guard AS guard')
+            ->select('guard.id AS guard_id')
+            ->select('guard.dni AS guard_dni')
+            ->select('guard.name AS guard_name')
+            ->select('guard.lastname AS guard_lastname')
             ->orderBy('id DESC')
             ->fetchAll();
 

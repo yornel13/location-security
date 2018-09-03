@@ -88,10 +88,10 @@ $app->group('/tablet', function () {
                 json_encode($this->model->tablet->getByDate())
             );
     });
-    $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
+    $this->get('/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
-                json_encode($this->model->tablet->getByDate($args['year'],$args['month'],$args['day']))
+                json_encode($this->model->tablet->getByDate($args['year'],$args['month'],$args['day'], $args['t_year'],$args['t_month'],$args['t_day']))
             );
     });
     $this->group('/watch/{id}', function () {
@@ -107,10 +107,10 @@ $app->group('/tablet', function () {
                     json_encode($this->model->tablet->getByWatchInDate($args['id']))
                 );
         });
-        $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
+        $this->get('/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}', function ($req, $res, $args) {
             return $res->withHeader('Content-type', 'application/json')
                 ->write(
-                    json_encode($this->model->tablet->getByWatchInDate( $args['id'], $args['year'],$args['month'],$args['day']))
+                    json_encode($this->model->tablet->getByWatchInDate( $args['id'], $args['year'],$args['month'],$args['day'], $args['t_year'],$args['t_month'],$args['t_day']))
                 );
         });
     });
@@ -127,10 +127,10 @@ $app->group('/tablet', function () {
                     json_encode($this->model->tablet->getByGuardInDate($args['id']))
                 );
         });
-        $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
+        $this->get('/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}', function ($req, $res, $args) {
             return $res->withHeader('Content-type', 'application/json')
                 ->write(
-                    json_encode($this->model->tablet->getByGuardInDate($args['id'], $args['year'],$args['month'],$args['day']))
+                    json_encode($this->model->tablet->getByGuardInDate($args['id'], $args['year'],$args['month'],$args['day'], $args['t_year'],$args['t_month'],$args['t_day']))
                 );
         });
     });
@@ -147,10 +147,10 @@ $app->group('/tablet', function () {
                     json_encode($this->model->tablet->getByImeiInDate($args['imei']))
                 );
         });
-        $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
+        $this->get('/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}', function ($req, $res, $args) {
             return $res->withHeader('Content-type', 'application/json')
                 ->write(
-                    json_encode($this->model->tablet->getByImeiInDate($args['imei'], $args['year'],$args['month'],$args['day']))
+                    json_encode($this->model->tablet->getByImeiInDate($args['imei'], $args['year'],$args['month'],$args['day'], $args['t_year'],$args['t_month'],$args['t_day']))
                 );
         });
     });
@@ -167,10 +167,10 @@ $app->group('/tablet', function () {
                     json_encode($this->model->tablet->getByMessageInDate($args['message']))
                 );
         });
-        $this->get('/date/{year}/{month}/{day}', function ($req, $res, $args) {
+        $this->get('/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}', function ($req, $res, $args) {
             return $res->withHeader('Content-type', 'application/json')
                 ->write(
-                    json_encode($this->model->tablet->getByMessageInDate($args['message'], $args['year'],$args['month'],$args['day']))
+                    json_encode($this->model->tablet->getByMessageInDate($args['message'], $args['year'],$args['month'],$args['day'], $args['t_year'],$args['t_month'],$args['t_day']))
                 );
         });
     });

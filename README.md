@@ -1138,9 +1138,9 @@ GET http://icsseseguridad.com/api/public/tablet/date/today
  
      obtiene todas las posiciones registradas del dia actual
     
-GET http://icsseseguridad.com/api/public/tablet/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/api/public/tablet/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}
  
-     obtiene todas las posiciones registradas del dia seleccionado
+     obtiene todas las posiciones registradas del periodo seleccionado
      
 GET http://icsseseguridad.com/api/public/tablet/watch/{id}
  
@@ -1150,9 +1150,9 @@ GET http://icsseseguridad.com/api/public/tablet/watch/{id}/date
  
      obtiene todas las posiciones registradas de una guardia por el id del dia actual
      
-GET http://icsseseguridad.com/api/public/tablet/watch/{id}/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/api/public/tablet/watch/{id}/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}
  
-     obtiene todas las posiciones registradas de una guardia por el id del dia seleccionado
+     obtiene todas las posiciones registradas de una guardia por el id del periodo seleccionado
      
 GET http://icsseseguridad.com/api/public/tablet/guard/{id}
  
@@ -1162,9 +1162,9 @@ GET http://icsseseguridad.com/api/public/tablet/guard/{id}/date
  
      obtiene todas las posiciones registradas de un empleado por el id del dia actual
      
-GET http://icsseseguridad.com/api/public/tablet/guard/{id}/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/api/public/tablet/guard/{id}/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}
  
-     obtiene todas las posiciones registradas de un empleado por el id del dia seleccionado
+     obtiene todas las posiciones registradas de un empleado por el id del periodo seleccionado
      
 GET http://icsseseguridad.com/api/public/tablet/imei/{imei}
  
@@ -1174,9 +1174,9 @@ GET http://icsseseguridad.com/api/public/tablet/imei/{imei}/date
  
      obtiene todas las posiciones registradas de una tablet por su imei del dia actual
      
-GET http://icsseseguridad.com/api/public/tablet/imei/{imei}/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/api/public/tablet/imei/{imei}/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}
  
-     obtiene todas las posiciones registradas de una tablet por su imei del dia seleccionado
+     obtiene todas las posiciones registradas de una tablet por su imei del periodo seleccionado
      
 GET http://icsseseguridad.com/api/public/tablet/message/{message}
  
@@ -1186,6 +1186,6 @@ GET http://icsseseguridad.com/api/public/tablet/message/{message}/date
  
      obtiene todas las posiciones registradas con ese message del dia actual
      
-GET http://icsseseguridad.com/api/public/tablet/message/{message}/date/{year}/{month}/{day}
+GET http://icsseseguridad.com/api/public/tablet/message/{message}/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}
  
-     obtiene todas las posiciones registradas con ese message del dia seleccionado
+     obtiene todas las posiciones registradas con ese message del periodo seleccionado

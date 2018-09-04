@@ -19,9 +19,9 @@ return [
         // Configuration my App
         'app_token_name' => 'APP_TOKEN',
         'connectionString' => [
-            'dns' => 'mysql:host=localhost;dbname=location_sec;charset=utf8',
-            'user' => 'root',
-            'pass' => '1234'
+            'dns' => 'mysql:host=localhost;dbname=tdouldln_location_prod;charset=utf8',
+            'user' => 'tdouldln_root',
+            'pass' => 'password1234'
         ]
     ],
 ];

@@ -3,6 +3,7 @@ namespace App\Model;
 
 
 use App\Lib\Response;
+use DateTime;
 
 class AlertModel
 {
@@ -301,5 +302,240 @@ class AlertModel
                 ->SetResponse(false, 'La alerta no exite');
         }
         return $this->response->SetResponse(true);
+    }
+
+    public function getOutSideBoundsByImeiInDate($imei, $year = false, $month = false, $day = false, $t_year = false, $t_month = false, $t_day = false) {
+
+        $timestamp = time()-(5*60*60);
+        if (is_bool($year) && !$year) {
+            $year = gmdate("Y", $timestamp);
+        }
+        if (is_bool($month) && !$month) {
+            $month = gmdate("m", $timestamp);
+        }
+        if (is_bool($day) && !$day) {
+            $day = gmdate("d", $timestamp);
+        }
+        if (is_bool($t_year) && !$t_year) {
+            $t_year = gmdate("Y", $timestamp);
+        }
+        if (is_bool($t_month) && !$t_month) {
+            $t_month = gmdate("m", $timestamp);
+        }
+        if (is_bool($t_day) && !$t_day) {
+            $t_day = gmdate("d", $timestamp);
+        }
+        $data = $this->db
+            ->from($this->table)
+            ->where('type', AlertModel::OUT_BOUNDS)
+            ->where('imei', $imei)
+            ->where('alert.create_date >= ?', $year . "-" . $month . "-" . $day . " 00:00:00")
+            ->where('alert.create_date <= ?', $t_year . "-" . $t_month . "-" . $t_day . " 23:59:59")
+            ->orderBy('id ASC')
+            ->fetchAll();
+
+        $timestamp = time()-(5*60*60);
+        $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
+        foreach ($data as $alert) {
+            $in = $this->db
+                ->from($this->table)
+                ->where('imei', $alert->imei)
+                ->where('type', AlertModel::IN_BOUNDS)
+                ->where('id > ?', $alert->id)
+                ->fetch();
+            $vehicle = $this->db
+                ->from('vehicle')
+                ->where('imei', $alert->imei)
+                ->fetch();
+            $alert->alias = $vehicle->alias;
+            if (is_object($in)) {
+                $alert->in = $in;
+                $alert->diff_sec = $this->diff($alert->create_date, $in->create_date);
+                $alert->diff_text = $this->dateDiff($alert->create_date, $in->create_date);
+            } else {
+                $alert->diff_sec = $this->diff($alert->create_date, $timestamp);
+                $alert->diff_text = $this->dateDiff($alert->create_date, $timestamp);
+            }
+        }
+
+        return [
+            'total' => count($data),
+            'data' => $data
+        ];
+    }
+
+    public function getOutSideBoundsInDate($year = false, $month = false, $day = false, $t_year = false, $t_month = false, $t_day = false) {
+
+        $timestamp = time()-(5*60*60);
+        if (is_bool($year) && !$year) {
+            $year = gmdate("Y", $timestamp);
+        }
+        if (is_bool($month) && !$month) {
+            $month = gmdate("m", $timestamp);
+        }
+        if (is_bool($day) && !$day) {
+            $day = gmdate("d", $timestamp);
+        }
+        if (is_bool($t_year) && !$t_year) {
+            $t_year = gmdate("Y", $timestamp);
+        }
+        if (is_bool($t_month) && !$t_month) {
+            $t_month = gmdate("m", $timestamp);
+        }
+        if (is_bool($t_day) && !$t_day) {
+            $t_day = gmdate("d", $timestamp);
+        }
+        $data = $this->db
+            ->from($this->table)
+            ->where('type', AlertModel::OUT_BOUNDS)
+            ->where('alert.create_date >= ?', $year . "-" . $month . "-" . $day . " 00:00:00")
+            ->where('alert.create_date <= ?', $t_year . "-" . $t_month . "-" . $t_day . " 23:59:59")
+            ->orderBy('id ASC')
+            ->fetchAll();
+
+        $timestamp = time()-(5*60*60);
+        $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
+        foreach ($data as $alert) {
+            $in = $this->db
+                ->from($this->table)
+                ->where('imei', $alert->imei)
+                ->where('type', AlertModel::IN_BOUNDS)
+                ->where('id > ?', $alert->id)
+                ->fetch();
+            $vehicle = $this->db
+                ->from('vehicle')
+                ->where('imei', $alert->imei)
+                ->fetch();
+            $alert->alias = $vehicle->alias;
+            if (is_object($in)) {
+                $alert->in = $in;
+                $alert->diff_sec = $this->diff($alert->create_date, $in->create_date);
+                $alert->diff_text = $this->dateDiff($alert->create_date, $in->create_date);
+            } else {
+                $alert->diff_sec = $this->diff($alert->create_date, $timestamp);
+                $alert->diff_text = $this->dateDiff($alert->create_date, $timestamp);
+            }
+        }
+
+        return [
+            'total' => count($data),
+            'data' => $data
+        ];
+    }
+
+    public function getOutSideBoundsByImei($imei) {
+        $data = $this->db
+            ->from($this->table)
+            ->where('type', AlertModel::OUT_BOUNDS)
+            ->where('imei', $imei)
+            ->orderBy('id ASC')
+            ->fetchAll();
+
+        $timestamp = time()-(5*60*60);
+        $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
+        foreach ($data as $alert) {
+            $in = $this->db
+                ->from($this->table)
+                ->where('imei', $alert->imei)
+                ->where('type', AlertModel::IN_BOUNDS)
+                ->where('id > ?', $alert->id)
+                ->fetch();
+            $vehicle = $this->db
+                ->from('vehicle')
+                ->where('imei', $alert->imei)
+                ->fetch();
+            $alert->alias = $vehicle->alias;
+            if (is_object($in)) {
+                $alert->in = $in;
+                $alert->diff_sec = $this->diff($alert->create_date, $in->create_date);
+                $alert->diff_text = $this->dateDiff($alert->create_date, $in->create_date);
+            } else {
+                $alert->diff_sec = $this->diff($alert->create_date, $timestamp);
+                $alert->diff_text = $this->dateDiff($alert->create_date, $timestamp);
+            }
+        }
+
+        return [
+            'total' => count($data),
+            'data' => $data
+        ];
+    }
+
+    public function getOutSideBounds()
+    {
+        $data = $this->db
+            ->from($this->table)
+            ->where('type', AlertModel::OUT_BOUNDS)
+            ->orderBy('id ASC')
+            ->fetchAll();
+
+        foreach ($data as $alert) {
+            $in = $this->db
+                ->from($this->table)
+                ->where('imei', $alert->imei)
+                ->where('type', AlertModel::IN_BOUNDS)
+                ->where('id > ?', $alert->id)
+                ->fetch();
+            if (is_object($in)) {
+                $alert->in = $in;
+                $alert->diff_sec = $this->diff($alert->create_date, $in->create_date);
+                $alert->diff_text = $this->dateDiff($alert->create_date, $in->create_date);
+            }
+        }
+
+        return [
+            'total' => count($data),
+            'data' => $data
+        ];
+    }
+
+    function diff($qw , $saw)
+    {
+        $datetime1 = strtotime($qw);
+        $datetime2 = strtotime($saw);
+        $interval = $datetime2 - $datetime1;
+        return $interval;
+    }
+
+    function dateDiff($date, $date2)
+    {
+        $datetime1 = date_create($date);
+        $datetime2 = date_create($date2);
+        $interval = date_diff($datetime1, $datetime2);
+        $min=$interval->format('%i');
+        $sec=$interval->format('%s');
+        $hour=$interval->format('%h');
+        $mon=$interval->format('%m');
+        $day=$interval->format('%d');
+        $year=$interval->format('%y');
+        if($interval->format('%i%h%d%m%y')=="00000")
+        {
+            //echo $interval->format('%i%h%d%m%y')."<br>";
+            return $sec." Segundos";
+
+        }
+
+        else if($interval->format('%h%d%m%y')=="0000"){
+            return $min." Minutos";
+        }
+
+
+        else if($interval->format('%d%m%y')=="000"){
+            return $hour." Horas";
+        }
+
+
+        else if($interval->format('%m%y')=="00"){
+            return $day." Dias";
+        }
+
+        else if($interval->format('%y')=="0"){
+            return $mon." Meses";
+        }
+
+        else{
+            return $year." Años";
+        }
+
     }
 }

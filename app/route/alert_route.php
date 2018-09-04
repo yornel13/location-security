@@ -36,7 +36,6 @@ $app->group('/alert', function () {
                 json_encode($this->model->alert->getAll())
             );
     });
-
     $this->get('/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
@@ -85,6 +84,46 @@ $app->group('/alert', function () {
                 return $res->withHeader('Content-type', 'application/json')
                     ->write(
                         json_encode($this->model->alert->getByCauseAndGuardInDate($args['cause'], $args['id'], $args['year'],$args['month'],$args['day'], $args['t_year'],$args['t_month'],$args['t_day']))
+                    );
+            });
+        });
+    });
+    $this->group('/out/bounds', function () {
+        $this->get('', function ($req, $res, $args) {
+            return $res->withHeader('Content-type', 'application/json')
+                ->write(
+                    json_encode($this->model->alert->getOutSideBounds())
+                );
+        });
+        $this->get('/date', function ($req, $res, $args) {
+            return $res->withHeader('Content-type', 'application/json')
+                ->write(
+                    json_encode($this->model->alert->getOutSideBoundsInDate())
+                );
+        });
+        $this->get('/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}', function ($req, $res, $args) {
+            return $res->withHeader('Content-type', 'application/json')
+                ->write(
+                    json_encode($this->model->alert->getOutSideBoundsInDate($args['year'],$args['month'],$args['day'], $args['t_year'],$args['t_month'],$args['t_day']))
+                );
+        });
+        $this->group('/imei/{imei}', function () {
+            $this->get('', function ($req, $res, $args) {
+                return $res->withHeader('Content-type', 'application/json')
+                    ->write(
+                        json_encode($this->model->alert->getOutSideBoundsByImei($args['imei']))
+                    );
+            });
+            $this->get('/date', function ($req, $res, $args) {
+                return $res->withHeader('Content-type', 'application/json')
+                    ->write(
+                        json_encode($this->model->alert->getOutSideBoundsByImeiInDate($args['imei']))
+                    );
+            });
+            $this->get('/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}', function ($req, $res, $args) {
+                return $res->withHeader('Content-type', 'application/json')
+                    ->write(
+                        json_encode($this->model->alert->getOutSideBoundsByImeiInDate($args['imei'], $args['year'],$args['month'],$args['day'], $args['t_year'],$args['t_month'],$args['t_day']))
                     );
             });
         });

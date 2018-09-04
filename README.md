@@ -1189,3 +1189,78 @@ GET http://icsseseguridad.com/api/public/tablet/message/{message}/date
 GET http://icsseseguridad.com/api/public/tablet/message/{message}/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}
  
      obtiene todas las posiciones registradas con ese message del periodo seleccionado
+     
+# * Salidas del cerco virtual, Zonas
+
+    formato de respuesta: array que contiene:
+    
+    "id": "3",
+    "guard_id": null,
+    "imei": "862894022745478",
+    "cause": "OUT_BOUNDS",
+    "type": "OUT_BOUNDS",
+    "message": "Guardia 2 Guardia 2 ha iniciado su guardia",
+    "extra": null,
+    "latitude": "10.123456",
+    "longitude": "60.123456",
+    "create_date": "2018-08-30 22:16:33",
+    "update_date": "2018-08-30 22:16:33",
+    "status": "0",
+    "alias": "HALCON 01 INGENIO VALDEZ",
+    "in": {
+        "id": "4",
+        "guard_id": null,
+        "imei": "862894022745478",
+        "cause": "OUT_BOUNDS",
+        "type": "IN_BOUNDS",
+        "message": "El vehiculo HALCON 01 INGENIO VALDEZ fue encendido",
+        "extra": null,
+        "latitude": "-2.021347",
+        "longitude": "-79.590240",
+        "create_date": "2018-09-02 06:31:19",
+        "update_date": "2018-09-02 06:31:19",
+        "status": "0"
+    },
+    "diff_sec": 202486,
+    "diff_text": "2 Dias"
+    
+    datos que deberian mostrarse:
+    
+        imei                (imei del vehiculo)
+        alias               (alias del vehiculo)
+        create_date:        (hora en que salio del la zona)
+        latitude            (coordenadas en las que salio del zona)
+        longitude           (coordenadas en las que salio del zona)
+        in.create_date      (hora en que volvio a la zona)
+        in.latitude         (coordenadas en las que volvio al cerco)
+        in.longitude        (coordenadas en las que volvio al cerco)
+        diff_text           (duracion que estuvo fuera del cero)
+        
+    si el objecto "in" no existe, significa que aun esta fuera del cerco, esto debe connotarse y en vez de mostrar
+    in.create_date, in.latitude, in.longitude, debe mostrar (AUN FUERA DE LA ZONA ESTABLECIDA)
+
+GET http://icsseseguridad.com/api/public/alert/out/bounds
+
+    obtiene la lista de salidas del cerco
+    
+GET http://icsseseguridad.com/api/public/alert/out/bounds/date
+
+    obtiene la lista de salidas del cerco del dia actual
+    
+GET http://icsseseguridad.com/api/public/alert/out/bounds/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}
+
+    obtiene la lista de salidas del cerco del rango seleccionado
+    
+GET http://icsseseguridad.com/api/public/alert/out/bounds/imei/{imei}
+
+    obtiene la lista de salidas del cerco de un vehiculos a tra vez de su imei
+    
+GET http://icsseseguridad.com/api/public/alert/out/bounds/imei/{imei}/date
+
+    obtiene la lista de salidas del cerco del dia actual de un vehiculos a tra vez de su imei
+    
+GET http://icsseseguridad.com/api/public/alert/out/bounds/imei/{imei}/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}
+
+    obtiene la lista de salidas del cerco del rango seleccionado de un vehiculos a tra vez de su imei
+
+

@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eaa892b9-4744-4ead-bd06-8997b50f9dad" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/api2.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/model/alert_model.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/model/alert_model.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/model/tablet_model.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/model/tablet_model.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/settings.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/settings.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -103,14 +104,14 @@
           <entry key="json" value="5" />
           <entry key="lock" value="3" />
           <entry key="md" value="27" />
-          <entry key="php" value="414" />
+          <entry key="php" value="416" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="JSON" value="8" />
           <entry key="Markdown" value="27" />
-          <entry key="PHP" value="414" />
+          <entry key="PHP" value="416" />
           <entry key="htaccess" value="1" />
         </counts>
       </usages-collector>
@@ -119,14 +120,14 @@
           <entry key="dummy" value="28" />
           <entry key="json" value="2" />
           <entry key="md" value="6099" />
-          <entry key="php" value="15925" />
+          <entry key="php" value="15934" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="2" />
           <entry key="Markdown" value="6099" />
-          <entry key="PHP" value="15925" />
+          <entry key="PHP" value="15934" />
           <entry key="PLAIN_TEXT" value="28" />
         </counts>
       </usages-collector>
@@ -140,10 +141,31 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/model/alert_model.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="211">
+              <caret line="257" column="9" lean-forward="true" selection-start-line="257" selection-start-column="9" selection-end-line="257" selection-end-column="9" />
+              <folding>
+                <element signature="e#29#50#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/model/tablet_model.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="353">
+              <caret line="85" column="5" selection-start-line="84" selection-start-column="4" selection-end-line="107" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/settings.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
+            <state relative-caret-position="357">
+              <caret line="21" column="62" selection-start-line="21" selection-start-column="50" selection-end-line="21" selection-end-column="62" />
             </state>
           </provider>
         </entry>
@@ -223,12 +245,12 @@
         <option value="$PROJECT_DIR$/app/validation/reply_validation.php" />
         <option value="$PROJECT_DIR$/app/model/messenger_model.php" />
         <option value="$PROJECT_DIR$/app/route/tablet_route.php" />
-        <option value="$PROJECT_DIR$/app/model/tablet_model.php" />
         <option value="$PROJECT_DIR$/app/model/vehicle_model.php" />
         <option value="$PROJECT_DIR$/app/route/alert_route.php" />
-        <option value="$PROJECT_DIR$/app/model/alert_model.php" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/settings.php" />
+        <option value="$PROJECT_DIR$/app/model/alert_model.php" />
+        <option value="$PROJECT_DIR$/app/model/tablet_model.php" />
       </list>
     </option>
   </component>
@@ -409,7 +431,7 @@
       <workItem from="1535583129782" duration="1405000" />
       <workItem from="1535623683232" duration="924000" />
       <workItem from="1535634506698" duration="34855000" />
-      <workItem from="1535903676412" duration="22304000" />
+      <workItem from="1535903676412" duration="28551000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <created>1533236198500</created>
@@ -485,7 +507,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="394609000" />
+    <option name="totallyTimeSpent" value="400856000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -826,13 +848,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/model/tablet_model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="363" column="56" selection-start-line="363" selection-start-column="56" selection-end-line="363" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/model/guard_model.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -874,16 +889,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/model/alert_model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="619">
-          <caret line="349" column="44" selection-start-line="349" selection-start-column="44" selection-end-line="349" selection-end-column="44" />
-          <folding>
-            <element signature="e#29#50#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
@@ -894,10 +899,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/tablet_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="353">
+          <caret line="85" column="5" selection-start-line="84" selection-start-column="4" selection-end-line="107" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/settings.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
+        <state relative-caret-position="357">
+          <caret line="21" column="62" selection-start-line="21" selection-start-column="50" selection-end-line="21" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/alert_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="211">
+          <caret line="257" column="9" lean-forward="true" selection-start-line="257" selection-start-column="9" selection-end-line="257" selection-end-column="9" />
+          <folding>
+            <element signature="e#29#50#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

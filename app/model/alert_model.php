@@ -469,6 +469,8 @@ class AlertModel
             ->orderBy('id ASC')
             ->fetchAll();
 
+        $timestamp = time()-(5*60*60);
+        $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
         foreach ($data as $alert) {
             $in = $this->db
                 ->from($this->table)
@@ -476,10 +478,18 @@ class AlertModel
                 ->where('type', AlertModel::IN_BOUNDS)
                 ->where('id > ?', $alert->id)
                 ->fetch();
+            $vehicle = $this->db
+                ->from('vehicle')
+                ->where('imei', $alert->imei)
+                ->fetch();
+            $alert->alias = $vehicle->alias;
             if (is_object($in)) {
                 $alert->in = $in;
                 $alert->diff_sec = $this->diff($alert->create_date, $in->create_date);
                 $alert->diff_text = $this->dateDiff($alert->create_date, $in->create_date);
+            } else {
+                $alert->diff_sec = $this->diff($alert->create_date, $timestamp);
+                $alert->diff_text = $this->dateDiff($alert->create_date, $timestamp);
             }
         }
 

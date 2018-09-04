@@ -87,12 +87,16 @@ class TabletModel
         if ($status == 'all') {
             $data = $this->db
                 ->from($this->table)
+                ->select('stand.name as stand_name')
+                ->select('stand.address as stand_address')
                 ->orderBy('id DESC')
                 ->fetchAll();
         } else {
             $data = $this->db
                 ->from($this->table)
                 ->where('status', $status)
+                ->select('stand.name as stand_name')
+                ->select('stand.address as stand_address')
                 ->orderBy('id DESC')
                 ->fetchAll();
         }

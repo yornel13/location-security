@@ -136,6 +136,10 @@ class SpecialReportModel
             ->from($this->table)
             ->where('create_date >= ?', $year."-".$month."-".$day." 00:00:00")
             ->where('create_date <= ?', $t_year."-".$t_month."-".$t_day." 23:59:59")
+            ->select('watch.guard.dni AS guard_dni')
+            ->select('watch.guard.name AS guard_name')
+            ->select('watch.guard.lastname AS guard_lastname')
+            ->select('incidence.level AS level')
             ->orderBy('id DESC')
             ->fetchAll();
 
@@ -179,6 +183,9 @@ class SpecialReportModel
             ->where($propertyName, $propertyValue)
             ->where('resolved', $resolved)
             ->select('watch.guard.dni AS guard_dni')
+            ->select('watch.guard.name AS guard_name')
+            ->select('watch.guard.lastname AS guard_lastname')
+            ->select('incidence.level AS level')
             ->orderBy('id DESC')
             ->fetchAll();
 
@@ -217,6 +224,9 @@ class SpecialReportModel
             ->where('incidence_id', $id)
             ->where('resolved', $resolved)
             ->select('watch.guard.dni AS guard_dni')
+            ->select('watch.guard.name AS guard_name')
+            ->select('watch.guard.lastname AS guard_lastname')
+            ->select('incidence.level AS level')
             ->orderBy('id DESC')
             ->fetchAll();
 
@@ -239,6 +249,9 @@ class SpecialReportModel
             ->where('watch_id', $id)
             ->where('resolved', $resolved)
             ->select('watch.guard.dni AS guard_dni')
+            ->select('watch.guard.name AS guard_name')
+            ->select('watch.guard.lastname AS guard_lastname')
+            ->select('incidence.level AS level')
             ->orderBy('id DESC')
             ->fetchAll();
 
@@ -261,6 +274,9 @@ class SpecialReportModel
             ->where('watch.guard_id', $id)
             ->where('resolved', $resolved)
             ->select('watch.guard.dni AS guard_dni')
+            ->select('watch.guard.name AS guard_name')
+            ->select('watch.guard.lastname AS guard_lastname')
+            ->select('incidence.level AS level')
             ->orderBy('id DESC')
             ->fetchAll();
 
@@ -282,6 +298,9 @@ class SpecialReportModel
             ->from($this->table)
             ->where('resolved', $resolved)
             ->select('watch.guard.dni AS guard_dni')
+            ->select('watch.guard.name AS guard_name')
+            ->select('watch.guard.lastname AS guard_lastname')
+            ->select('incidence.level AS level')
             ->orderBy('id DESC')
             ->fetchAll();
 
@@ -297,6 +316,9 @@ class SpecialReportModel
             ->from($this->table)
             ->where('status', 1)
             ->select('watch.guard.dni AS guard_dni')
+            ->select('watch.guard.name AS guard_name')
+            ->select('watch.guard.lastname AS guard_lastname')
+            ->select('incidence.level AS level')
             ->orderBy('id DESC')
             ->fetchAll();
 

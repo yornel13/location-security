@@ -3,6 +3,7 @@ namespace App\Model;
 
 
 use App\Lib\Response;
+use Exception;
 
 class BoundsModel
 {
@@ -195,14 +196,22 @@ class BoundsModel
 
     public function delete($id)
     {
-        $query = $this->db
-            ->deleteFrom($this->table, $id)
-            ->execute();
-        if ($query === 0) {
-            return $this->response
-                ->SetResponse(false, 'El cerco no exite');
+        try {
+            $this->db
+                ->deleteFrom($this->table_vehicle_bounds)
+                ->where('bounds_id', $id)
+                ->execute();
+            $query = $this->db
+                ->deleteFrom($this->table, $id)
+                ->execute();
+            if ($query === 0) {
+                return $this->response
+                    ->SetResponse(false, 'El cerco no exite');
+            }
+            return $this->response->SetResponse(true);
+        } catch (Exception $e) {
+            return $this->response->SetResponse(false, 'Error de borrado');
         }
-        return $this->response->SetResponse(true);
     }
 
     public function deleteVehicleBounds($vehicle_bounds_id)
@@ -214,6 +223,7 @@ class BoundsModel
             return $this->response
                 ->SetResponse(false, 'Esta asociación no existe');
         }
+
         return $this->response->SetResponse(true);
     }
 }

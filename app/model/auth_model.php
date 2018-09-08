@@ -56,13 +56,24 @@ class AuthModel
             ->fetch();
 
         if (is_object($admin)) {
-            $token = Auth::SignIn([
-                'id' => $admin->id,
-                'dni' => $admin->dni,
-                'name' => $admin->name,
-                'lastname' => $admin->lastname,
-                'isAdmin' => true
-            ]);
+            //if ($admin->photo != null && strpos($admin->photo,'http')) {
+                $token = Auth::SignIn([
+                    'id' => $admin->id,
+                    'dni' => $admin->dni,
+                    'name' => $admin->name,
+                    'lastname' => $admin->lastname,
+                    'photo' => $admin->photo,
+                    'isAdmin' => true
+                ]);
+            /*} else {
+                $token = Auth::SignIn([
+                    'id' => $admin->id,
+                    'dni' => $admin->dni,
+                    'name' => $admin->name,
+                    'lastname' => $admin->lastname,
+                    'isAdmin' => true
+                ]);
+            }*/
             $this->response->result = $token;
             return $this->response->SetResponse(true);
         } else {

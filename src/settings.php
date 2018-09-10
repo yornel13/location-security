@@ -19,7 +19,7 @@ return [
         // Configuration my App
         'app_token_name' => 'APP_TOKEN',
         'connectionString' => [
-            'dns' => 'mysql:host=localhost;dbname=location_sec;charset=utf8',
+            'dns' => 'mysql:host=localhost;dbname=location_security;charset=utf8',
             'user' => 'root',
             'pass' => '1234'
         ]

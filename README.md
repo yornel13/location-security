@@ -900,6 +900,45 @@ GET http://icsseseguridad.com/api/public/messenger/conversations/channel/{id}
  
      obtiene todos los mensajes de un channel
      
+GET http://icsseseguridad.com/api/public/messenger/conversations/admin/{admin_id}/chat/unread
+
+    obtiene las cantida de mensajes sin leer del administrador y los chat que tienen dichos mensajes sin leer
+    
+    ejemplo:
+        
+        {
+            "unread": 2,
+            "data": [
+                {
+                    "chat": {
+                        "id": "52",
+                        "user_1_id": "9",
+                        "user_1_type": "ADMIN",
+                        "user_1_name": "Jose Alonzo Palacios Blanco",
+                        "user_2_id": "2",
+                        "user_2_type": "GUARD",
+                        "user_2_name": "Guardia 2",
+                        "create_at": "2018-09-08 18:25:02",
+                        "update_at": "2018-09-08 18:27:35",
+                        "state": "1"
+                    },
+                    "unread": 2
+                }
+            ]
+        }
+        
+GET http://icsseseguridad.com/api/public/messenger/conversations/guard/{guard_id}/chat/unread
+
+    obtiene las cantida de mensajes sin leer del administrador y los chat que tienen dichos mensajes sin leer
+    
+PUT http://icsseseguridad.com/api/public/messenger/conversations/admin/{admin_id}/chat/{chat_id}/read
+
+    marca todos los mensajes de un chat de un administrador como leidos, este metodo debe llamarse siempre al abrir un chat
+    
+PUT http://icsseseguridad.com/api/public/messenger/conversations/guardia/{guard_id}/chat/{chat_id}/read
+
+    marca todos los mensajes de un chat de un guardia como leidos, este metodo debe llamarse siempre al abrir un chat
+     
 # * Banner [imagenes para mostrar en el home de las tablets]
 
 GET http://icsseseguridad.com/api/public/banner

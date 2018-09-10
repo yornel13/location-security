@@ -501,4 +501,83 @@ class MessengerModel
         }
         return $new_data;
     }
+
+    function getAllGuardUnreadMessages($guard_id) {
+        return $this->getAllUnreadMessages($guard_id, $this->GUARD);
+    }
+
+    function getAllAdminUnreadMessages($admin_id) {
+        return $this->getAllUnreadMessages($admin_id, $this->ADMIN);
+    }
+
+    function getAllUnreadMessages($user_id, $user_type) {
+        $params = [
+            ':user_id'   => $user_id,
+            ':user_type' => $user_type
+        ];
+        $chats = $this->db
+            ->from($this->table_chat)
+            ->where('state = 1 and ((user_1_id = :user_id and user_1_type = :user_type) OR 
+                (user_2_id = :user_id and user_2_type = :user_type))', $params)
+            ->orderBy('id DESC')
+            ->fetchAll();
+
+        $unread = 0;
+        $unreadChats = [];
+        if (is_array($chats)) {
+            foreach ($chats as $chat) {
+                $messages = $this->db
+                    ->from($this->table_chat_line)
+                    ->where('chat_id', $chat->id)
+                    ->where('state', 1)
+                    ->orderBy('id DESC')
+                    ->fetchAll();
+                $chatIsUnread = false;
+                $count = 0;
+                if (is_array($messages)) {
+                    foreach ($messages as $message) {
+                        if (!($message->sender_id == $user_id && $message->sender_type == $this->ADMIN)) {
+                            $unread++;
+                            $count++;
+                            $chatIsUnread = true;
+                        }
+                    }
+                    if ($chatIsUnread) {
+                        $unreadChats[] = [
+                            'chat' => $chat,
+                            'unread' => $count
+                        ];
+                    }
+                }
+            }
+        }
+        return [
+            'unread' => $unread,
+            'data' => $unreadChats
+        ];
+    }
+
+    function putAllReadAdmin($admin_id, $chat_id) {
+        return $this->putAllRead($admin_id, $this->ADMIN, $chat_id);
+    }
+
+    function putAllReadGuard($guard_id, $chat_id) {
+        return $this->putAllRead($guard_id, $this->GUARD, $chat_id);
+    }
+
+    function putAllRead($user_id, $user_type, $chat_id) {
+
+        $data = null;
+        $data['state'] = 0;
+
+        $this->db
+            ->update($this->table_chat_line)
+            ->set($data)
+            ->where('chat_id', $chat_id)
+            ->where('sender_id != ?', $user_id)
+            ->where('sender_type != ?', $user_type)
+            ->execute();
+
+        return $this->response->SetResponse(true);
+    }
 }

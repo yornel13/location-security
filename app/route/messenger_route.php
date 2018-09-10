@@ -80,10 +80,34 @@ $app->group('/messenger', function () {
                 json_encode($this->model->messenger->getAdminChats($args['id']))
             );
     });
+    $this->get('/conversations/admin/{id}/chat/unread', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->messenger->getAllAdminUnreadMessages($args['id']))
+            );
+    });
+    $this->get('/conversations/guard/{id}/chat/unread', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->messenger->getAllGuardUnreadMessages($args['id']))
+            );
+    });
     $this->get('/conversations/chat/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
                 json_encode($this->model->messenger->getMessages($args['id']))
+            );
+    });
+    $this->put('/conversations/admin/{id}/chat/{chat_id}/read', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->messenger->putAllReadAdmin($args['id'], $args['chat_id']))
+            );
+    });
+    $this->put('/conversations/guard/{id}/chat/{chat_id}/read', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->messenger->putAllReadGuard($args['id'], $args['chat_id']))
             );
     });
     $this->get('/conversations/channel/{id}', function ($req, $res, $args) {

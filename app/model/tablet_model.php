@@ -94,7 +94,7 @@ class TabletModel
         } else {
             $data = $this->db
                 ->from($this->table)
-                ->where('status', $status)
+                ->where('tablet.status', $status)
                 ->select('stand.name as stand_name')
                 ->select('stand.address as stand_address')
                 ->orderBy('id DESC')
@@ -377,6 +377,14 @@ class TabletModel
 
     public function getLast()
     {
+        $tablets = $data = $this->db
+            ->from($this->table)
+            ->where('tablet.status', 1)
+            ->select('stand.name as stand_name')
+            ->select('stand.address as stand_address')
+            ->orderBy('id DESC')
+            ->fetchAll();
+
         $data = $this->db
             ->from($this->table_position)
             ->where('generated_time in (SELECT MAX(generated_time) FROM tablet_position GROUP BY imei)')
@@ -388,9 +396,19 @@ class TabletModel
             ->select('guard.lastname AS guard_lastname')
             ->orderBy('generated_time DESC')
             ->fetchAll();
+
+        $dataReturn = [];
+        foreach ($data as $tablet) {
+            foreach ($tablets as $value) {
+                if ($tablet->imei == $value->imei) {
+                    $dataReturn[] = $tablet;
+                }
+            }
+        }
+
         return [
-            'data' => $data,
-            'total' => count($data)
+            'data' => $dataReturn,
+            'total' => count($dataReturn)
         ];
     }
 }

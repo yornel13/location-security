@@ -18,7 +18,9 @@ class FirebaseNotification
 
         $notification = array(
             'title' => 'Nuevo Mensaje',
-            'body'  => 'Tienes un nuevo mensaje'
+            'body'  => 'Tienes un nuevo mensaje',
+            'icon'  => 'https://firebasestorage.googleapis.com/v0/b/icsseseguridad-6f751.appspot.com/o/ic_launcher.png?alt=media&token=402016ac-218e-4542-a3b7-bd039eaef8bd',
+            'click_action' => 'http://localhost:4200/u/messaging'
         );
         $fields = array(
             'registration_ids' => $registrationIds,
@@ -50,7 +52,9 @@ class FirebaseNotification
         $web_push = array ("headers" => $expire);
         $notification = array(
             'title' => 'Nuevo Alerta',
-            'body'  => 'Tienes una notificación'
+            'body'  => 'Tienes una notificación',
+            'icon'  => 'https://firebasestorage.googleapis.com/v0/b/icsseseguridad-6f751.appspot.com/o/ic_launcher.png?alt=media&token=402016ac-218e-4542-a3b7-bd039eaef8bd',
+            'click_action' => 'http://localhost:4200/u/messaging'
         );
         $fields = array(
             'registration_ids' => $registrationIds,

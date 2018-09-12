@@ -8,7 +8,6 @@
 
 namespace App\Model;
 
-
 class FirestoreDatabase
 {
     private $url = 'https://firestore.googleapis.com/v1beta1/projects/icsseseguridad-6f751/databases/(default)/documents/alerts';
@@ -20,14 +19,12 @@ class FirestoreDatabase
 //            'Authorization: key=' . $this->API_ACCESS_KEY,
             'Content-Type: application/json'
         );
-
         $ch = curl_init();
         curl_setopt($ch,CURLOPT_URL, $this->url.'/'.$id);
         curl_setopt($ch,CURLOPT_TIMEOUT, 0.1);
-        //curl_setopt($ch,CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
         curl_setopt($ch,CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch,CURLOPT_POSTFIELDS, json_encode($fields));
         $result = curl_exec($ch);

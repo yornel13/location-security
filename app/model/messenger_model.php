@@ -41,10 +41,7 @@ class MessengerModel
                 ->execute();
             $data['id'] = $object->id;
         } else {
-            $query = $this->db
-                ->insertInto($this->table_tablet_token, $data)
-                ->execute();
-            $data['id'] = $query;
+            return $this->response->SetResponse(false, 'Sin registro');
         }
 
         $this->response->result = $data;
@@ -53,26 +50,48 @@ class MessengerModel
 
     public function registerWeb($data)
     {
-        $object = $this->db
-            ->from($this->table_web_token)
+        $this->db
+            ->deleteFrom($this->table_web_token)
             ->where('admin_id', $data['admin_id'])
-            ->fetch();
+            ->execute();
+        $this->db
+            ->deleteFrom($this->table_web_token)
+            ->where('registration_id', $data['registration_id'])
+            ->execute();
 
-        if (!empty($object)) {
-            $this->db
-                ->update($this->table_web_token, $data, $object->id)
-                ->execute();
-            $data['id'] = $object->id;
-        } else {
-            $query = $this->db
-                ->insertInto($this->table_web_token, $data)
-                ->execute();
-            $data['id'] = $query;
-        }
-
+        $timestamp = time()-(5*60*60);
+        $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
+        $data['init_at'] = $timestamp;
+        $query = $this->db
+            ->insertInto($this->table_web_token, $data)
+            ->execute();
+        $data['id'] = $query;
         $this->response->result = $data;
         return $this->response->SetResponse(true);
     }
+
+//    public function registerWeb($data)
+//    {
+//        $object = $this->db
+//            ->from($this->table_web_token)
+//            ->where('admin_id', $data['admin_id'])
+//            ->fetch();
+//
+//        if (!empty($object)) {
+//            $this->db
+//                ->update($this->table_web_token, $data, $object->id)
+//                ->execute();
+//            $data['id'] = $object->id;
+//        } else {
+//            $query = $this->db
+//                ->insertInto($this->table_web_token, $data)
+//                ->execute();
+//            $data['id'] = $query;
+//        }
+//
+//        $this->response->result = $data;
+//        return $this->response->SetResponse(true);
+//    }
 
     public function createChat($data)
     {
@@ -570,13 +589,31 @@ class MessengerModel
         $data = null;
         $data['state'] = 0;
 
-        $this->db
-            ->update($this->table_chat_line)
-            ->set($data)
-            ->where('chat_id', $chat_id)
-            ->where('sender_id != ?', $user_id)
-            ->where('sender_type != ?', $user_type)
-            ->execute();
+        $chat = $this->db
+            ->from($this->table_chat, $chat_id)
+            ->fetch();
+
+        if (is_object($chat)) {
+            $id = null;
+            $type = null;
+            if ($chat->user_1_id == $user_id
+                && $chat->user_1_type == $user_type) {
+                $id = $chat->user_2_id;
+                $type =  $chat->user_2_type;
+            }
+            if ($chat->user_2_id == $user_id
+                && $chat->user_2_type == $user_type) {
+                $id = $chat->user_1_id;
+                $type =  $chat->user_1_type;
+            }
+            $this->db
+                ->update($this->table_chat_line)
+                ->set($data)
+                ->where('chat_id', $chat_id)
+                ->where('sender_id', $id)
+                ->where('sender_type', $type)
+                ->execute();
+        }
 
         return $this->response->SetResponse(true);
     }

@@ -8,7 +8,7 @@ class Auth
 {
     private static $secret_key = 'Sdw1s9x8@';
     private static $encrypt = ['HS256'];
-    private static $expire = 21600; //seconds
+    private static $expire = 604800; // in seconds (86400 sec = 1 day, 604800 = 1 week)
     private static $aud = null;
 
     // Crea un uevo token guardando la informacion del usuario que hemos autenticado

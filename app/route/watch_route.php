@@ -3,19 +3,20 @@
 use App\Middleware\AuthMiddleware;
 use App\Validation\WatchValidation;
 
-$app->group('/watch', function () {
-    $this->post('/start', function ($req, $res, $args) {
-        $r = WatchValidation::validateStart($req->getParsedBody());
-        if (!$r->response) {
-            return $res->withHeader('Content-type', 'application/json')
-                ->withStatus(422)->write(json_encode($r));
-        }
-
+$app->post('/watch/start', function ($req, $res, $args) {
+    $r = WatchValidation::validateStart($req->getParsedBody());
+    if (!$r->response) {
         return $res->withHeader('Content-type', 'application/json')
-            ->write(
-                json_encode($this->model->watch->start($req->getParsedBody()))
-            );
-    });
+            ->withStatus(422)->write(json_encode($r));
+    }
+
+    return $res->withHeader('Content-type', 'application/json')
+        ->write(
+            json_encode($this->model->watch->start($req->getParsedBody(), $req->getHeaderLine('APP-TOKEN')))
+        );
+})->add(new AuthMiddleware($app, true));
+
+$app->group('/watch', function () {
     $this->put('/{id}/end', function ($req, $res, $args) {
         $r = WatchValidation::validateEnd($req->getParsedBody(), true);
         if (!$r->response) {

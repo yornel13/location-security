@@ -9,6 +9,7 @@ class WatchModel
 {
     private $db;
     private $table = 'watch';
+    private $table_session = 'tablet_token';
     private $response;
 
     public function __CONSTRUCT($db)
@@ -17,7 +18,7 @@ class WatchModel
         $this->response = new Response();
     }
 
-    public function start($data)
+    public function start($data, $token)
     {
         $guard_service = new GuardModel($this->db);
         $guard = $guard_service->get($data['guard_id']);
@@ -44,27 +45,42 @@ class WatchModel
         $data['status'] = 1;
 
         $watch = $this->getWatchActiveByGuard($data['guard_id']);
-        if ($watch != null) {
-            $watch->resumed = true;
-            $this->response->result = $watch;
-            return $this->response->SetResponse(true);
-        }
 
         try {
-            $query = $this->db
-                ->insertInto($this->table, $data)
-                ->execute();
-            $data['id'] = $query;
-            $data['resumed'] = false;
-            $this->alertStart($data['guard_id'], $data['latitude'], $data['longitude']);
+            if (is_object($watch)) {
+                $watch = (array) $watch;
+                $watch['resumed'] = true;
+            } else {
+                $this->db
+                    ->insertInto($this->table, $data)
+                    ->execute();
+                $watch = $this->getWatchActiveByGuard($data['guard_id']);
+                $watch = (array) $watch;
+                $watch['resumed'] = false;
+            }
         } catch (Exception $e) {
             if (strpos($e->getMessage(), "foreign key")) {
                 return $this->response->SetResponse(false, 'Asociacion erronea');
             }
             return $this->response->SetResponse(false, $e->getMessage());
         }
+        $this->db
+            ->deleteFrom($this->table_session)
+            ->where('guard_id', $data['guard_id'])
+            ->execute();
+        $session = [
+            'imei' => $data['tablet_imei'],
+            'session' => $token,
+            'guard_id' => $data['guard_id'],
+            'init_at' => $timestamp,
+        ];
+        $this->db
+            ->insertInto($this->table_session, $session)
+            ->execute();
 
-        $this->response->result = $data;
+        $this->alertStart($data['guard_id'], $data['latitude'], $data['longitude'], $watch['resumed']);
+
+        $this->response->result = $watch;
         return $this->response->SetResponse(true);
     }
 
@@ -295,20 +311,25 @@ class WatchModel
         }
     }
 
-    public function alertStart($guard_id, $latitude, $longitude) {
+    public function alertStart($guard_id, $latitude, $longitude, $resumed) {
         $guardService = new GuardModel($this->db);
         $guard = $guardService->get($guard_id);
         $name = $guard->name." ".$guard->lastname;
+        if (!$resumed) {
+            $text = " ha iniciado su guardia";
+        } else {
+            $text = " ha retomado su guardia";
+        }
         $alert = [
             "guard_id" => $guard_id,
             "cause" => AlertModel::GENERAL,
             "type" => AlertModel::INIT_WATCH,
-            "message" => $name." ha iniciado su guardia",
+            "message" => $name.$text,
             "latitude" => $latitude,
             "longitude" => $longitude,
         ];
         $alertService = new AlertModel($this->db);
-        $alertService->registerGeneral($alert);
+        return $alertService->registerGeneral($alert);
     }
 
     public function alertEnd($guard_id, $latitude, $longitude) {

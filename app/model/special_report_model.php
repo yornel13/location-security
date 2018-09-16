@@ -31,8 +31,30 @@ class SpecialReportModel
 
         $report = $this->get($query);
         $this->response->result = $report;
+        $this->generate_record($report);
         $this->alertIncidence($report);
         return $this->response->SetResponse(true);
+    }
+
+    public function generate_record($report)
+    {
+        $position = array();
+        $position['latitude'] = $report->latitude;
+        $position['longitude'] = $report->longitude;
+        $position['generated_time'] = $report->create_date;
+        $position['message_time'] = $report->create_date;
+        $position['watch_id'] = $report->watch_id;
+        $position['imei'] = $report->watch->tablet_imei;
+        if (((int) $report->incidence->level) == 1) {
+            $position['message'] = 'INCIDENCE_LEVEL_1';
+        } else {
+            $position['message'] = 'INCIDENCE_LEVEL_2';
+        }
+        $position['alert_message'] = $report->observation;
+        $position['is_exception'] = true;
+
+        $tabletService = new TabletModel($this->db);
+        $tabletService->register($position);
     }
 
     public function accept($id)

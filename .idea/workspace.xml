@@ -6,14 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="eaa892b9-4744-4ead-bd06-8997b50f9dad" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/lib/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/lib/auth.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/middleware/auth_middleware.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/middleware/auth_middleware.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/model/FirebaseNotification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/model/FirebaseNotification.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/model/FirestoreDatabase.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/model/FirestoreDatabase.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/model/auth_model.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/model/auth_model.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/model/alert_model.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/model/alert_model.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/model/messenger_model.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/model/messenger_model.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/model/reply_model.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/model/reply_model.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/model/special_report_model.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/model/special_report_model.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/model/watch_model.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/model/watch_model.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/route/watch_route.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/route/watch_route.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/route/messenger_route.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/route/messenger_route.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/route/reply_route.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/route/reply_route.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -98,10 +98,10 @@
           <entry key="project.open.time.3" value="2" />
           <entry key="project.open.time.4" value="1" />
           <entry key="project.open.time.6" value="1" />
-          <entry key="project.open.time.7" value="1" />
-          <entry key="project.open.time.8" value="5" />
+          <entry key="project.open.time.7" value="2" />
+          <entry key="project.open.time.8" value="7" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="26" />
+          <entry key="project.opened" value="29" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -110,14 +110,14 @@
           <entry key="json" value="7" />
           <entry key="lock" value="3" />
           <entry key="md" value="28" />
-          <entry key="php" value="457" />
+          <entry key="php" value="486" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="JSON" value="10" />
           <entry key="Markdown" value="28" />
-          <entry key="PHP" value="457" />
+          <entry key="PHP" value="486" />
           <entry key="htaccess" value="1" />
         </counts>
       </usages-collector>
@@ -126,14 +126,14 @@
           <entry key="dummy" value="28" />
           <entry key="json" value="10" />
           <entry key="md" value="6426" />
-          <entry key="php" value="18104" />
+          <entry key="php" value="20181" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="10" />
           <entry key="Markdown" value="6426" />
-          <entry key="PHP" value="18104" />
+          <entry key="PHP" value="20181" />
           <entry key="PLAIN_TEXT" value="28" />
         </counts>
       </usages-collector>
@@ -147,28 +147,28 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/model/messenger_model.php">
+        <entry file="file://$PROJECT_DIR$/app/route/messenger_route.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="393">
-              <caret line="488" column="29" selection-start-line="488" selection-start-column="29" selection-end-line="488" selection-end-column="29" />
+            <state relative-caret-position="561">
+              <caret line="100" column="4" selection-start-line="100" selection-start-column="4" selection-end-line="105" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/model/alert_model.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="374">
+              <caret line="58" lean-forward="true" selection-start-line="58" selection-end-line="58" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/route/auth_route.php">
+        <entry file="file://$PROJECT_DIR$/app/model/special_report_model.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="901">
-              <caret line="55" column="22" lean-forward="true" selection-start-line="55" selection-start-column="22" selection-end-line="55" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/route/watch_route.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="15" column="10" lean-forward="true" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
+            <state relative-caret-position="653">
+              <caret line="382" column="8" selection-start-line="382" selection-start-column="8" selection-end-line="382" selection-end-column="50" />
             </state>
           </provider>
         </entry>
@@ -176,35 +176,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/model/watch_model.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1957">
-              <caret line="331" column="35" selection-start-line="331" selection-start-column="35" selection-end-line="331" selection-end-column="35" />
+            <state relative-caret-position="291">
+              <caret line="245" column="20" selection-start-line="245" selection-start-column="20" selection-end-line="245" selection-end-column="20" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/model/alert_model.php">
+        <entry file="file://$PROJECT_DIR$/app/model/tablet_model.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="325">
-              <caret line="71" column="45" lean-forward="true" selection-start-line="71" selection-start-column="45" selection-end-line="71" selection-end-column="45" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/middleware/auth_middleware.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="398">
-              <caret line="32" column="42" lean-forward="true" selection-start-line="32" selection-start-column="42" selection-end-line="32" selection-end-column="42" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/lib/auth.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="10" column="79" selection-start-line="10" selection-start-column="79" selection-end-line="10" selection-end-column="79" />
+            <state relative-caret-position="285">
+              <caret line="166" column="23" selection-start-line="166" selection-start-column="23" selection-end-line="166" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -231,6 +213,7 @@
       <find>messe</find>
       <find>createChat</find>
       <find>delete</find>
+      <find>select</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -239,8 +222,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/validation/ChatValidation.php" />
-        <option value="$PROJECT_DIR$/app/validation/messenger_validation.php" />
         <option value="$PROJECT_DIR$/app/validation/chat_validation.php" />
         <option value="$PROJECT_DIR$/app/route/admin_route.php" />
         <option value="$PROJECT_DIR$/app/model/banner_model.php" />
@@ -273,13 +254,10 @@
         <option value="$PROJECT_DIR$/app/route/tablet_route.php" />
         <option value="$PROJECT_DIR$/app/model/vehicle_model.php" />
         <option value="$PROJECT_DIR$/app/route/alert_route.php" />
-        <option value="$PROJECT_DIR$/app/model/special_report_model.php" />
         <option value="$PROJECT_DIR$/app/model/bounds_model.php" />
         <option value="$PROJECT_DIR$/app/model/tablet_model.php" />
         <option value="$PROJECT_DIR$/src/settings.php" />
-        <option value="$PROJECT_DIR$/app/route/messenger_route.php" />
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/app/model/FirebaseNotification.php" />
         <option value="$PROJECT_DIR$/app/route/auth_route.php" />
         <option value="$PROJECT_DIR$/composer.json" />
         <option value="$PROJECT_DIR$/app/model/auth_model.php" />
@@ -287,9 +265,14 @@
         <option value="$PROJECT_DIR$/app/middleware/auth_middleware.php" />
         <option value="$PROJECT_DIR$/app/route/watch_route.php" />
         <option value="$PROJECT_DIR$/app/model/FirestoreDatabase.php" />
+        <option value="$PROJECT_DIR$/app/model/FirebaseNotification.php" />
+        <option value="$PROJECT_DIR$/app/route/messenger_route.php" />
         <option value="$PROJECT_DIR$/app/model/messenger_model.php" />
-        <option value="$PROJECT_DIR$/app/model/alert_model.php" />
+        <option value="$PROJECT_DIR$/app/route/reply_route.php" />
+        <option value="$PROJECT_DIR$/app/model/reply_model.php" />
         <option value="$PROJECT_DIR$/app/model/watch_model.php" />
+        <option value="$PROJECT_DIR$/app/model/special_report_model.php" />
+        <option value="$PROJECT_DIR$/app/model/alert_model.php" />
       </list>
     </option>
   </component>
@@ -354,6 +337,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -365,12 +349,6 @@
               <item name="location-security" type="b2602c69:ProjectViewProjectNode" />
               <item name="location-security" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="location-security" type="b2602c69:ProjectViewProjectNode" />
-              <item name="location-security" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="middleware" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="location-security" type="b2602c69:ProjectViewProjectNode" />
@@ -393,7 +371,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -481,7 +458,10 @@
       <workItem from="1536366844899" duration="95000" />
       <workItem from="1536451397330" duration="653000" />
       <workItem from="1536536530239" duration="10403000" />
-      <workItem from="1536681579888" duration="16761000" />
+      <workItem from="1536681579888" duration="18188000" />
+      <workItem from="1536929731671" duration="1363000" />
+      <workItem from="1536947284577" duration="13845000" />
+      <workItem from="1537113128065" duration="7137000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <created>1533236198500</created>
@@ -557,7 +537,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="434518000" />
+    <option name="totallyTimeSpent" value="458290000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -572,7 +552,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16257995" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1673774" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -585,7 +565,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.329718" />
-      <window_info anchor="bottom" id="Terminal" order="10" weight="0.26898047" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.16160521" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" weight="0.329718" />
       <window_info active="true" anchor="bottom" id="Command Line Tools Console" order="12" weight="0.329718" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -673,13 +653,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/model/stand_model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="121" column="5" selection-start-line="121" selection-start-column="5" selection-end-line="121" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/route/guard_route.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
@@ -738,13 +711,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/route/reply_route.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="7" column="34" lean-forward="true" selection-start-line="7" selection-start-column="34" selection-end-line="7" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/validation/reply_validation.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="714">
@@ -757,11 +723,6 @@
         <state relative-caret-position="370">
           <caret line="48" column="51" selection-start-line="48" selection-start-column="51" selection-end-line="48" selection-end-column="51" />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/model/reply_model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-877" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/route/special_report_route.php">
@@ -792,27 +753,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/route/alert_route.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="789">
-          <caret line="125" column="97" selection-start-line="125" selection-start-column="97" selection-end-line="125" selection-end-column="97" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/model/special_report_model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4998">
-          <caret line="294" column="35" selection-start-line="294" selection-start-column="35" selection-end-line="294" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/model/bounds_model.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3349">
           <caret line="198" column="9" selection-start-line="198" selection-start-column="9" selection-end-line="198" selection-end-column="9" />
-          <folding>
-            <element signature="e#29#50#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -820,13 +764,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2312">
           <caret line="137" column="9" selection-start-line="125" selection-start-column="8" selection-end-line="137" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/model/tablet_model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="383" column="54" selection-start-line="383" selection-start-column="54" selection-end-line="383" selection-end-column="54" />
         </state>
       </provider>
     </entry>
@@ -843,13 +780,6 @@
     <entry file="file://$PROJECT_DIR$/app/model/utility_model.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1132" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/model/FirebaseNotification.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="22" column="65" lean-forward="true" selection-start-line="22" selection-start-column="65" selection-end-line="22" selection-end-column="65" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/model/vehicle_model.php">
@@ -880,45 +810,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/settings.php">
+    <entry file="file://$PROJECT_DIR$/app/route/watch_route.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="61" selection-start-line="21" selection-start-column="61" selection-end-line="21" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/dependencies.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="32" column="9" lean-forward="true" selection-start-line="32" selection-start-column="9" selection-end-line="32" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/lib/auth.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="10" column="79" selection-start-line="10" selection-start-column="79" selection-end-line="10" selection-end-column="79" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/route/auth_route.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="901">
-          <caret line="55" column="22" lean-forward="true" selection-start-line="55" selection-start-column="22" selection-end-line="55" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/route/messenger_route.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="7" column="33" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/model/auth_model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="15" column="20" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
+        <state relative-caret-position="238">
+          <caret line="15" column="10" lean-forward="true" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
         </state>
       </provider>
     </entry>
@@ -929,13 +824,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/model/alert_model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="325">
-          <caret line="71" column="45" lean-forward="true" selection-start-line="71" selection-start-column="45" selection-end-line="71" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/model/FirestoreDatabase.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -943,31 +831,122 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/model/messenger_model.php">
+    <entry file="file://$PROJECT_DIR$/app/route/auth_route.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="488" column="29" selection-start-line="488" selection-start-column="29" selection-end-line="488" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/route/watch_route.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="15" column="10" lean-forward="true" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/model/watch_model.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1957">
-          <caret line="331" column="35" selection-start-line="331" selection-start-column="35" selection-end-line="331" selection-end-column="35" />
+        <state relative-caret-position="816">
+          <caret line="55" column="22" selection-start-line="55" selection-start-column="22" selection-end-line="55" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/middleware/auth_middleware.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="32" column="42" lean-forward="true" selection-start-line="32" selection-start-column="42" selection-end-line="32" selection-end-column="42" />
+        <state relative-caret-position="323">
+          <caret line="20" column="49" selection-start-line="20" selection-start-column="49" selection-end-line="20" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/lib/auth.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="353">
+          <caret line="48" column="27" selection-start-line="48" selection-start-column="27" selection-end-line="48" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/FirebaseNotification.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="81" column="58" selection-start-line="81" selection-start-column="42" selection-end-line="81" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/settings.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="31" lean-forward="true" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dependencies.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="32" column="9" lean-forward="true" selection-start-line="32" selection-start-column="9" selection-end-line="32" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/stand_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="840">
+          <caret line="121" column="5" selection-start-line="121" selection-start-column="5" selection-end-line="121" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/route/alert_route.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2108">
+          <caret line="125" column="97" selection-start-line="125" selection-start-column="97" selection-end-line="125" selection-end-column="97" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/reply_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="806">
+          <caret line="216" column="50" selection-start-line="216" selection-start-column="50" selection-end-line="216" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/route/reply_route.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="721">
+          <caret line="59" column="64" selection-start-line="59" selection-start-column="64" selection-end-line="59" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/messenger_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="527" column="20" selection-start-line="527" selection-start-column="20" selection-end-line="527" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/auth_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="761">
+          <caret line="94" column="25" selection-start-line="94" selection-start-column="25" selection-end-line="94" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/tablet_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="166" column="23" selection-start-line="166" selection-start-column="23" selection-end-line="166" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/route/messenger_route.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="100" column="4" selection-start-line="100" selection-start-column="4" selection-end-line="105" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/watch_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="245" column="20" selection-start-line="245" selection-start-column="20" selection-end-line="245" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/special_report_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="653">
+          <caret line="382" column="8" selection-start-line="382" selection-start-column="8" selection-end-line="382" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/model/alert_model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="58" lean-forward="true" selection-start-line="58" selection-end-line="58" />
         </state>
       </provider>
     </entry>

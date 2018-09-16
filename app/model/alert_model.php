@@ -63,8 +63,32 @@ class AlertModel
 
         $data['id'] = $query;
         $this->response->result = $data;
+        if ($data['cause'] == AlertModel::SOS1 || $data['cause'] == AlertModel::DROP) {
+            $this->generate_record((object) $data);
+        }
         $this->notify($data);
         return $this->response->SetResponse(true);
+    }
+
+    public function generate_record($alert)
+    {
+        $watchService = new WatchModel($this->db);
+        $watch = $watchService->getWatchActiveByGuard($alert->guard_id);
+        if (!is_object($watch)) {
+            return;
+        }
+        $position = array();
+        $position['latitude'] = $alert->latitude;
+        $position['longitude'] = $alert->longitude;
+        $position['generated_time'] = $alert->create_date;
+        $position['message_time'] = $alert->create_date;
+        $position['watch_id'] = $watch->id;
+        $position['imei'] = $watch->tablet_imei;
+        $position['message'] = $alert->cause;
+        $position['alert_message'] = $alert->message;
+        $position['is_exception'] = true;
+        $tabletService = new TabletModel($this->db);
+        $tabletService->register($position);
     }
 
     private function notify($alert) {

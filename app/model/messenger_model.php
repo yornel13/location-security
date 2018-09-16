@@ -21,6 +21,7 @@ class MessengerModel
 
     const ALERT = 'ALERT';
     const MESSAGE = 'MESSAGE';
+    const REPORT = 'REPORT';
 
     public function __CONSTRUCT($db)
     {
@@ -454,6 +455,50 @@ class MessengerModel
         $firebase->send($data, $registrations_id);
     }
 
+    public function send_message_report_to_admins($reply) {
+        $data = [
+            'type' => MessengerModel::REPORT,
+            'message' => $reply
+        ];
+        $registrations_id = $this->getAdminsToken();
+        if (count($registrations_id) > 0) {
+            $firebase = new FirebaseNotification();
+            $firebase->send_report($data, $registrations_id);
+        }
+    }
+
+    public function send_message_report_to_guard($reply, $token) {
+        $data = [
+            'type' => MessengerModel::REPORT,
+            'message' => $reply
+        ];
+        $registrations_id = array($token);
+        $firebase = new FirebaseNotification();
+        return $firebase->send_report($data, $registrations_id);
+    }
+
+    public function getAdminsToken() {
+        $registrations = $this->db
+            ->from($this->table_web_token)
+            ->fetchAll();
+        $registrations_id = array();
+        foreach ($registrations as $registration) {
+            $time = strtotime($registration->init_at) + (24*60*60);
+            $currentTime = time();
+            $authService = new AuthModel($this->db);
+            $auth = null;
+            try {
+                $auth = $authService->verify($registration->session);
+            } catch (Exception $e) {}
+            if (is_object($auth) && ((int) $auth->id) === ((int) $registration->admin_id) && ($time > $currentTime)) {
+                $registrations_id[] = $registration->registration_id;
+            }
+        }
+        return $registrations_id;
+    }
+
+
+
 //    public function send_alert_notification($alert) {
 //        $data = [
 //            'type' => MessengerModel::ALERT,
@@ -555,7 +600,7 @@ class MessengerModel
                 $count = 0;
                 if (is_array($messages)) {
                     foreach ($messages as $message) {
-                        if (!($message->sender_id == $user_id && $message->sender_type == $this->ADMIN)) {
+                        if (!($message->sender_id == $user_id && $message->sender_type == $user_type)) {
                             $unread++;
                             $count++;
                             $chatIsUnread = true;

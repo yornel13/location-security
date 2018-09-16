@@ -54,7 +54,40 @@ class FirebaseNotification
             'title' => 'Nuevo Alerta',
             'body'  => 'Tienes una notificación',
             'icon'  => 'https://firebasestorage.googleapis.com/v0/b/icsseseguridad-6f751.appspot.com/o/ic_launcher.png?alt=media&token=402016ac-218e-4542-a3b7-bd039eaef8bd',
-            'click_action' => 'http://localhost:4200/u/messaging'
+        );
+        $fields = array(
+            'registration_ids' => $registrationIds,
+            'data'             => $message,
+            'notification'     => $notification,
+            'webpush'          => $web_push
+        );
+
+        $headers = array(
+            'Authorization: key=' . $this->API_ACCESS_KEY,
+            'Content-Type: application/json'
+        );
+
+        $ch = curl_init();
+        curl_setopt( $ch,CURLOPT_URL, $this->url);
+        curl_setopt( $ch,CURLOPT_POST, true );
+        curl_setopt( $ch,CURLOPT_HTTPHEADER, $headers );
+        curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
+        curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
+        curl_setopt( $ch,CURLOPT_POSTFIELDS, json_encode( $fields ) );
+        $result = curl_exec($ch );
+        curl_close( $ch );
+        return $result;
+    }
+
+    public function send_report($message, $registrationIds) {
+
+        $expire = array("TTL" => "1000");
+        $web_push = array ("headers" => $expire);
+        $notification = array(
+            'title' => 'Nuevo Comentario Recibido',
+            'body'  => 'Tienes una notificación',
+            'icon'  => 'https://firebasestorage.googleapis.com/v0/b/icsseseguridad-6f751.appspot.com/o/ic_launcher.png?alt=media&token=402016ac-218e-4542-a3b7-bd039eaef8bd',
+            'click_action' => 'http://localhost:4200/u/control/bitacora/reportes'
         );
         $fields = array(
             'registration_ids' => $registrationIds,

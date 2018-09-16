@@ -140,6 +140,12 @@ $app->group('/messenger', function () {
                 json_encode($this->model->messenger->send_alert_notification('hola amigo'))
             );
     });
+    $this->get('/test/token', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->messenger->getAdminsToken())
+            );
+    });
 });
 
 

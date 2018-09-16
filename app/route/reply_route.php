@@ -36,6 +36,30 @@ $app->group('/binnacle-reply', function () {
                 json_encode($this->model->reply->getAll())
             );
     });
+    $this->get('/guard/{id}/comment/unread', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->reply->getAllGuardUnreadComments($args['id']))
+            );
+    });
+    $this->get('/admin/comment/unread', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->reply->getAllAdminUnreadComments())
+            );
+    });
+    $this->put('/admin/report/{report_id}/read', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->reply->putAllReadAdmin($args['report_id']))
+            );
+    });
+    $this->put('/guard/report/{report_id}/read', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->reply->putAllReadGuard($args['report_id']))
+            );
+    });
 })/*->add(new AuthMiddleware($app))*/;
 
 

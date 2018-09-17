@@ -376,6 +376,7 @@ class SpecialReportModel
             "cause" => AlertModel::INCIDENCE,
             "type" => $type,
             "message" => $message,
+            "imei" => $report->watch->tablet_imei,
             "latitude" => $report->latitude,
             "longitude" => $report->longitude,
             "extra" => json_encode($report)

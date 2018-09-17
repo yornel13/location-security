@@ -48,6 +48,12 @@ $app->group('/binnacle-reply', function () {
                 json_encode($this->model->reply->getAllAdminUnreadComments())
             );
     });
+    $this->get('/admin/comment/unread/full', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->reply->getAllAdminUnreadCommentsFull())
+            );
+    });
     $this->put('/admin/report/{report_id}/read', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(

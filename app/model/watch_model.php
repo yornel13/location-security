@@ -79,7 +79,7 @@ class WatchModel
             ->execute();
 
         $this->generate_record_start((object) $watch, $data['latitude'], $data['longitude'], $timestamp);
-        $this->alertStart($data['guard_id'], $data['latitude'], $data['longitude'], $watch['resumed']);
+        $this->alertStart($data['guard_id'], $data['latitude'], $data['longitude'], $watch['resumed'], $data['tablet_imei']);
 
         $this->response->result = $watch;
         return $this->response->SetResponse(true);
@@ -124,7 +124,7 @@ class WatchModel
             $watch = $this->get($id);
             $this->response->result = $watch;
             $this->generate_record_end((object) $watch, $data['f_latitude'], $data['f_longitude'], $timestamp);
-            $this->alertEnd($watch->guard_id, $watch->f_latitude, $watch->f_longitude);
+            $this->alertEnd($watch->guard_id, $watch->f_latitude, $watch->f_longitude, $watch->tablet_imei);
         }
         return $this->response->SetResponse(true);
     }
@@ -352,7 +352,7 @@ class WatchModel
         }
     }
 
-    public function alertStart($guard_id, $latitude, $longitude, $resumed) {
+    public function alertStart($guard_id, $latitude, $longitude, $resumed, $imei) {
         $guardService = new GuardModel($this->db);
         $guard = $guardService->get($guard_id);
         $name = $guard->name." ".$guard->lastname;
@@ -365,6 +365,7 @@ class WatchModel
             "guard_id" => $guard_id,
             "cause" => AlertModel::GENERAL,
             "type" => AlertModel::INIT_WATCH,
+            "imei" => $imei,
             "message" => $name.$text,
             "latitude" => $latitude,
             "longitude" => $longitude,
@@ -373,7 +374,7 @@ class WatchModel
         return $alertService->registerGeneral($alert);
     }
 
-    public function alertEnd($guard_id, $latitude, $longitude) {
+    public function alertEnd($guard_id, $latitude, $longitude, $imei) {
         $guardService = new GuardModel($this->db);
         $guard = $guardService->get($guard_id);
         $name = $guard->name." ".$guard->lastname;
@@ -381,6 +382,7 @@ class WatchModel
             "guard_id" => $guard_id,
             "cause" => AlertModel::GENERAL,
             "type" => AlertModel::FINISH_WATCH,
+            "imei" => $imei,
             "message" => $name." ha finalizado su guardia",
             "latitude" => $latitude,
             "longitude" => $longitude,

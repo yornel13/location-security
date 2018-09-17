@@ -401,6 +401,7 @@ class TabletModel
         foreach ($data as $tablet) {
             foreach ($tablets as $value) {
                 if ($tablet->imei == $value->imei) {
+                    $tablet->id = $value->id;
                     $dataReturn[] = $tablet;
                 }
             }

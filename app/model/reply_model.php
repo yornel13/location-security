@@ -191,6 +191,40 @@ class SpecialReportReplyModel
         ];
     }
 
+    function getAllAdminUnreadCommentsFull() {
+        $unreadReports = [];
+
+        $replies = $this->db
+            ->from($this->table)
+            ->where('state', 1)
+            ->where('admin_id', null)
+            ->orderBy('id DESC')
+            ->fetchAll();
+
+        if (is_array($replies)) {
+            $arr = array();
+            foreach($replies as $reply) {
+                $arr[$reply->report_id][] = $reply;
+            }
+            $binnacleService = new SpecialReportModel($this->db);
+            foreach($arr as $unreadRep) {
+                $count = 0;
+                $report_id = null;
+                foreach($unreadRep as $reply) {
+                    $count++;
+                    $report_id = $reply->report_id;
+                }
+                $report = $binnacleService->get($report_id);
+                $report->unread = $count;
+                $unreadReports[] = $report;
+            }
+        }
+        return [
+            'unread' => count($replies),
+            'data' => $unreadReports
+        ];
+    }
+
     function putAllReadAdmin($report_id) {
         $data = null;
         $data['state'] = 0;

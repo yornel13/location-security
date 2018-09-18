@@ -97,6 +97,26 @@ $app->group('/watch', function () {
                 );
         });
     });
+    $this->group('/stand/{id}', function () {
+        $this->get('', function ($req, $res, $args) {
+            return $res->withHeader('Content-type', 'application/json')
+                ->write(
+                    json_encode($this->model->watch->getByStand($args['id']))
+                );
+        });
+        $this->get('/date', function ($req, $res, $args) {
+            return $res->withHeader('Content-type', 'application/json')
+                ->write(
+                    json_encode($this->model->watch->getByStandInDate($args['id']))
+                );
+        });
+        $this->get('/date/{year}/{month}/{day}/to/{t_year}/{t_month}/{t_day}', function ($req, $res, $args) {
+            return $res->withHeader('Content-type', 'application/json')
+                ->write(
+                    json_encode($this->model->watch->getByStandInDate($args['id'], $args['year'],$args['month'],$args['day'], $args['t_year'],$args['t_month'],$args['t_day']))
+                );
+        });
+    });
 })/*->add(new AuthMiddleware($app))*/;
 
 

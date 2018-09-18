@@ -243,6 +243,10 @@ class WatchModel
         return $this->getByDateAndProperty('guard_id', $id, $year, $month, $day, $t_year, $t_month, $t_day);
     }
 
+    public function getByStandInDate($id, $year = false, $month = false, $day = false, $t_year = false, $t_month = false, $t_day = false) {
+        return $this->getByDateAndProperty('watch.stand_id', $id, $year, $month, $day, $t_year, $t_month, $t_day);
+    }
+
     public function getWatchActiveByGuard($id)
     {
         return $this->db
@@ -280,6 +284,25 @@ class WatchModel
         $data = $this->db
             ->from($this->table)
             ->where('guard_id', $guard_id)
+            ->select('guard.dni as guard_dni')
+            ->select('guard.name as guard_name')
+            ->select('guard.lastname as guard_lastname')
+            ->select('guard.email as guard_email')
+            ->select('guard.photo as guard_photo')
+            ->orderBy('watch.id DESC')
+            ->fetchAll();
+
+        return [
+            'total' => count($data),
+            'data' => $data
+        ];
+    }
+
+    public function getByStand($stand_id)
+    {
+        $data = $this->db
+            ->from($this->table)
+            ->where('stand_id', $stand_id)
             ->select('guard.dni as guard_dni')
             ->select('guard.name as guard_name')
             ->select('guard.lastname as guard_lastname')

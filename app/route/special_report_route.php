@@ -17,6 +17,12 @@ $app->group('/binnacle', function () {
                 json_encode($this->model->specialReport->register($req->getParsedBody()))
             );
     });
+    $this->post('/sync', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->specialReport->save($req->getParsedBody()))
+            );
+    });
     $this->put('/accept/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(

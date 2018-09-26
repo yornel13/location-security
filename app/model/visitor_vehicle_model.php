@@ -3,6 +3,7 @@ namespace App\Model;
 
 
 use App\Lib\Response;
+use DateTime;
 use Exception;
 
 class VisitorVehicleModel
@@ -15,6 +16,30 @@ class VisitorVehicleModel
     {
         $this->db = $db;
         $this->response = new Response();
+    }
+
+    public function save($data)
+    {
+        $vehicle = $this->db
+            ->from($this->table)
+            ->where('plate', $data['plate'])
+            ->where('active', 1)
+            ->fetch();
+
+        if (is_object($vehicle)) {
+            $this->response->result = (array) $vehicle;
+            return $this->response->SetResponse(true, 'La placa se encuentra asociada a otro vehiculo');
+        }
+
+        $data['create_date'] = (new DateTime($data['create_date']))->format('Y-m-d H:i:s');
+        $data['update_date'] = (new DateTime($data['update_date']))->format('Y-m-d H:i:s');
+        $query = $this->db
+            ->insertInto($this->table, $data)
+            ->execute();
+
+        $data['id'] = $query;
+        $this->response->result = $data;
+        return $this->response->SetResponse(true);
     }
 
     public function register($data)

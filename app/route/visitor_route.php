@@ -18,6 +18,12 @@ $app->group('/visitor', function () {
                 json_encode($this->model->visitor->register($req->getParsedBody()))
             );
     });
+    $this->post('/sync', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->visitor->save($req->getParsedBody()))
+            );
+    });
     $this->put('/{id}', function ($req, $res, $args) {
         $r = VisitorValidation::validate($req->getParsedBody(), true);
 

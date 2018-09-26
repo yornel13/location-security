@@ -3,6 +3,7 @@ namespace App\Model;
 
 
 use App\Lib\Response;
+use DateTime;
 use Exception;
 
 class VisitorModel
@@ -15,6 +16,31 @@ class VisitorModel
     {
         $this->db = $db;
         $this->response = new Response();
+    }
+
+    public function save($data)
+    {
+        $visitor = $this->db
+            ->from($this->table)
+            ->where('dni', $data['dni'])
+            ->where('active', 1)
+            ->fetch();
+
+        if (is_object($visitor)) {
+            $this->response->result = (array) $visitor;
+            return $this->response->SetResponse(true, 'La cedula se encuentra asociada a otro visitante');
+        }
+
+        $data['create_date'] = (new DateTime($data['create_date']))->format('Y-m-d H:i:s');
+        $data['update_date'] = (new DateTime($data['update_date']))->format('Y-m-d H:i:s');
+        $query = $this->db
+            ->insertInto($this->table, $data)
+            ->execute();
+
+        $data['id'] = $query;
+        $this->response->result = $data;
+        $this->checkCompany($data['company']);
+        return $this->response->SetResponse(true);
     }
 
     public function register($data)

@@ -16,17 +16,23 @@ class FirebaseNotification
 
     public function send($message, $registrationIds) {
 
+        // $message['message']['create_at'] = date('Y-m-d G:i:s', (time() - (5 * 60 * 60)));
+
         $notification = array(
             'title' => 'Nuevo Mensaje',
             'body'  => 'Tienes un nuevo mensaje',
             'icon'  => 'https://firebasestorage.googleapis.com/v0/b/icsseseguridad-6f751.appspot.com/o/ic_launcher.png?alt=media&token=402016ac-218e-4542-a3b7-bd039eaef8bd',
-            'click_action' => 'http://localhost:4200/u/messaging'
+            'sound' => 'default',
+            'android_channel_id' => 'Mensajes',
+            'click_action' => 'https://www.icsseseguridad.com/u/messaging',
         );
         $fields = array(
             'registration_ids' => $registrationIds,
             'data'             => $message,
             'notification'     => $notification,
-            'tll'              => 3600
+            'webpush'          => array("headers" => array("TTL" => "900")),
+            'android'          => array("ttl" => "2419200s"),
+            "ttl"              => '3600'
         );
 
         $headers = array(
@@ -46,54 +52,57 @@ class FirebaseNotification
         return $result;
     }
 
-    public function send_alert_web($message, $registrationIds) {
-
-        $expire = array("TTL" => "0");
-        $web_push = array ("headers" => $expire);
-        $notification = array(
-            'title' => 'Nuevo Alerta',
-            'body'  => 'Tienes una notificación',
-            'icon'  => 'https://firebasestorage.googleapis.com/v0/b/icsseseguridad-6f751.appspot.com/o/ic_launcher.png?alt=media&token=402016ac-218e-4542-a3b7-bd039eaef8bd',
-        );
-        $fields = array(
-            'registration_ids' => $registrationIds,
-            'data'             => $message,
-            'notification'     => $notification,
-            'webpush'          => $web_push
-        );
-
-        $headers = array(
-            'Authorization: key=' . $this->API_ACCESS_KEY,
-            'Content-Type: application/json'
-        );
-
-        $ch = curl_init();
-        curl_setopt( $ch,CURLOPT_URL, $this->url);
-        curl_setopt( $ch,CURLOPT_POST, true );
-        curl_setopt( $ch,CURLOPT_HTTPHEADER, $headers );
-        curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
-        curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
-        curl_setopt( $ch,CURLOPT_POSTFIELDS, json_encode( $fields ) );
-        $result = curl_exec($ch );
-        curl_close( $ch );
-        return $result;
-    }
+//    public function send_alert_web($message, $registrationIds) {
+//
+//        $expire = array("TTL" => "0");
+//        $web_push = array ("headers" => $expire);
+//        $notification = array(
+//            'title' => 'Nuevo Alerta',
+//            'body'  => 'Tienes una notificación',
+//            'icon'  => 'https://firebasestorage.googleapis.com/v0/b/icsseseguridad-6f751.appspot.com/o/ic_launcher.png?alt=media&token=402016ac-218e-4542-a3b7-bd039eaef8bd',
+//            'sound' => 'default',
+//        );
+//        $fields = array(
+//            'registration_ids' => $registrationIds,
+//            'data'             => $message,
+//            'notification'     => $notification,
+//            'webpush'          => $web_push
+//        );
+//
+//        $headers = array(
+//            'Authorization: key=' . $this->API_ACCESS_KEY,
+//            'Content-Type: application/json'
+//        );
+//
+//        $ch = curl_init();
+//        curl_setopt( $ch,CURLOPT_URL, $this->url);
+//        curl_setopt( $ch,CURLOPT_POST, true );
+//        curl_setopt( $ch,CURLOPT_HTTPHEADER, $headers );
+//        curl_setopt( $ch,CURLOPT_RETURNTRANSFER, true );
+//        curl_setopt( $ch,CURLOPT_SSL_VERIFYPEER, false );
+//        curl_setopt( $ch,CURLOPT_POSTFIELDS, json_encode( $fields ) );
+//        $result = curl_exec($ch );
+//        curl_close( $ch );
+//        return $result;
+//    }
 
     public function send_report($message, $registrationIds) {
 
-        $expire = array("TTL" => "1000");
-        $web_push = array ("headers" => $expire);
         $notification = array(
             'title' => 'Nuevo Comentario Recibido',
             'body'  => 'Tienes una notificación',
             'icon'  => 'https://firebasestorage.googleapis.com/v0/b/icsseseguridad-6f751.appspot.com/o/ic_launcher.png?alt=media&token=402016ac-218e-4542-a3b7-bd039eaef8bd',
-            'click_action' => 'http://localhost:4200/u/control/bitacora/reportes'
+            'sound' => 'default',
+            'android_channel_id' => 'Reportes',
+            'click_action' => 'https://www.icsseseguridad.com/u/control/bitacora/reportes',
         );
         $fields = array(
             'registration_ids' => $registrationIds,
             'data'             => $message,
             'notification'     => $notification,
-            'webpush'          => $web_push
+            'webpush'          => array("headers" => array("TTL" => "900")),
+            'android'          => array("ttl" => "2419200s"),
+            "ttl"              => '3600'
         );
 
         $headers = array(

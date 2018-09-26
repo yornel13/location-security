@@ -3,6 +3,7 @@ namespace App\Model;
 
 
 use App\Lib\Response;
+use DateTime;
 
 class SpecialReportModel
 {
@@ -14,6 +15,32 @@ class SpecialReportModel
     {
         $this->db = $db;
         $this->response = new Response();
+    }
+
+    public function save($data)
+    {
+        $report = $this->db
+            ->from($this->table)
+            ->where('sync_id', $data['sync_id'])
+            ->fetch();
+
+        if (is_object($report)) {
+            $this->response->result = $this->get($report->id);
+            return $this->response->SetResponse(true, 'El reporte ya se encuentra registrado');
+        }
+
+        $data['create_date'] = (new DateTime($data['create_date']))->format('Y-m-d H:i:s');
+        $data['update_date'] = (new DateTime($data['update_date']))->format('Y-m-d H:i:s');
+
+        $query = $this->db
+            ->insertInto($this->table, $data)
+            ->execute();
+
+        $report = $this->get($query);
+        $this->response->result = $report;
+        // $this->generate_record($report);
+        $this->alertIncidence($report);
+        return $this->response->SetResponse(true);
     }
 
     public function register($data)
@@ -54,7 +81,7 @@ class SpecialReportModel
         $position['is_exception'] = true;
 
         $tabletService = new TabletModel($this->db);
-        $tabletService->register($position);
+        $tabletService->register($position, false);
     }
 
     public function accept($id)
@@ -295,6 +322,7 @@ class SpecialReportModel
             ->from($this->table)
             ->where('watch.guard_id', $id)
             ->where('resolved', $resolved)
+            ->select('watch.guard_id AS guard_id')
             ->select('watch.guard.dni AS guard_dni')
             ->select('watch.guard.name AS guard_name')
             ->select('watch.guard.lastname AS guard_lastname')

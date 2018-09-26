@@ -164,11 +164,13 @@ class TabletModel
     /*
      * Tablet Position
      */
-    public function register($data)
+    public function register($data, $change = true)
     {
-        $timestamp = time()-(5*60*60);
-        $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
-        $data['generated_time'] = $timestamp;
+        if ($change) {
+            $timestamp = time()-(5*60*60);
+            $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
+            $data['generated_time'] = $timestamp;
+        }
 
         $query = $this->db
             ->insertInto($this->table_position, $data)

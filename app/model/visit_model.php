@@ -3,6 +3,7 @@ namespace App\Model;
 
 
 use App\Lib\Response;
+use DateTime;
 use Exception;
 
 class VisitModel
@@ -15,6 +16,35 @@ class VisitModel
     {
         $this->db = $db;
         $this->response = new Response();
+    }
+
+    public function save($data)
+    {
+        $visit = $this->db
+            ->from($this->table)
+            ->where('sync_id', $data['sync_id'])
+            ->fetch();
+
+        $data['create_date'] = (new DateTime($data['create_date']))->format('Y-m-d H:i:s');
+
+        if (is_object($visit)) {
+            if ($data["status"] == 0) {
+                $data['finish_date'] = (new DateTime($data['finish_date']))->format('Y-m-d H:i:s');$this->db
+                    ->update($this->table, [
+                        "comment" => $data["comment"],
+                        "status" => $data["status"],
+                        "finish_date" => $data["finish_date"]
+                    ], $visit->id)
+                    ->execute();
+            }
+            $query = $visit->id;
+        } else {
+            $query = $this->db
+                ->insertInto($this->table, $data)
+                ->execute();
+        }
+        $this->response->result = $this->get($query);
+        return $this->response->SetResponse(true);
     }
 
     public function register($data)

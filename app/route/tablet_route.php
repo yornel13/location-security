@@ -64,6 +64,20 @@ $app->group('/tablet', function () {
                 json_encode($this->model->tablet->register($req->getParsedBody()))
             );
     });
+    $this->post('/position/sync', function ($req, $res, $args) {
+        $r = TabletPositionValidation::validate($req->getParsedBody());
+
+        if (!$r->response) {
+            return $res->withHeader('Content-type', 'application/json')
+                ->withStatus(422)
+                ->write(json_encode($r));
+        }
+
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->tablet->save_position($req->getParsedBody()))
+            );
+    });
     $this->get('/all', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(

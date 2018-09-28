@@ -3,6 +3,7 @@ namespace App\Model;
 
 
 use App\Lib\Response;
+use DateTime;
 use Exception;
 
 class TabletModel
@@ -164,6 +165,20 @@ class TabletModel
     /*
      * Tablet Position
      */
+    public function save_position($data)
+    {
+        $data['generated_time'] = (new DateTime($data['generated_time']))->format('Y-m-d H:i:s');
+        $data['message_time'] = (new DateTime($data['message_time']))->format('Y-m-d H:i:s');
+
+        $query = $this->db
+            ->insertInto($this->table_position, $data)
+            ->execute();
+
+        $data['id'] = $query;
+        $this->response->result = $data;
+        return $this->response->SetResponse(true);
+    }
+
     public function register($data, $change = true)
     {
         if ($change) {

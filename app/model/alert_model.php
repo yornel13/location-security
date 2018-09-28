@@ -31,6 +31,22 @@ class AlertModel
         $this->response = new Response();
     }
 
+    public function save($data)
+    {
+        $data['create_date'] = (new DateTime($data['create_date']))->format('Y-m-d H:i:s');
+        $data['update_date'] = (new DateTime($data['update_date']))->format('Y-m-d H:i:s');
+        $data['status'] = (int) $data['status'];
+
+        $query = $this->db
+            ->insertInto($this->table, $data)
+            ->execute();
+
+        $data['id'] = $query;
+        $this->response->result = $data;
+        $this->notify($data);
+        return $this->response->SetResponse(true);
+    }
+
     public function registerGeneral($data)
     {
         $timestamp = time()-(5*60*60);

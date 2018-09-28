@@ -18,6 +18,13 @@ $app->group('/alert', function () {
                 json_encode($this->model->alert->register($req->getParsedBody()))
             );
     });
+    $this->post('/sync', function ($req, $res, $args) {
+
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->alert->save($req->getParsedBody()))
+            );
+    });
     $this->put('/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(

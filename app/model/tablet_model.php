@@ -273,7 +273,7 @@ class TabletModel
             ->select('guard.dni AS guard_dni')
             ->select('guard.name AS guard_name')
             ->select('guard.lastname AS guard_lastname')
-            ->orderBy('id DESC')
+            ->orderBy('generated_time DESC')
             ->fetchAll();
 
         return [

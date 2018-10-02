@@ -188,6 +188,7 @@ class SpecialReportModel
             ->select('watch.guard.dni AS guard_dni')
             ->select('watch.guard.name AS guard_name')
             ->select('watch.guard.lastname AS guard_lastname')
+            ->select('watch.stand_name AS stand_name')
             ->select('incidence.level AS level')
             ->orderBy('id DESC')
             ->fetchAll();
@@ -234,6 +235,7 @@ class SpecialReportModel
             ->select('watch.guard.dni AS guard_dni')
             ->select('watch.guard.name AS guard_name')
             ->select('watch.guard.lastname AS guard_lastname')
+            ->select('watch.stand_name AS stand_name')
             ->select('incidence.level AS level')
             ->orderBy('id DESC')
             ->fetchAll();
@@ -275,6 +277,7 @@ class SpecialReportModel
             ->select('watch.guard.dni AS guard_dni')
             ->select('watch.guard.name AS guard_name')
             ->select('watch.guard.lastname AS guard_lastname')
+            ->select('watch.stand_name AS stand_name')
             ->select('incidence.level AS level')
             ->orderBy('id DESC')
             ->fetchAll();
@@ -300,6 +303,7 @@ class SpecialReportModel
             ->select('watch.guard.dni AS guard_dni')
             ->select('watch.guard.name AS guard_name')
             ->select('watch.guard.lastname AS guard_lastname')
+            ->select('watch.stand_name AS stand_name')
             ->select('incidence.level AS level')
             ->orderBy('id DESC')
             ->fetchAll();
@@ -326,6 +330,7 @@ class SpecialReportModel
             ->select('watch.guard.dni AS guard_dni')
             ->select('watch.guard.name AS guard_name')
             ->select('watch.guard.lastname AS guard_lastname')
+            ->select('watch.stand_name AS stand_name')
             ->select('incidence.level AS level')
             ->orderBy('id DESC')
             ->fetchAll();
@@ -350,6 +355,7 @@ class SpecialReportModel
             ->select('watch.guard.dni AS guard_dni')
             ->select('watch.guard.name AS guard_name')
             ->select('watch.guard.lastname AS guard_lastname')
+            ->select('watch.stand_name AS stand_name')
             ->select('incidence.level AS level')
             ->orderBy('id DESC')
             ->fetchAll();
@@ -368,6 +374,7 @@ class SpecialReportModel
             ->select('watch.guard.dni AS guard_dni')
             ->select('watch.guard.name AS guard_name')
             ->select('watch.guard.lastname AS guard_lastname')
+            ->select('watch.stand_name AS stand_name')
             ->select('incidence.level AS level')
             ->orderBy('id DESC')
             ->fetchAll();

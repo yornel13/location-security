@@ -15,7 +15,7 @@ class IncidenceValidation
         } else {
             $value = $data[$key];
 
-            if (strlen($value) < 4) {
+            if (strlen($value) < 3) {
                 $response->errors[$key][] = 'debe contener como minimo 4 caracteres';
             }
         }

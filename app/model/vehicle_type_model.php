@@ -4,10 +4,10 @@ namespace App\Model;
 
 use App\Lib\Response;
 
-class CompanyModel
+class VehicleTypeModel
 {
     private $db;
-    private $table = 'company';
+    private $table = 'vehicle_type';
     private $response;
 
     public function __CONSTRUCT($db)
@@ -25,7 +25,7 @@ class CompanyModel
 
         if (!empty($object)) {
             $key = 'name';
-            $this->response->errors[$key][] = 'Ya existe una empresa con este nombre';
+            $this->response->errors[$key][] = 'Ya existe este tipo de vehiculo';
             return $this->response->SetResponse(false);
         }
 
@@ -47,7 +47,7 @@ class CompanyModel
 
         if (!empty($object) && $object->id !== $id) {
             $key = 'name';
-            $this->response->errors[$key][] = 'Ya existe una empresa con este nombre';
+            $this->response->errors[$key][] = 'Ya existe este tipo de vehiculo';
             return $this->response->SetResponse(false);
         }
 
@@ -56,7 +56,7 @@ class CompanyModel
             ->execute();
 
         if ($query === 0) {
-            return $this->response->SetResponse(false, 'La empresa no exite');
+            return $this->response->SetResponse(false, 'El tipo de vehiculo no exite');
         } else {
             $this->response->result = $this->get($id);
         }
@@ -98,7 +98,7 @@ class CompanyModel
             ->execute();
         if ($query === 0) {
             return $this->response
-                ->SetResponse(false, 'La empresa no existe');
+                ->SetResponse(false, 'El tipo de vehiculo no existe');
         }
         return $this->response->SetResponse(true);
     }

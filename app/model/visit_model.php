@@ -29,11 +29,15 @@ class VisitModel
 
         if (is_object($visit)) {
             if ($data["status"] == 0) {
-                $data['finish_date'] = (new DateTime($data['finish_date']))->format('Y-m-d H:i:s');$this->db
+                $data['finish_date'] = (new DateTime($data['finish_date']))->format('Y-m-d H:i:s');
+                $this->db
                     ->update($this->table, [
                         "comment" => $data["comment"],
                         "status" => $data["status"],
-                        "finish_date" => $data["finish_date"]
+                        "finish_date" => $data["finish_date"],
+                        "f_latitude" => $data["f_latitude"],
+                        "f_longitude" => $data["f_longitude"],
+                        "guard_out_id" => $data["guard_out_id"]
                     ], $visit->id)
                     ->execute();
             }
@@ -125,6 +129,12 @@ class VisitModel
                     ->from('guard', $data->guard_id)
                     ->fetch();
                 $data->guard->password = null;
+            }
+            if ($data->guard_out_id != null) {
+                $data->guard_out = $this->db
+                    ->from('guard', $data->guard_out_id)
+                    ->fetch();
+                $data->guard_out->password = null;
             }
         }
         return $data;

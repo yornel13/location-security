@@ -53,6 +53,7 @@ $container['model'] = function ($c) {
         'banner' => new App\Model\BannerModel($c->db),
         'bounds' => new App\Model\BoundsModel($c->db),
         'stand' => new App\Model\StandModel($c->db),
-        'bgroup' => new App\Model\BoundsGroupModel($c->db)
+        'bgroup' => new App\Model\BoundsGroupModel($c->db),
+        'vehicleType' => new App\Model\VehicleTypeModel($c->db)
     ];
 };

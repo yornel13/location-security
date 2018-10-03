@@ -237,9 +237,16 @@ class AlertModel
 
     public function get($id)
     {
-        return $this->db
+        $alert = $this->db
             ->from($this->table, $id)
             ->fetch();
+        if (is_object($alert)) {
+            if ($alert->guard_id != null) {
+                $guardService = new GuardModel($this->db);
+                $alert->guard = $guardService->get($alert->guard_id);
+            }
+        }
+        return $alert;
     }
 
     public function getAll()

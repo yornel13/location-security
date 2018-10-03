@@ -402,7 +402,7 @@ class TabletModel
             ->orderBy('id DESC')
             ->fetchAll();
 
-        $data = $this->db
+            $data = $this->db
             ->from($this->table_position)
             ->where('generated_time in (SELECT MAX(generated_time) FROM tablet_position GROUP BY imei)')
             ->disableSmartJoin()

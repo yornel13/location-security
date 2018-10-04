@@ -38,9 +38,19 @@ class TabletModel
         $query = $this->db
             ->insertInto($this->table, $data)
             ->execute();
+        $this->db
+            ->update($this->table, [ 'alias' => 'Tablet '.$query ], $query)
+            ->execute();
 
-        $data['id'] = $query;
-        $this->response->result = $data;
+        $this->response->result = $this->getTablet($query);
+        return $this->response->SetResponse(true);
+    }
+
+    public function updateTablet($id, $data) {
+        $this->db
+            ->update($this->table, $data, $id)
+            ->execute();
+        $this->response->result = $this->getTablet($id);
         return $this->response->SetResponse(true);
     }
 
@@ -419,6 +429,7 @@ class TabletModel
             foreach ($tablets as $value) {
                 if ($tablet->imei == $value->imei) {
                     $tablet->id = $value->id;
+                    $tablet->alias = $value->alias;
                     $dataReturn[] = $tablet;
                 }
             }

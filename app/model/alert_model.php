@@ -162,7 +162,7 @@ class AlertModel
                 ->select("guard.dni as guard_dni")
                 ->select("guard.name as guard_name")
                 ->select("guard.lastname as guard_lastname")
-                ->orderBy('id DESC')
+                ->orderBy('alert.create_date DESC')
                 ->fetchAll();
         } else {
             $data = $this->db
@@ -173,7 +173,7 @@ class AlertModel
                 ->select("guard.dni as guard_dni")
                 ->select("guard.name as guard_name")
                 ->select("guard.lastname as guard_lastname")
-                ->orderBy('id DESC')
+                ->orderBy('alert.create_date DESC')
                 ->fetchAll();
         }
 
@@ -213,7 +213,7 @@ class AlertModel
                 ->select("guard.dni as guard_dni")
                 ->select("guard.name as guard_name")
                 ->select("guard.lastname as guard_lastname")
-                ->orderBy('id DESC')
+                ->orderBy('alert.create_date DESC')
                 ->fetchAll();
         } else {
             $data = $this->db
@@ -225,7 +225,7 @@ class AlertModel
                 ->select("guard.dni as guard_dni")
                 ->select("guard.name as guard_name")
                 ->select("guard.lastname as guard_lastname")
-                ->orderBy('id DESC')
+                ->orderBy('alert.create_date DESC')
                 ->fetchAll();
         }
 
@@ -257,6 +257,7 @@ class AlertModel
             ->select("guard.dni as guard_dni")
             ->select("guard.name as guard_name")
             ->select("guard.lastname as guard_lastname")
+            ->orderBy('alert.create_date DESC')
             ->fetchAll();
 
         return [
@@ -274,6 +275,7 @@ class AlertModel
             ->select("guard.dni as guard_dni")
             ->select("guard.name as guard_name")
             ->select("guard.lastname as guard_lastname")
+            ->orderBy('alert.create_date DESC')
             ->fetchAll();
 
         return [
@@ -291,7 +293,7 @@ class AlertModel
                 ->select("guard.dni as guard_dni")
                 ->select("guard.name as guard_name")
                 ->select("guard.lastname as guard_lastname")
-                ->orderBy('id DESC')
+                ->orderBy('alert.create_date DESC')
                 ->fetchAll();
         } else {
             $data = $this->db
@@ -300,7 +302,7 @@ class AlertModel
                 ->select("guard.dni as guard_dni")
                 ->select("guard.name as guard_name")
                 ->select("guard.lastname as guard_lastname")
-                ->orderBy('id DESC')
+                ->orderBy('alert.create_date DESC')
                 ->fetchAll();
         }
         return [
@@ -318,7 +320,7 @@ class AlertModel
                 ->select("guard.dni as guard_dni")
                 ->select("guard.name as guard_name")
                 ->select("guard.lastname as guard_lastname")
-                ->orderBy('id DESC')
+                ->orderBy('alert.create_date DESC')
                 ->fetchAll();
         } else {
             $data = $this->db
@@ -328,7 +330,7 @@ class AlertModel
                 ->select("guard.dni as guard_dni")
                 ->select("guard.name as guard_name")
                 ->select("guard.lastname as guard_lastname")
-                ->orderBy('id DESC')
+                ->orderBy('alert.create_date DESC')
                 ->fetchAll();
         }
 

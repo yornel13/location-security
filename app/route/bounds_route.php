@@ -52,6 +52,8 @@ $app->group('/bounds', function () {
                 json_encode($this->model->bounds->removeGroup($args['id']))
             );
     });
+
+    /* vehicle */
     $this->post('/{id}/vehicle', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
@@ -68,6 +70,26 @@ $app->group('/bounds', function () {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
                 json_encode($this->model->bounds->deleteVehicleBounds($args['vehicle_id']))
+            );
+    });
+
+    /* tablet */
+    $this->post('/{id}/tablet', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->bounds->addTabletToBounds($args['id'], $req->getParsedBody()))
+            );
+    });
+    $this->get('/{id}/tablet', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->bounds->getTabletsBound($args['id']))
+            );
+    });
+    $this->delete('/tablet/{tablet_id}', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->bounds->deleteTabletBounds($args['tablet_id']))
             );
     });
 })/*->add(new AuthMiddleware($app))*/;

@@ -20,6 +20,12 @@ $app->group('/tablet', function () {
                 json_encode($this->model->tablet->registerTablet($req->getParsedBody()))
             );
     });
+    $this->get('/verify/{imei}', function ($req, $res, $args) {
+        return $res->withHeader('Content-type', 'application/json')
+            ->write(
+                json_encode($this->model->tablet->verify($args['imei']))
+            );
+    });
     $this->put('/{id}', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(

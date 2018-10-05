@@ -10,6 +10,7 @@ class BoundsModel
     private $db;
     private $table = 'bounds';
     private $table_vehicle_bounds = 'vehicle_bound';
+    private $table_tablet_bounds = 'tablet_bound';
     private $response;
 
     public function __CONSTRUCT($db)
@@ -132,6 +133,30 @@ class BoundsModel
         return $this->response->SetResponse(true);
     }
 
+    public function addTabletToBounds($id, $data)
+    {
+        $timestamp = time()-(5*60*60);
+        $timestamp = gmdate('Y-m-d H:i:s', $timestamp);
+
+        foreach ($data as $valor) {
+            $valor['bounds_id'] = $id;
+            $valor['create_at'] = $timestamp;
+
+            $registered = $this->db
+                ->from($this->table_tablet_bounds)
+                ->where('imei', $valor['imei'])
+                ->fetch();
+
+            if (is_object($registered)) {
+                $this->deleteTabletBounds($registered->id);
+            }
+            $this->db
+                ->insertInto($this->table_tablet_bounds, $valor)
+                ->execute();
+        }
+        return $this->response->SetResponse(true);
+    }
+
 
     public function getByGroup($group_id)
     {
@@ -166,6 +191,38 @@ class BoundsModel
             ->where("bounds_id", $bounds_id)
             ->orderBy('id DESC')
             ->fetchAll();
+        foreach ($data as $bounds) {
+            $vehicle = $this->db
+                ->from('vehicle')
+                ->where("imei", $bounds->imei)
+                ->fetch();
+            if (is_object($vehicle)) {
+                $bounds->alias = $vehicle->alias;
+            }
+        }
+
+        return [
+            'data' => $data,
+            'total' => count($data)
+        ];
+    }
+
+    public function getTabletsBound($bounds_id)
+    {
+        $data = $this->db
+            ->from($this->table_tablet_bounds)
+            ->where("bounds_id", $bounds_id)
+            ->orderBy('id DESC')
+            ->fetchAll();
+        foreach ($data as $bounds) {
+            $tablet = $this->db
+                ->from('tablet')
+                ->where("imei", $bounds->imei)
+                ->fetch();
+            if (is_object($tablet)) {
+                $bounds->alias = $tablet->alias;
+            }
+        }
 
         return [
             'data' => $data,
@@ -177,6 +234,15 @@ class BoundsModel
     {
         $data = $this->db
             ->from($this->table_vehicle_bounds, $vehicle_bounds_id)
+            ->fetch();
+
+        return $data;
+    }
+
+    public function getTabletByBounds($tablet_bounds_id)
+    {
+        $data = $this->db
+            ->from($this->table_tablet_bounds, $tablet_bounds_id)
             ->fetch();
 
         return $data;
@@ -201,6 +267,10 @@ class BoundsModel
                 ->deleteFrom($this->table_vehicle_bounds)
                 ->where('bounds_id', $id)
                 ->execute();
+            $this->db
+                ->deleteFrom($this->table_tablet_bounds)
+                ->where('bounds_id', $id)
+                ->execute();
             $query = $this->db
                 ->deleteFrom($this->table, $id)
                 ->execute();
@@ -218,6 +288,19 @@ class BoundsModel
     {
         $query = $this->db
             ->deleteFrom($this->table_vehicle_bounds, $vehicle_bounds_id)
+            ->execute();
+        if ($query === 0) {
+            return $this->response
+                ->SetResponse(false, 'Esta asociación no existe');
+        }
+
+        return $this->response->SetResponse(true);
+    }
+
+    public function deleteTabletBounds($tablet_bounds_id)
+    {
+        $query = $this->db
+            ->deleteFrom($this->table_tablet_bounds, $tablet_bounds_id)
             ->execute();
         if ($query === 0) {
             return $this->response

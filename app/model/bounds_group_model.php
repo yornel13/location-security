@@ -116,6 +116,11 @@ class BoundsGroupModel
     public function delete($id)
     {
         try {
+            $this->db
+                ->update('bounds')
+                ->set([ 'bounds_group_id' => null])
+                ->where('bounds_group_id', $id)
+                ->execute();
             $query = $this->db
                 ->deleteFrom($this->table, $id)
                 ->execute();
@@ -123,6 +128,8 @@ class BoundsGroupModel
                 return $this->response
                     ->SetResponse(false, 'El grupo no exite');
             }
+
+
         } catch (Exception $e) {
             if (strpos($e->getMessage(), "FOREIGN KEY")) {
                 $set = null;

@@ -23,10 +23,13 @@ class AuthModel
     {
         $guard = $this->db->from($this->tableG)
             ->where('dni', $dni)
-            ->where('password', md5($password))
             ->fetch();
 
         if (is_object($guard)) {
+            if ($guard->password !=  md5($password)) {
+                return $this->response->SetResponse(false, 'Clave incorrecta');
+            }
+
             if ($guard->stand_id == null) {
                 return $this->response->SetResponse(false, 'No puedes iniciar session si no estas asociado a una zona');
             }
@@ -44,7 +47,7 @@ class AuthModel
             return $this->response->SetResponse(true);
 
         } else {
-            return $this->response->SetResponse(false, 'Credenciales no validas');
+            return $this->response->SetResponse(false, 'Cedula no registrada');
         }
     }
 
@@ -52,10 +55,13 @@ class AuthModel
     {
         $admin = $this->db->from($this->tableA)
             ->where('dni', $dni)
-            ->where('password', md5($password))
             ->fetch();
 
         if (is_object($admin)) {
+            if ($admin->password !=  md5($password)) {
+                return $this->response->SetResponse(false, 'Clave incorrecta');
+            }
+
             $token = Auth::SignIn([
                 'id' => $admin->id,
                 'dni' => $admin->dni,
@@ -67,7 +73,7 @@ class AuthModel
             $this->response->result = $token;
             return $this->response->SetResponse(true);
         } else {
-            return $this->response->SetResponse(false, 'Credenciales no validas');
+            return $this->response->SetResponse(false, 'Cedula no registrada');
         }
     }
 

@@ -1000,13 +1000,37 @@ POST http://icsseseguridad.com/api/public/bounds/{id}/vehicle
              	}
              ]
              
+POST http://icsseseguridad.com/api/public/bounds/{id}/tablet
+
+    Agrega tablets al cerco virtual, recibe por el bodi un array en string de "imei"
+    
+    ejemplo: [
+             	{
+             		"imei": "867162025555004"
+             	},
+             	{
+             		"imei": "862366030046173"
+             	},
+             	{
+             		"imei": "860599001483437"
+             	}
+             ]
+             
 DELETE http://icsseseguridad.com/api/public/bounds/vehicle/{vehicle_id}
 
     quita un vehiculo del cerco virtual
+             
+DELETE http://icsseseguridad.com/api/public/bounds/tablet/{tablet_id}
+
+    quita una tablet del cerco virtual
     
 GET http://icsseseguridad.com/api/public/bounds/{id}/vehicle
 
     obtiene todas los vehiculos asociados a un cerco virtual
+    
+GET http://icsseseguridad.com/api/public/bounds/{id}/tablet
+
+    obtiene todas las tablet asociados a un cerco virtual
     
 # * Bounds Groups (Grupos para cercos virtuales)
 

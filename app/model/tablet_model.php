@@ -19,6 +19,16 @@ class TabletModel
         $this->response = new Response();
     }
 
+    public function verify($imei) {
+        $tablet = $this->getTabletByImei($imei);
+        if (is_object($tablet)) {
+            $this->response->result = $tablet;
+            return $this->response->SetResponse(true, 'El imei se encuentra ya registrado');
+        } else {
+            return $this->response->SetResponse(false, 'Dispositivo no registrado');
+        }
+    }
+
     public function registerTablet($data)
     {
         $timestamp = time()-(5*60*60);

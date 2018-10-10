@@ -260,6 +260,18 @@ class BoundsModel
         return $data;
     }
 
+    public function getTabletBoundByImei($imei)
+    {
+        $data = $this->db
+            ->from($this->table_tablet_bounds)
+            ->where("imei", $imei)
+            ->select("bounds.name as bounds_name")
+            ->select("bounds.points as bounds_points")
+            ->fetch();
+
+        return $data;
+    }
+
     public function delete($id)
     {
         try {

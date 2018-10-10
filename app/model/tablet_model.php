@@ -185,19 +185,6 @@ class TabletModel
     /*
      * Tablet Position
      */
-    public function save_position($data)
-    {
-        $data['generated_time'] = (new DateTime($data['generated_time']))->format('Y-m-d H:i:s');
-        $data['message_time'] = (new DateTime($data['message_time']))->format('Y-m-d H:i:s');
-
-        $query = $this->db
-            ->insertInto($this->table_position, $data)
-            ->execute();
-
-        $data['id'] = $query;
-        $this->response->result = $data;
-        return $this->response->SetResponse(true);
-    }
 
     public function register($data, $change = true)
     {
@@ -214,6 +201,64 @@ class TabletModel
         $data['id'] = $query;
         $this->response->result = $data;
         return $this->response->SetResponse(true);
+    }
+
+    // new
+    public function save_position($data)
+    {
+        $data['generated_time'] = (new DateTime($data['generated_time']))->format('Y-m-d H:i:s');
+        $data['message_time'] = (new DateTime($data['message_time']))->format('Y-m-d H:i:s');
+
+        $query = $this->db
+            ->insertInto($this->table_position, $data)
+            ->execute();
+
+        $data['id'] = $query;
+        $this->response->result = $data;
+        return $this->verifyBounds($data);
+        return $this->response->SetResponse(true);
+    }
+
+    public function verifyBounds($position) {
+        $device = $this->db
+            ->from($this->table)
+            ->where('imei', $position['imei'])
+            ->fetch();
+        $device = (array) $device;
+        $deviceUpdate = [];
+        $boundsService = new BoundsModel($this->db);
+        $vehicleService = new VehicleModel($this->db);
+        $association = $boundsService->getTabletBoundByImei($position['imei']);
+        if (is_object($association)) {
+            $in_limit = $vehicleService->checkLimit($position, $association);
+            if ($in_limit) {
+                $deviceUpdate['in_polygon'] = $vehicleService->IN;
+            } else {
+                $deviceUpdate['in_polygon'] = $vehicleService->OUT;
+            }
+            if (((int) $device['in_polygon']) === $vehicleService->IN && $deviceUpdate['in_polygon'] === $vehicleService->OUT) {
+                $vehicleService->alertOut(
+                    $device['imei'],
+                    $device['alias'],
+                    $position['latitude'],
+                    $position['longitude'],
+                    $association->bounds_points
+                );
+            }
+            if (((int) $device['in_polygon']) === $vehicleService->OUT && $deviceUpdate['in_polygon'] === $vehicleService->IN) {
+                $vehicleService->alertIn(
+                    $device['imei'],
+                    $device['alias'],
+                    $position['latitude'],
+                    $position['longitude'],
+                    $association->bounds_points
+                );
+            }
+            $device['in_polygon'] = $deviceUpdate['in_polygon'];
+            $this->updateTablet($device['id'], $device);
+            return $device;
+        }
+        return 'none';
     }
 
     public function getPosition($id)

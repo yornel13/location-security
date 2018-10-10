@@ -11,6 +11,7 @@ namespace App\Model;
 class FirestoreDatabase
 {
     private $url = 'https://firestore.googleapis.com/v1beta1/projects/icsseseguridad-6f751/databases/(default)/documents/alert';
+    //private $url = 'https://firestore.googleapis.com/v1beta1/projects/icsseseguridad-6f751/databases/(default)/documents/test_alert'; // for test
     private $API_ACCESS_KEY = 'AAAA4DA7bSU:APA91bErm3rES3xAUDKX8KMBVDpiENq16FvpcScn3XEGHkIMm1yP4WwqvP_JkQUw0ny2LnElrcsXJcRs6eNI2awjHpnnwem5AxpL-0KgM9XvYMyok1f9L7SZx_KGVJuqxJEaGB09i0t9D2dBP0k-0y8ecsLx4U4O6Q';
 
     public function save($fields, $id) {

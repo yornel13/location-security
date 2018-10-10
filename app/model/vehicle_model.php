@@ -10,8 +10,8 @@ class VehicleModel
     private $group_name1 = "AZUCARERA INGENIO VALDEZ";
     private $group_name2 = "BOMBAS DE DRENAJE";
     private $token = '01EC469EB5F64D8DA878042400D3CBA2';
-    private $IN = 1; // inside polygon
-    private $OUT = 2; // outside polygon
+    public $IN = 1; // inside polygon
+    public $OUT = 2; // outside polygon
 
     private $db;
     private $table = 'vehicle';
@@ -132,11 +132,6 @@ class VehicleModel
         $vehiclesLocal = $this->getAllLocal();
         $boundsService = new BoundsModel($this->db);
 
-//        $bounds = $boundsService->getAll();
-//        foreach ($bounds['data'] as $bound) {
-//            $associates_vehicles = $boundsService->getVehiclesBound($bound->id)['data'];
-//            $bound->vehicles = $associates_vehicles;
-//        }
         foreach ($vehiclesExternal as $external) {
             $exist = false;
             foreach ($vehiclesLocal as $local) {
@@ -146,29 +141,29 @@ class VehicleModel
                     if ($external['ignition_state'] !== $local['ignition_state']) {
                         if ($external['ignition_state'] === 1 && $local['ignition_state'] == 2) {
                             $this->alertIgnitionOn(
-                                $local['imei'],
-                                $local['alias'],
-                                $local['latitude'],
-                                $local['longitude']
+                                $external['imei'],
+                                $external['alias'],
+                                $external['latitude'],
+                                $external['longitude']
                             );
                             $count++;
                         }
                         if ($external['ignition_state'] === 2 && $local['ignition_state'] == 1) {
                             $this->alertIgnitionOff(
-                                $local['imei'],
-                                $local['alias'],
-                                $local['latitude'],
-                                $local['longitude']
+                                $external['imei'],
+                                $external['alias'],
+                                $external['latitude'],
+                                $external['longitude']
                             );
                             $count++;
                         }
                     }
                     if ($external['speed'] > 100 && $local['speed'] <= 100) {
                         $this->alertSpeed(
-                            $local['imei'],
-                            $local['alias'],
-                            $local['latitude'],
-                            $local['longitude']
+                            $external['imei'],
+                            $external['alias'],
+                            $external['latitude'],
+                            $external['longitude']
                         );
                         $count++;
                     }
@@ -183,20 +178,20 @@ class VehicleModel
                         }
                         if (((int) $local['in_polygon']) === $this->IN && $external['in_polygon'] === $this->OUT) {
                             $this->alertOut(
-                                $local['imei'],
-                                $local['alias'],
-                                $local['latitude'],
-                                $local['longitude'],
+                                $external['imei'],
+                                $external['alias'],
+                                $external['latitude'],
+                                $external['longitude'],
                                 $association->bounds_points
                             );
                             $count++;
                         }
                         if (((int) $local['in_polygon']) === $this->OUT && $external['in_polygon'] === $this->IN) {
-                            $this->alertOut(
-                                $local['imei'],
-                                $local['alias'],
-                                $local['latitude'],
-                                $local['longitude'],
+                            $this->alertIn(
+                                $external['imei'],
+                                $external['alias'],
+                                $external['latitude'],
+                                $external['longitude'],
                                 $association->bounds_points
                             );
                             $count++;
@@ -217,8 +212,8 @@ class VehicleModel
         $vertices_y = array();
         $vertices_x = array();
         foreach ($polygon as $point) {
-            $vertices_y[] = $point->latitude;
-            $vertices_x[] = $point->longitude;
+            $vertices_y[] = $point->lat;
+            $vertices_x[] = $point->lng;
         }
         $points_polygon = count($vertices_x) - 1;
         $latitude_y = $vehicle['latitude'];
@@ -241,7 +236,7 @@ class VehicleModel
             "imei" => $imei,
             "cause" => AlertModel::OUT_BOUNDS,
             "type" => AlertModel::OUT_BOUNDS,
-            "message" => "El vehiculo ".$alias." ha salido de la zona establecida",
+            "message" => "El dispositivo ".$alias." ha salido de la zona establecida",
             "extra" => $points,
             "latitude" => $latitude,
             "longitude" => $longitude
@@ -255,7 +250,7 @@ class VehicleModel
             "imei" => $imei,
             "cause" => AlertModel::OUT_BOUNDS,
             "type" => AlertModel::IN_BOUNDS,
-            "message" => "El vehiculo ".$alias." ha entrado nuevamente a su zona establecida",
+            "message" => "El dispositivo ".$alias." ha entrado nuevamente a su zona establecida",
             "extra" => $points,
             "latitude" => $latitude,
             "longitude" => $longitude

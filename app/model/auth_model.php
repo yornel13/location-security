@@ -26,7 +26,7 @@ class AuthModel
             ->fetch();
 
         if (is_object($guard)) {
-            if ($guard->password !=  md5($password)) {
+            if ($guard->password != md5($password)) {
                 return $this->response->SetResponse(false, 'Clave incorrecta');
             }
 

@@ -78,34 +78,34 @@ class WatchModel
             ->insertInto($this->table_session, $session)
             ->execute();
 
-        $this->generate_record_start((object) $watch, $data['latitude'], $data['longitude'], $timestamp);
+        //$this->generate_record_start((object) $watch, $data['latitude'], $data['longitude'], $timestamp);
         $this->alertStart($data['guard_id'], $data['latitude'], $data['longitude'], $watch['resumed'], $data['tablet_imei']);
 
         $this->response->result = $watch;
         return $this->response->SetResponse(true);
     }
 
-    public function generate_record_start($watch, $latitude, $longitude, $timestamp)
-    {
-        $position = array();
-        $position['latitude'] = $latitude;
-        $position['longitude'] = $longitude;
-        $position['generated_time'] = $timestamp;
-        $position['message_time'] = $timestamp;
-        $position['watch_id'] = $watch->id;
-        $position['imei'] = $watch->tablet_imei;
-        $name = $watch->guard_name." ".$watch->guard_lastname;
-        if ($watch->resumed) {
-            $position['message'] = 'RESUMED_WATCH';
-            $position['alert_message'] = $name." ha retomado su guardia";
-        } else {
-            $position['message'] = 'INIT_WATCH';
-            $position['alert_message'] = $name." ha iniciado su guardia";
-        }
-        $position['is_exception'] = true;
-        $tabletService = new TabletModel($this->db);
-        $tabletService->register($position);
-    }
+//    public function generate_record_start($watch, $latitude, $longitude, $timestamp)
+//    {
+//        $position = array();
+//        $position['latitude'] = $latitude;
+//        $position['longitude'] = $longitude;
+//        $position['generated_time'] = $timestamp;
+//        $position['message_time'] = $timestamp;
+//        $position['watch_id'] = $watch->id;
+//        $position['imei'] = $watch->tablet_imei;
+//        $name = $watch->guard_name." ".$watch->guard_lastname;
+//        if ($watch->resumed) {
+//            $position['message'] = 'RESUMED_WATCH';
+//            $position['alert_message'] = $name." ha retomado su guardia";
+//        } else {
+//            $position['message'] = 'INIT_WATCH';
+//            $position['alert_message'] = $name." ha iniciado su guardia";
+//        }
+//        $position['is_exception'] = true;
+//        $tabletService = new TabletModel($this->db);
+//        $tabletService->register($position);
+//    }
 
     public function end($data, $id)
     {
@@ -123,28 +123,28 @@ class WatchModel
         } else {
             $watch = $this->get($id);
             $this->response->result = $watch;
-            $this->generate_record_end((object) $watch, $data['f_latitude'], $data['f_longitude'], $timestamp);
+            //$this->generate_record_end((object) $watch, $data['f_latitude'], $data['f_longitude'], $timestamp);
             $this->alertEnd($watch->guard_id, $watch->f_latitude, $watch->f_longitude, $watch->tablet_imei);
         }
         return $this->response->SetResponse(true);
     }
 
-    public function generate_record_end($watch, $latitude, $longitude, $timestamp)
-    {
-        $position = array();
-        $position['latitude'] = $latitude;
-        $position['longitude'] = $longitude;
-        $position['generated_time'] = $timestamp;
-        $position['message_time'] = $timestamp;
-        $position['watch_id'] = $watch->id;
-        $position['imei'] = $watch->tablet_imei;
-        $name = $watch->guard_name." ".$watch->guard_lastname;
-        $position['message'] = 'FINISHED_WATCH';
-        $position['alert_message'] = $name." ha finalizado su guardia";
-        $position['is_exception'] = true;
-        $tabletService = new TabletModel($this->db);
-        $tabletService->register($position);
-    }
+//    public function generate_record_end($watch, $latitude, $longitude, $timestamp)
+//    {
+//        $position = array();
+//        $position['latitude'] = $latitude;
+//        $position['longitude'] = $longitude;
+//        $position['generated_time'] = $timestamp;
+//        $position['message_time'] = $timestamp;
+//        $position['watch_id'] = $watch->id;
+//        $position['imei'] = $watch->tablet_imei;
+//        $name = $watch->guard_name." ".$watch->guard_lastname;
+//        $position['message'] = 'FINISHED_WATCH';
+//        $position['alert_message'] = $name." ha finalizado su guardia";
+//        $position['is_exception'] = true;
+//        $tabletService = new TabletModel($this->db);
+//        $tabletService->register($position);
+//    }
 
     public function get($id)
     {

@@ -203,7 +203,7 @@ $app->group('/tablet', function () {
     $this->get('/verificar/tablet', function ($req, $res, $args) {
         return $res->withHeader('Content-type', 'application/json')
             ->write(
-                json_encode($this->model->tablet->verifyBounds('358240051111110'))
+                json_encode($this->model->tablet->tick())
             );
     });
 });

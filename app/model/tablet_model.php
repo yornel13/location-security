@@ -3,6 +3,7 @@ namespace App\Model;
 
 
 use App\Lib\Response;
+use AsyncTask;
 use DateTime;
 use Exception;
 
@@ -215,7 +216,34 @@ class TabletModel
 
         $data['id'] = $query;
         $this->response->result = $data;
-        return $this->verifyBounds($data);
+        //$this->verifyBounds($data);
+        //$this->call($data);
+        return $this->response->SetResponse(true);
+    }
+
+    public function tick() {
+        $id = 8;
+        $data = [ 'id' => 8];
+        //$rama = new SomeThreadedClass($id, $data);
+        //$rama->start();
+
+        //$pool = new Pool(4);
+        //$pool->submit(new SomeThreadedClass($id, $data));
+        //$task = new Task;
+        //$thread = new SomeThreadedClass($id, $data, $task);
+        //$thread->start();
+//        $worker = new Worker();
+//        $worker->start();
+//        $worker->stack(new Task());
+        //while ($worker->collect());
+        //$worker->shutdown();
+        //while ($pool->collect()) continue;
+        //$pool->shutdown();
+
+
+        $task = new TestTask();
+        $task->execute('test');
+
         return $this->response->SetResponse(true);
     }
 
@@ -467,7 +495,7 @@ class TabletModel
             ->orderBy('id DESC')
             ->fetchAll();
 
-            $data = $this->db
+        $data = $this->db
             ->from($this->table_position)
             ->where('generated_time in (SELECT MAX(generated_time) FROM tablet_position GROUP BY imei)')
             ->disableSmartJoin()
@@ -494,5 +522,27 @@ class TabletModel
             'data' => $dataReturn,
             'total' => count($dataReturn)
         ];
+    }
+}
+
+class TestTask extends AsyncTask
+{
+    //Hook que se ejecuta antes de la tarea principal
+    protected function onPreExecute()
+    {
+
+    }
+
+    protected function doInBackground($parameters)
+    {
+        //El código dentro de esta función se ejecutará de forma asíncrona
+        //sleep(10);
+        return $parameters;
+    }
+
+    //Hook que se ejecuta después de la tarea principal
+    protected function onPostExecute($result)
+    {
+        echo $result;
     }
 }
